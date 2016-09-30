@@ -1,5 +1,5 @@
 {
-  "name": "kurssiarkisto",
+  "name": "kurssiarkisto-api",
   "version": "1.0.0",
   "description": "Course archive web service for users to spread information about courses",
   "main": "server.js",
