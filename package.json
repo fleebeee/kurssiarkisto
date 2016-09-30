@@ -1,0 +1,30 @@
+{
+  "name": "kurssiarkisto",
+  "version": "1.0.0",
+  "description": "Course archive web service for users to spread information about courses",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flibo/kurssiarkisto.git"
+  },
+  "keywords": [
+    "course",
+    "archive",
+    "express",
+    "node",
+    "mongodb",
+    "aalto"
+  ],
+  "author": "Jesse Koivukoski, Heta Ruikka, Auri Väljä",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Flibo/kurssiarkisto/issues"
+  },
+  "homepage": "https://github.com/Flibo/kurssiarkisto#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
