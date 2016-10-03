@@ -12,8 +12,10 @@ export class AppService {
     return Promise.reject(error.message || error);
   }
 
+  apiUrl = 'http://localhost:3003';
+
    getMessage(): Promise<string> {
-     return this.http.get('http://localhost:3000').toPromise()
+     return this.http.get(this.apiUrl).toPromise()
             .then(response => response.json().message as string)
             .catch(this.handleError);
    }
