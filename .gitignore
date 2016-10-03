@@ -24,3 +24,12 @@ coverage
 
 # Benchmarking
 benchmarks/graphs
+
+# Angular2
+client/typings
+client/system-config.js*
+client/app/**/*.js
+client/app/**/*.map
+client/node_modules
+client/jspm_packages
+client/bower_components
