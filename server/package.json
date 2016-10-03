@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/Flibo/kurssiarkisto#readme",
   "dependencies": {
+    "cors": "^2.8.1",
     "express": "^4.14.0"
   }
 }

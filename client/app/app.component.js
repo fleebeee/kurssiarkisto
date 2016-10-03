@@ -9,15 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var app_service_1 = require('./app.service');
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(appService) {
+        this.appService = appService;
+        this.message = '';
     }
+    AppComponent.prototype.getMessage = function () {
+        var _this = this;
+        this.appService.getMessage().then(function (message) { return _this.message = message; });
+    };
+    AppComponent.prototype.ngOnInit = function () {
+        this.getMessage();
+    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: '<h1>Kurssiarkisto</h1>'
+            template: "\n    <h1>Kurssiarkisto</h1>\n    <p>{{message}}</p>\n    ",
+            providers: [app_service_1.AppService],
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [app_service_1.AppService])
     ], AppComponent);
     return AppComponent;
 }());
