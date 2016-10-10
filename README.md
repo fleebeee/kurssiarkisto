@@ -9,14 +9,14 @@ First, install [Node.js](https://nodejs.org/en/) and verify that it's working by
 
 The service is split into three smaller services that you must run concurrently. Once they are running, you can access the website at localhost:8000.
 
-### Client
+### Database
 
-The client can be set up by entering these commands into your terminal:
+First, you have to install [MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/) on your machine by either Homebrew or with a binary. Then, setup MongoDB with
 
-    $ cd client
-    $ npm install
+    $ sudo mkdir -p /data/db
+    $ sudo chown -R $USER /data/db
 
-You can run the client with `npm start`. The client i.e. the public interface for the web service is available at localhost:8000.
+You can now run `mongod --dbpath=/data/db` to bring up MongoDB.
 
 ### Server
 
@@ -27,9 +27,14 @@ Enter the following commands into your terminal:
 
 After these steps, you can run the server with `node server.js` and visit localhost:3003 in your browser to use the server API.
 
-### Database
+### Client
 
-TODO
+The client can be set up by entering these commands into your terminal:
+
+    $ cd client
+    $ npm install
+
+You can run the client with `npm start`. The client i.e. the public interface for the web service is available at localhost:8000.
 
 ## Basic workflow
 
