@@ -33,3 +33,6 @@ client/app/**/*.map
 client/node_modules
 client/jspm_packages
 client/bower_components
+
+# Next
+.next
