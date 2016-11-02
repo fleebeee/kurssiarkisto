@@ -1,0 +1,32 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "globals": {
+    "document": true,
+    "window": true,
+    "process": true,
+  },
+  "rules": {
+    "import/extensions": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/no-unresolved": 0,
+    "react/jsx-filename-extension": 0,
+    # Because we depend on componentDidMount for authorization
+    # TODO Change this to use something better when it's figured out
+    "react/no-did-mount-set-state": 0,
+    "linebreak-style": 0,
+    # single quotes
+    "quotes": [2, "single"],
+    "jsx-quotes": [2, "prefer-single"],
+    # 2 space indentation
+    "indent": [2, 2],
+    # Allow _function/variable names (to show privateness)
+    "no-underscore-dangle": 0,
+    # Commas always at the end of line
+    "comma-style": [2, "last"],
+    # 80 char line length
+    "max-len": [2, 80, 1],
+    # console is fine
+    "no-console": 0,
+  }
+}

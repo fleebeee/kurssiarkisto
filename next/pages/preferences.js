@@ -1,65 +1,56 @@
-import React from 'react'
-import 'isomorphic-fetch'
+import React, { Component } from 'react';
+import fetch from 'isomorphic-fetch';
 import ls from 'local-storage';
 
-export default class extends React.Component {
+import NotAuthorized from '../components/NotAuthorized/NotAuthorized.js';
+
+class Preferences extends Component {
   constructor(props) {
     super(props);
     this.state =
     {
-      isAuthenticated: 'pending',
-      data: {}
+      isAuthorized: 'pending',
+      data: {},
     };
   }
 
   async componentDidMount() {
     const jwt = ls.get('jwt');
 
-    if (!!jwt) {
+    if (jwt) {
       const res = await fetch('http://localhost:3003/api/memberinfo', {
         method: 'GET',
         headers: {
-          'Accept': 'application/json',
+          Accept: 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': jwt
+          Authorization: jwt,
         },
       });
 
       const data = await res.json();
 
-      if (!!data.success) {
-        this.setState({ isAuthenticated: 'yes', data: data });
+      if (data.success) {
+        this.setState({ isAuthorized: 'yes', data });
+      } else {
+        this.setState({ isAuthorized: 'no' });
       }
-      else {
-        this.setState({ isAuthenticated: 'no' });
-      }
-    }
-    else {
-      this.setState({ isAuthenticated: 'no' });
+    } else {
+      this.setState({ isAuthorized: 'no' });
     }
   }
 
-  render () {
-    if (this.state.isAuthenticated === 'pending') {
+  render() {
+    if (this.state.isAuthorized !== 'yes') {
       return (
-        <div>
-          Loading indicator
-        </div>
+        <NotAuthorized status={this.state.isAuthorized} />
       );
     }
-    else if (this.state.isAuthenticated === 'no') {
-      return (
-        <div>
-          Unauthorized
-        </div>
-      );
-    }
-    else if (this.state.isAuthenticated == 'yes') {
-      return (
-        <div>
-          Hello you are authenticated {this.state.data.msg}
-        </div>
-      );
-    }
+    return (
+      <div>
+        Hello you are authorized {this.state.data.msg}
+      </div>
+    );
   }
 }
+
+export default Preferences;

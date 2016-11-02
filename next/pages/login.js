@@ -1,8 +1,12 @@
-import React from 'react';
-import 'isomorphic-fetch';
+import React, { Component, PropTypes } from 'react';
+import fetch from 'isomorphic-fetch';
 import ls from 'local-storage';
 
-export default class extends React.Component {
+const propTypes = {
+  url: PropTypes.object.isRequired,
+};
+
+class Login extends Component {
   constructor(props) {
     super(props);
     this.logIn = this.logIn.bind(this);
@@ -12,17 +16,17 @@ export default class extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  async logIn(email, password) {
+  async logIn() {
     const res = await fetch('http://localhost:3003/api/authenticate', {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: email,
-        password: password
-      })
+        email: this.state.email,
+        password: this.state.password,
+      }),
     });
     const data = await res.json();
     console.debug('logIn() response', data);
@@ -37,20 +41,18 @@ export default class extends React.Component {
     this.setState({ password: event.target.value });
   }
 
-  async handleSubmit(event) {
-    const res = await this.logIn(this.state.email, this.state.password);
+  async handleSubmit() {
+    const res = await this.logIn();
 
     if (!res) {
       console.debug('No answer from server');
-    }
-    else if (!!res.success) {
+    } else if (res.success) {
       // Save JWT to localstorage
       ls.set('jwt', res.token);
       console.debug('Successful login', res.token);
       // Redirect to front page
       this.props.url.pushTo('/');
-    }
-    else {
+    } else {
       console.debug('Invalid credentials');
     }
   }
@@ -58,21 +60,25 @@ export default class extends React.Component {
   render() {
     return (
       <div>
-        Hello World {this.props.message}
+        Hello World
         <input
-         type='text'
-         placeholder='email'
-         value={this.state.email}
-         onChange={this.handleEmailChange}
+          type='text'
+          placeholder='email'
+          value={this.state.email}
+          onChange={this.handleEmailChange}
         />
         <input
-         type='password'
-         placeholder='password'
-         value={this.state.password}
-         onChange={this.handlePasswordChange}
+          type='password'
+          placeholder='password'
+          value={this.state.password}
+          onChange={this.handlePasswordChange}
         />
         <button onClick={this.handleSubmit}>Log in</button>
       </div>
     );
   }
 }
+
+Login.propTypes = propTypes;
+
+export default Login;
