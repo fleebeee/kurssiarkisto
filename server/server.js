@@ -5,62 +5,36 @@ var morgan = require('morgan');
 var cors = require('cors')
 var mongoose = require('mongoose');
 var passport = require('passport');
-var config = require('./config/database'); // get db config file
-var User = require('./app/models/user'); // get the mongoose model
 var port = process.env.PORT || 3003;
 var jwt = require('jwt-simple');
 
+// Middlewares
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(passport.initialize());
 
+// Database config
+var config = require('./config/database');
+require('./config/passport')(passport);
+
+// Database models
+var User = require('./app/models/user');
+var Course = require('./app/models/course');
+
 mongoose.Promise = require('bluebird');
 mongoose.connect(config.database);
-
 var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-/*
-db.once('open', function() {
-  var kittySchema = mongoose.Schema({
-    name: String
-  });
+db.on('error', console.error.bind(console, 'Connection error:'));
 
-  // NOTE: methods must be added to the schema before compiling it with mongoose.model()
-  kittySchema.methods.speak = function () {
-    var greeting = this.name
-      ? "Meow name is " + this.name
-      : "I don't have a name";
-    console.log(greeting);
-  }
+// Authentication routes
 
-  var Kitten = mongoose.model('Kitten', kittySchema);
-  var silence = new Kitten({ name: 'Silence' });
-  console.log(silence.name); // 'Silence'
-  var fluffy = new Kitten({ name: 'fluffy' });
-  fluffy.speak(); // "Meow name is fluffy"
+var authRoutes = express.Router();
 
-  fluffy.save(function (err, fluffy) {
-    if (err) return console.error(err);
-    fluffy.speak();
-  });
-
-  Kitten.find(function (err, kittens) {
-    if (err) return console.error(err);
-    console.log(kittens);
-  });
-
-
-});
-*/
-
-require('./config/passport')(passport);
-var apiRoutes = express.Router();
-
-apiRoutes.post('/signup', function(req, res) {
+authRoutes.post('/signup', function(req, res) {
   if (!req.body.email || !req.body.password) {
-    res.json({success: false, msg: 'Please pass email and password.'});
+    res.json({success: false, msg: 'Please enter both email and password'});
   } else {
     var newUser = new User({
       email: req.body.email,
@@ -70,14 +44,14 @@ apiRoutes.post('/signup', function(req, res) {
     newUser.save(function(err) {
       if (err) {
         console.log(err);
-        return res.json({success: false, msg: 'Email already exists.'});
+        return res.json({success: false, msg: 'Email already exists'});
       }
-      res.json({success: true, msg: 'Successfully created new user.'});
+      res.json({success: true, msg: 'Successfully created new user'});
     });
   }
 });
 
-apiRoutes.post('/authenticate', function(req, res) {
+authRoutes.post('/authenticate', function(req, res) {
   User.findOne({
     email: req.body.email
   }, function(err, user) {
@@ -101,7 +75,8 @@ apiRoutes.post('/authenticate', function(req, res) {
   });
 });
 
-apiRoutes.get('/memberinfo', passport.authenticate('jwt', { session: false }), function(req, res) {
+// TODO Move out of authRoutes
+authRoutes.get('/memberinfo', passport.authenticate('jwt', { session: false }), function(req, res) {
   var token = getToken(req.headers);
   if (token) {
     var decoded = jwt.decode(token, config.secret);
@@ -117,10 +92,11 @@ apiRoutes.get('/memberinfo', passport.authenticate('jwt', { session: false }), f
         }
     });
   } else {
-    return res.status(403).send({success: false, msg: 'No token provided.'});
+    return res.status(403).send({success: false, msg: 'No token provided'});
   }
 });
 
+// Helper function for routes that require authorization
 getToken = function (headers) {
   if (headers && headers.authorization) {
     var parted = headers.authorization.split(' ');
@@ -134,7 +110,71 @@ getToken = function (headers) {
   }
 };
 
-app.use('/api', apiRoutes);
+app.use('/auth', authRoutes);
+
+// Course routes
+
+app.post('/course', function (req, res) {
+  if (!req.body.name || !req.body.code) {
+    res.json({
+      success: false,
+      message: 'Please enter course name and code.'
+    });
+  } else {
+    var newCourse = new Course({
+      name: req.body.name,
+      code: req.body.code,
+      // The attributes below aren't required, so they can be undefined
+      myCoursesLink: req.body.myCoursesLink,
+      compulsoryAttendance: req.body.compulsoryAttendance,
+      passingMechanisms: req.body.passingMechanisms,
+      credits: req.body.credits,
+      periods: req.body.periods,
+      school: req.body.school,
+    });
+    // save the course
+    newCourse.save(function(err) {
+      if (err) {
+        console.log(err);
+        return res.json({
+          success: false,
+          message: 'Something went wrong. Course code might be used.',
+        });
+      }
+      res.json({
+        success: true,
+        message: `Successfully added new course ${req.body.code} - ${req.body.name}`,
+      });
+    });
+  }
+});
+
+app.get('/course/:code', function (req, res) {
+  var code = req.params.code;
+  Course.findOne({
+    code // Same as { code: code }
+  }, function(err, course) {
+      if (err) throw err;
+      if (!course) {
+        return res.status(403).send({
+          success: false,
+          message: 'Course not found'
+        });
+      } else {
+        res.json({ success: true, course });
+      }
+  });
+});
+
+// TODO Keyword search or something similar
+
+// Review routes
+
+// TODO
+
+// Comment routes
+
+// TODO
 
 app.get('/', function (req, res) {
   res.json({ message: 'Hello World!' });

@@ -16,7 +16,7 @@ class Signup extends Component {
   }
 
   async signUp() {
-    const res = await fetch('http://localhost:3003/api/signup', {
+    const res = await fetch('http://localhost:3003/auth/signup', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

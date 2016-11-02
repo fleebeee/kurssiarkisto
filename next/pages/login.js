@@ -17,7 +17,7 @@ class Login extends Component {
   }
 
   async logIn() {
-    const res = await fetch('http://localhost:3003/api/authenticate', {
+    const res = await fetch('http://localhost:3003/auth/authenticate', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

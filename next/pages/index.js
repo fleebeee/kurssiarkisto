@@ -15,6 +15,9 @@ const ul = css({
 });
 // superkommentti
 const li = css({
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
   marginBottom: '5px',
   padding: '7px',
   border: '1px solid black',

@@ -18,7 +18,7 @@ class Preferences extends Component {
     const jwt = ls.get('jwt');
 
     if (jwt) {
-      const res = await fetch('http://localhost:3003/api/memberinfo', {
+      const res = await fetch('http://localhost:3003/auth/memberinfo', {
         method: 'GET',
         headers: {
           Accept: 'application/json',
