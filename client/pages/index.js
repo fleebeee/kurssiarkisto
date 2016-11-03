@@ -29,6 +29,7 @@ export default () => (
     {/* TODO Move this to header */}
     <Head>
       <title>Kurssiarkisto</title>
+      <meta charSet='utf-8' />
       {/* eslint-disable max-len */}
       <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css' />
       <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css' />

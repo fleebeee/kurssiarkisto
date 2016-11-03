@@ -20,6 +20,7 @@
     "local-storage": "^1.4.2",
     "next": "^1.0.2",
     "react-bootstrap": "^0.30.6",
-    "react-spinkit": "^1.1.11"
+    "react-spinkit": "^1.1.11",
+    "styled-components": "^1.0.10"
   }
 }

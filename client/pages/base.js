@@ -1,15 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 // import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
-import css from 'next/css';
+import styled from 'styled-components';
 
 const propTypes = {
   url: PropTypes.object.isRequired,
 };
 
-const baseStyle = css({
-  div: 'block',
-});
+const BaseContainer = styled.div`
+  color: palevioletred;
+`;
 
 class Base extends Component {
   constructor(props) {
@@ -20,9 +20,9 @@ class Base extends Component {
 
   render() {
     return (
-      <div className={baseStyle}>
+      <BaseContainer>
         Base
-      </div>
+      </BaseContainer>
     );
   }
 }
