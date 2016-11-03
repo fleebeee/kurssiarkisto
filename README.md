@@ -34,7 +34,7 @@ The client can be set up by entering these commands into your terminal:
     $ cd client
     $ npm install
 
-You can run the client with `npm start`. The client i.e. the public interface for the web service is available at localhost:8000.
+You can run the client with `npm run dev`. The client i.e. the public interface for the web service is available at localhost:3000.
 
 ## Basic workflow
 
