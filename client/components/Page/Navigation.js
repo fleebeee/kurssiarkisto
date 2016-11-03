@@ -28,7 +28,7 @@ const MenuItem = styled.li`
   padding: 5px;
 `;
 
-const LinkText = styled.a`
+const LinkText = styled.span`
   color: white;
 
   &:hover {
