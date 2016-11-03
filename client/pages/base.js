@@ -4,11 +4,12 @@ import React, { Component, PropTypes } from 'react';
 import styled from 'styled-components';
 
 const propTypes = {
-  url: PropTypes.object.isRequired,
+  url: PropTypes.object,
 };
 
+// Replace this with your own style
 const BaseContainer = styled.div`
-  color: palevioletred;
+  display: block;
 `;
 
 class Base extends Component {

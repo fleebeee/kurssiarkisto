@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import fetch from 'isomorphic-fetch';
 
+import Page from '../components/Page/Page.js';
+
 const propTypes = {
   url: PropTypes.object.isRequired,
 };
@@ -56,22 +58,24 @@ class Signup extends Component {
 
   render() {
     return (
-      <div>
-        Rekisteröidy
-        <input
-          type='text'
-          placeholder='email'
-          value={this.state.email}
-          onChange={this.handleEmailChange}
-        />
-        <input
-          type='password'
-          placeholder='password'
-          value={this.state.password}
-          onChange={this.handlePasswordChange}
-        />
-        <button onClick={this.handleSubmit}>Sign up</button>
-      </div>
+      <Page>
+        <div>
+          Rekisteröidy
+          <input
+            type='text'
+            placeholder='email'
+            value={this.state.email}
+            onChange={this.handleEmailChange}
+          />
+          <input
+            type='password'
+            placeholder='password'
+            value={this.state.password}
+            onChange={this.handlePasswordChange}
+          />
+          <button onClick={this.handleSubmit}>Sign up</button>
+        </div>
+      </Page>
     );
   }
 }

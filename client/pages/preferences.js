@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
 import ls from 'local-storage';
 
+import Page from '../components/Page/Page.js';
 import NotAuthorized from '../components/NotAuthorized/NotAuthorized.js';
 
 class Preferences extends Component {
@@ -42,13 +43,17 @@ class Preferences extends Component {
   render() {
     if (this.state.isAuthorized !== 'yes') {
       return (
-        <NotAuthorized status={this.state.isAuthorized} />
+        <Page>
+          <NotAuthorized status={this.state.isAuthorized} />
+        </Page>
       );
     }
     return (
-      <div>
-        Hello you are authorized {this.state.data.msg}
-      </div>
+      <Page>
+        <div>
+          Hello you are authorized {this.state.data.msg}
+        </div>
+      </Page>
     );
   }
 }

@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import fetch from 'isomorphic-fetch';
 import ls from 'local-storage';
 
+import Page from '../components/Page/Page.js';
+
 const propTypes = {
   url: PropTypes.object.isRequired,
 };
@@ -59,22 +61,24 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
-        Hello World
-        <input
-          type='text'
-          placeholder='email'
-          value={this.state.email}
-          onChange={this.handleEmailChange}
-        />
-        <input
-          type='password'
-          placeholder='password'
-          value={this.state.password}
-          onChange={this.handlePasswordChange}
-        />
-        <button onClick={this.handleSubmit}>Log in</button>
-      </div>
+      <Page>
+        <div>
+          Hello World
+          <input
+            type='text'
+            placeholder='email'
+            value={this.state.email}
+            onChange={this.handleEmailChange}
+          />
+          <input
+            type='password'
+            placeholder='password'
+            value={this.state.password}
+            onChange={this.handlePasswordChange}
+          />
+          <button onClick={this.handleSubmit}>Log in</button>
+        </div>
+      </Page>
     );
   }
 }
