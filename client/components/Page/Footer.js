@@ -8,7 +8,10 @@ const propTypes = {
 };
 
 const FooterContainer = styled.div`
-  background-color: tomato;
+  background-color: #FF7E00;
+  font-family: 'Helvetica Neue', Helvetica, sans serif;
+  font-size: 0.9em;
+  color: #FFFFFF;
 `;
 
 class Footer extends Component {
@@ -20,7 +23,7 @@ class Footer extends Component {
   render() {
     return (
       <FooterContainer>
-        Footer stuff
+        CSE-E4400 Design of WWW Services
       </FooterContainer>
     );
   }
