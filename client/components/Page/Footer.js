@@ -12,6 +12,7 @@ const FooterContainer = styled.div`
   font-family: 'Helvetica Neue', Helvetica, sans serif;
   font-size: 0.9em;
   color: #FFFFFF;
+  padding-left: 10px;
 `;
 
 class Footer extends Component {

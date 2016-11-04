@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 // import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
+import { Button, DropdownButton } from 'react-bootstrap';
 import styled from 'styled-components';
 import Head from 'next/head';
 
@@ -46,10 +47,10 @@ class Header extends Component {
           src='/static/images/logo-oranssi.png'
           alt='Kurssiarkisto logo'
         />
-
         <NavigationContainer>
           <Navigation />
         </NavigationContainer>
+
       </HeaderContainer>
     );
   }
