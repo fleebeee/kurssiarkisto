@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { ButtonGroup, Button } from 'react-bootstrap';
 // import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
 import styled from 'styled-components';
@@ -9,10 +10,17 @@ const propTypes = {
   url: PropTypes.object,
 };
 
+const Image = styled.img`
+  width: 60px;
+  height: 60px;
+`;
+
 // Replace this with your own style
 const CourseContainer = styled.div`
   display: block;
 `;
+
+
 
 class Index extends Component {
   constructor(props) {
@@ -24,9 +32,15 @@ class Index extends Component {
     return (
       <Page>
         <CourseContainer>
-          <h1>DoWWWs on aika muikku kurssi</h1>
+        <Image
+        src='/static/images/back-arrow.png'
+        alt='Takaisin hakuun'/>
+          <h1>CSE-E4400 Design of WWW Services</h1>
           <p>Tähän sitten niitä kurssin ominaisuuksia ou jee!</p>
-          <button> Review course </button> <button> Edit course </button>
+          <ButtonGroup>
+            <Button bsStyle="warning">Review</Button>
+            <Button bsStyle="warning">Edit</Button>
+          </ButtonGroup>
         </CourseContainer>
       </Page>
     );
