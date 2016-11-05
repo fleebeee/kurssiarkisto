@@ -48,15 +48,12 @@ const MSGContainer = styled.div`
 `;
 
 
-
 class Index extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-  }
-
-  getInitialState() {
-    return { showModal: false };
+    this.state = { showModal: false };
+    this.close = this.close.bind(this);
+    this.open = this.open.bind(this);
   }
 
   close() {
@@ -72,20 +69,22 @@ class Index extends Component {
       <Page>
         <NameContainer>
           <Arrow
-          src='/static/images/back-arrow.png'
-          alt='Takaisin hakuun'/>
+            src='/static/images/back-arrow.png'
+            alt='Takaisin hakuun'
+          />
           <h1>CSE-E4400 Design of WWW Services</h1>
         </NameContainer>
         <CourseContainer>
           <InfoContainer>
-          <ButtonGroup>
-            <Button bsStyle="warning" onClick={this.open}>Arvostele</Button>
+            <ButtonGroup>
+              <Button bsStyle='warning' onClick={this.open}>Arvostele</Button>
 
-            <Modal show={this.state.showModal} onHide={this.close}>
+              <Modal show={this.state.showModal} onHide={this.close}>
                 <Modal.Header closeButton>
                   <Modal.Title>Arvostele</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                  {/* eslint-disable max-len */}
                   <h4>Text in a modal</h4>
                   <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
                   <h4>Overflowing text to show scroll behavior</h4>
@@ -94,28 +93,31 @@ class Index extends Component {
                   <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
                   <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
                   <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                  {/* eslint-enable max-len */}
                 </Modal.Body>
                 <Modal.Footer>
                   <Button onClick={this.close}>Sulje</Button>
                 </Modal.Footer>
-            </Modal>
+              </Modal>
 
-            <Button bsStyle="warning" href="/login.js">Muokkaa</Button>
-            <Button bsStyle="warning">Lisää suosikkeihin</Button>
-          </ButtonGroup>
+              <Button bsStyle='warning' href='/login.js'>Muokkaa</Button>
+              <Button bsStyle='warning'>Lisää suosikkeihin</Button>
+            </ButtonGroup>
 
-
-          <br></br>
-          <p>Yleisarvosana</p>
-          <p>Kuormittavuus</p>
-          <p>Periodit</p>
-          <p>Tentti?</p>
-          <p>Harjoitustyö?</p>
-          <p>Läsnäolopakko?</p>
-          <p>Opintopisteet</p>
+            <br />
+            <p>Yleisarvosana</p>
+            <p>Kuormittavuus</p>
+            <p>Periodit</p>
+            <p>Tentti?</p>
+            <p>Harjoitustyö?</p>
+            <p>Läsnäolopakko?</p>
+            <p>Opintopisteet</p>
           </InfoContainer>
           <MSGContainer>
-            <p> tämän pitäisi näkyä oikealla. Tähän alle tulee kommentti boksi </p>
+            <p>
+              tämän pitäisi näkyä oikealla.
+              Tähän alle tulee kommentti boksi
+            </p>
           </MSGContainer>
         </CourseContainer>
       </Page>
