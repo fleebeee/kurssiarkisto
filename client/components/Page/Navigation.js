@@ -10,32 +10,36 @@ const propTypes = {
 };
 
 const NavigationContainer = styled.div`
-  display: block;
-  height: 100%;
+  margin-right: 15px;
 `;
 
-const MenuList = styled.ul`
-  list-style-type: none;
+const Icon = styled.i`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-`;
-
-const MenuItem = styled.li`
+  color: #6A7C90;
+  background-color: #fff;
+  font-size: 32px;
+  width: 40px;
+  height: 40px;
   padding: 5px;
-`;
+  border-radius: 7px;
 
-const LinkText = styled.span`
-  color: white;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px transparent;
+  overflow: hidden;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: color, background-color;
+  transition-property: color, background-color;
 
   &:hover {
-    color: hotpink;
+    cursor: pointer;
+    background-color: #FD7E23;
+    color: white;
   }
 `;
-
 
 class Navigation extends Component {
   constructor(props) {
@@ -46,28 +50,28 @@ class Navigation extends Component {
   render() {
     return (
       <NavigationContainer>
-        <MenuList>
-          <MenuItem>
-            <Link href='/'>
-              <LinkText>Etusivu</LinkText>
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link href='/login'>
-              <LinkText>Kirjaudu sisään</LinkText>
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link href='/signup'>
-              <LinkText>Rekisteröidy</LinkText>
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link href='/preferences'>
-              <LinkText>Asetukset</LinkText>
-            </Link>
-          </MenuItem>
-        </MenuList>
+        <div className='dropdown'>
+          <div
+            className='dropdown-toggle'
+            id='dropdownMenu1'
+            data-toggle='dropdown'
+            aria-haspopup='true'
+            aria-expanded='true'
+          >
+            <Icon className='ion-navicon' />
+          </div>
+          <ul
+            className='dropdown-menu pull-right'
+            aria-labelledby='dropdownMenu1'
+          >
+            <li><Link href='/'>Etusivu</Link></li>
+            <li><Link href='/login'>Kirjaudu sisään</Link></li>
+            <li><Link href='/signup'>Rekisteröidy</Link></li>
+            <li role='separator' className='divider' />
+            <li><Link href='/course'>Kurssi</Link></li>
+            <li><Link href='/preferences'>Asetukset</Link></li>
+          </ul>
+        </div>
       </NavigationContainer>
     );
   }
