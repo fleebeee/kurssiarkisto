@@ -4,15 +4,21 @@ var Schema = mongoose.Schema;
 var CourseSchema = new Schema({
   name: {
     type: String, // 'Design of WWW Services'
-    required: true,
+    required: [true, 'Course name is required'],
   },
   code: {
     type: String, // 'CS-E4400'
-    required: true,
-    unique: true, // Primary key, let's trust Aalto not to have duplicate course codes
+    required: [true, 'Course code is required'],
+    unique: [true, 'Course code has to be unique'], // 'Primary key', let's trust Aalto not to have duplicate course codes
   },
   myCoursesLink: {
-    type: String, // NOTE Validate this
+    type: String,
+    validate: {
+      validator: function(v) {
+        return /^$|^https:\/\/mycourses\.aalto\.fi\/course\/view\.php\?id\=[0-9]+$/g.test(v);
+      },
+      message: '\'{VALUE}\' is not a valid MyCoursesLink. It should satisfy this RegExp: /^$|^https:\/\/mycourses\.aalto\.fi\/course\/view\.php\?id\=[0-9]+$/g'
+    },
     required: false,
   },
   compulsoryAttendance: {

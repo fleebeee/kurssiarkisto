@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var port = process.env.PORT || 3003;
 var jwt = require('jwt-simple');
+var _ = require('lodash');
 
 // Middlewares
 app.use(cors());
@@ -28,6 +29,23 @@ mongoose.connect(config.database);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Connection error:'));
 
+// Parse errors to give the client clearer information why there was an error
+var errorParser = function(err) {
+  var errors = '';
+  // Validation errors
+  if (_.has(err, 'errors')) {
+    _.each(err.errors, function(val, key) {
+      errors += `${key} error:\nDescription: ${val.message}\nValue that caused this error: ${val.value}\n`;
+    });
+  }
+
+  if (_.has(err, 'name') && _.has(err, 'message')) {
+    errors += `${err.name}: ${err.message}\n`;
+  }
+
+  return errors;
+}
+
 // Authentication routes
 
 var authRoutes = express.Router();
@@ -44,7 +62,11 @@ authRoutes.post('/signup', function(req, res) {
     newUser.save(function(err) {
       if (err) {
         console.log(err);
-        return res.json({success: false, msg: 'Email already exists'});
+        var errors = errorParser(err);
+        return res.json({
+          success: false,
+          message: `Something went wrong. Hopefully helpful description:\n${errors}`,
+        });
       }
       res.json({success: true, msg: 'Successfully created new user'});
     });
@@ -142,9 +164,11 @@ app.post('/course', function (req, res) {
     newCourse.save(function(err) {
       if (err) {
         console.log(err);
+        var errors = errorParser(err);
+
         return res.json({
           success: false,
-          message: 'Something went wrong. Course code might be used.',
+          message: `Something went wrong. Hopefully helpful description:\n${errors}`,
         });
       }
       res.json({

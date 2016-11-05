@@ -1,18 +1,20 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+require('mongoose-type-email');
 var bcrypt = require('bcrypt');
 
-// set up a mongoose model
 var UserSchema = new Schema({
   email: {
-        type: String,
-        unique: true,
-        required: true
-    },
+    type: mongoose.SchemaTypes.Email,
+    unique: true,
+    trim: true,
+    lowercase: true,
+    unique: true
+  },
   password: {
-        type: String,
-        required: true
-    }
+    type: String,
+    required: true
+  }
 });
 
 UserSchema.pre('save', function (next) {
