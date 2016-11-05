@@ -33,18 +33,30 @@ const CourseContainer = styled.div`
 
 const InfoContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 70%;
+  flex-direction: row;
+  width: 60%;
   font-family: 'Raleway', Helvetica, sans serif;
   font-weight: bold;
   font-size: 1.5em;
   color: #6A7C90;
 `;
 
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-width: 30%;
+`;
+
+const DataContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+`;
+
 const MSGContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 30%;
+  width: 40%;
   background-color: #E0CAA5;
 `;
 
@@ -96,51 +108,64 @@ class Index extends Component {
             src='/static/images/back-arrow.png'
             alt='Takaisin hakuun'
           />
-          <h1>CSE-E4400 Design of WWW Services</h1>
+          <h1>CSE-E4400 Design of WWW Services</h1>  <h1>{this.state.course.name}</h1>
         </NameContainer>
         <CourseContainer>
-          <InfoContainer>
+
             <ButtonGroup>
               <Button bsStyle='warning' onClick={this.open}>Arvostele</Button>
 
               <Modal show={this.state.showModal} onHide={this.close}>
                 <Modal.Header closeButton>
-                  <Modal.Title>Arvostele</Modal.Title>
+                  <Modal.Title>Arvostele kurssi</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   {/* eslint-disable max-len */}
-                  <h4>Text in a modal</h4>
-                  <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
-                  <h4>Overflowing text to show scroll behavior</h4>
-                  <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                  <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-                  <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                  <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                  <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                  <h4>Yleisarvosana</h4>
+                  <p>Anna kurssille yleisarvosana asteikolla 1-5 (1=huono, 5= erinomainen).</p>
+                  <h4>Kuormittavuus</h4>
+                  <p>Arvioi kurssin kuormittavuus asteikolla 1-5 (1=kevyt, 5= todella raskas).</p>
                   {/* eslint-enable max-len */}
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button onClick={this.close}>Sulje</Button>
+                  <ButtonGroup>
+                    <Button bsStyle='warning' onClick={this.close}>Tallenna</Button>
+                    <Button bsStyle='warning' onClick={this.close}>Sulje</Button>
+                  </ButtonGroup>
                 </Modal.Footer>
               </Modal>
 
               <Button bsStyle='warning' href='/login.js'>Muokkaa</Button>
               <Button bsStyle='warning'>Lisää suosikkeihin</Button>
             </ButtonGroup>
-
-            <br />
-            <p>Yleisarvosana</p>
-            <p>Kuormittavuus</p>
-            <p>Periodit</p>
-            <p>Tentti?</p>
-            <p>Harjoitustyö?</p>
-            <p>Läsnäolopakko?</p>
-            <p>Opintopisteet</p>
+            </CourseContainer>
+            <CourseContainer>
+            <InfoContainer>
+            <br/>
+            <TextContainer>
+              <p>Yleisarvosana</p>
+              <p>Kuormittavuus</p>
+              <p>Periodit</p>
+              <p>Tentti</p>
+              <p>Harjoitustyö</p>
+              <p>Läsnäolopakko</p>
+              <p>Opintopisteet</p>
+            </TextContainer>
+            <DataContainer>
+              <p> 4.5</p>
+              <p> 3.5</p>
+              <p> I, II</p>
+              <p> Kyllä</p>
+              <p> Ei</p>
+              <p> Ei</p>
+              <p> 5</p>
+            </DataContainer>
           </InfoContainer>
           <MSGContainer>
             <p>
               tämän pitäisi näkyä oikealla.
-              Tähän alle tulee kommentti boksi
+              Tähän alle tulee kommentti boksi. Ja alla näkyy kurssin nimi
+              {this.state.course.name}
             </p>
           </MSGContainer>
         </CourseContainer>
