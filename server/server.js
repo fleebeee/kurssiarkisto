@@ -186,7 +186,7 @@ app.get('/course/:code', function (req, res) {
   }, function(err, course) {
       if (err) throw err;
       if (!course) {
-        return res.status(403).send({
+        return res.status(404).send({
           success: false,
           message: 'Course not found'
         });

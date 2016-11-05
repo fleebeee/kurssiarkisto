@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { ButtonGroup, Button, Modal } from 'react-bootstrap';
-// import fetch from 'isomorphic-fetch';
+import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
 import styled from 'styled-components';
+import _ from 'lodash';
 
 import Page from '../components/Page/Page.js';
 
@@ -51,9 +52,32 @@ const MSGContainer = styled.div`
 class Index extends Component {
   constructor(props) {
     super(props);
-    this.state = { showModal: false };
+    this.state = { course: {}, showModal: false };
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
+  }
+
+  async componentDidMount() {
+    // Fetch course data from server
+    const query = this.props.url.query;
+    if (_.has(query, 'code')) {
+      // TODO Probably move API calls elsewhere to reduce clutter
+      const res = await fetch(`http://localhost:3003/course/${query.code}`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        console.debug('Course data:', data.course);
+        this.setState({ course: data.course });
+      } else {
+        console.debug('Course data couldn\'t be fetched:', data);
+      }
+    }
   }
 
   close() {
