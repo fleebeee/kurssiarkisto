@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 // import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
-import { Button, DropdownButton } from 'react-bootstrap';
 import styled from 'styled-components';
 import Head from 'next/head';
 
@@ -13,16 +12,14 @@ const propTypes = {
 
 const HeaderContainer = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   background-color: #6A7C90;
 `;
 
 const Logo = styled.img`
   width: 80px;
   height: 80px;
-`;
-
-const NavigationContainer = styled.div`
-  width: 100%;
 `;
 
 class Header extends Component {
@@ -40,6 +37,9 @@ class Header extends Component {
           {/* eslint-disable max-len */}
           <link rel='stylesheet' href='/static/css/bootstrap.min.css' />
           <link rel='stylesheet' href='/static/css/bootstrap-theme.min.css' />
+          <link rel='stylesheet' href='/static/css/ionicons.min.css' />
+          <script src='/static/js/jquery-3.1.1.min.js' />
+          <script src='/static/js/bootstrap.min.js' />
           {/* eslint-enable max-len */}
         </Head>
 
@@ -47,10 +47,7 @@ class Header extends Component {
           src='/static/images/logo-oranssi.png'
           alt='Kurssiarkisto logo'
         />
-        <NavigationContainer>
-          <Navigation />
-        </NavigationContainer>
-
+        <Navigation />
       </HeaderContainer>
     );
   }
