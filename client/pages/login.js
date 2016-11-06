@@ -44,7 +44,7 @@ class Login extends Component {
     return (
       <Page>
         <div>
-          Hello World
+          Kirjaudu sisään
           <input
             type='text'
             placeholder='email'

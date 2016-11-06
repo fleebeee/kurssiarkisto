@@ -36,7 +36,6 @@ class Header extends Component {
           <meta charSet='utf-8' />
           {/* eslint-disable max-len */}
           <link rel='stylesheet' href='/static/css/bootstrap.min.css' />
-          <link rel='stylesheet' href='/static/css/bootstrap-theme.min.css' />
           <link rel='stylesheet' href='/static/css/ionicons.min.css' />
           <script src='/static/js/jquery-3.1.1.min.js' />
           <script src='/static/js/bootstrap.min.js' />

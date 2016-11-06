@@ -21,7 +21,7 @@ var CourseSchema = new Schema({
     },
     required: false,
   },
-  compulsoryAttendance: {
+  mandatoryAttendance: {
     type: Boolean,
     required: false,
   },

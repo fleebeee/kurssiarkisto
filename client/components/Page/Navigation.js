@@ -2,8 +2,9 @@ import React, { Component, PropTypes } from 'react';
 // import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
 import styled from 'styled-components';
-
 import Link from 'next/link';
+
+import palette from '../../utils/palette.js';
 
 const propTypes = {
   children: PropTypes.node,
@@ -17,8 +18,8 @@ const Icon = styled.i`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  color: #6A7C90;
-  background-color: #fff;
+  color: ${palette.headerGrey};
+  background-color: ${palette.white};
   font-size: 32px;
   width: 40px;
   height: 40px;
@@ -36,8 +37,8 @@ const Icon = styled.i`
 
   &:hover {
     cursor: pointer;
-    background-color: #FD7E23;
-    color: white;
+    background-color: ${palette.orange};
+    color: ${palette.white};
   }
 `;
 
@@ -69,6 +70,7 @@ class Navigation extends Component {
             <li><Link href='/signup'>Rekisteröidy</Link></li>
             <li role='separator' className='divider' />
             <li><Link href='/course'>Kurssi</Link></li>
+            <li><Link href='/addcourse'>Lisää kurssi</Link></li>
             <li><Link href='/preferences'>Asetukset</Link></li>
           </ul>
         </div>
