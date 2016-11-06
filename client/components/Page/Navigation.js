@@ -72,6 +72,7 @@ class Navigation extends Component {
             <li><Link href='/course'>Kurssi</Link></li>
             <li><Link href='/addcourse'>Lisää kurssi</Link></li>
             <li><Link href='/preferences'>Asetukset</Link></li>
+            <li><Link href='/mypage'>Omat tiedot</Link></li>
           </ul>
         </div>
       </NavigationContainer>
