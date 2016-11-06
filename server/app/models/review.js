@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var ReviewSchema = new Schema({
   workload: {
     type: Number, // a number from 0 to 5
-    required: true
+    required: true,
   },
   score: {
     type: Number, // a number from 0 to 5
