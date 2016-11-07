@@ -25,8 +25,10 @@ export default class AuthService {
       }),
     });
 
-    this.setToken(res.token);
-    this.setProfile(res.profile);
+    if (res.success) {
+      this.setToken(res.token);
+      this.setProfile(res.profile);
+    }
 
     return res;
   }

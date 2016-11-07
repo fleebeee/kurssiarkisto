@@ -7,6 +7,7 @@ import Head from 'next/head';
 import Header from './Header.js';
 import Footer from './Footer.js';
 
+// Global jQuery for Bootstrap
 global.jQuery = global.$ = require('jquery');
 
 const propTypes = {

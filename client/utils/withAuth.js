@@ -21,7 +21,7 @@ export default (AuthComponent) => {
     componentDidMount() {
       if (!Auth.loggedIn()) {
         console.debug('You do not have sufficient permissions');
-        this.props.url.replaceTo('/');
+        this.props.url.pushTo('/');
       }
       this.setState({ isLoading: false });
     }
