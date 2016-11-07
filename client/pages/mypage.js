@@ -1,14 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import styled from 'styled-components';
-import _ from 'lodash';
+// import _ from 'lodash';
 import fetch from 'isomorphic-fetch';
 import palette from '../utils/palette.js';
+
 import Page from '../components/Page/Page.js';
+import AuthService from '../utils/AuthService.js';
+import withAuth from '../utils/withAuth.js';
 
 
 // Formatting
 const propTypes = {
-  url: PropTypes.object,
+  // url: PropTypes.object,
+  auth: PropTypes.instanceOf(AuthService),
 };
 
 const myPageContainer = styled.div`
@@ -95,14 +99,12 @@ const SaveMyPageButton = styled.button`
   }
 `;
 
-const user = this.props.auth.getProfile();
-
 class Mypage extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      // user: {},
+      user: props.auth.getProfile(),
       firstName: '',
       surName: '',
       email: '',
@@ -222,7 +224,7 @@ class Mypage extends Component {
                     className='form-control'
                     id='email'
                     type='text'
-                    placeholder={this.state.user.email}
+                    placeholder={this.state.user.data}
                     value={this.state.email}
                     onChange={this.handleTextChange.bind(this, 'email')}
                   />
@@ -454,4 +456,4 @@ class Mypage extends Component {
 
 Mypage.propTypes = propTypes;
 
-export default Mypage;
+export default withAuth(Mypage);
