@@ -56,7 +56,12 @@ authRoutes.post('/signup', function(req, res) {
   } else {
     var newUser = new User({
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      // Optional
+      role: req.body.role,
+      track: req.body.track,
+      startingYear: req.body.startingYear,
+      nickname: req.body.nickname,
     });
     // save the user
     newUser.save(function(err) {
@@ -92,7 +97,12 @@ authRoutes.post('/authenticate', function(req, res) {
             success: true,
             token: 'JWT ' + token,
             profile: {
-              data: 'placeholder',
+              email: user.email,
+              role: user.role,
+              track: user.track,
+              startingYear: user.startingYear,
+              nickname: user.nickname,
+              favorites: user.favorites
             },
           });
         } else {
@@ -119,6 +129,7 @@ getToken = function (headers) {
 
 app.use('/auth', authRoutes);
 
+// User routes
 
 app.get('/user', passport.authenticate('jwt', { session: false }), function(req, res) {
   var token = getToken(req.headers);
@@ -132,7 +143,51 @@ app.get('/user', passport.authenticate('jwt', { session: false }), function(req,
         if (!user) {
           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
-          res.json({ success: true, data: user.email });
+          res.json({
+            success: true,
+            email: user.email,
+            role: user.role,
+            track: user.track,
+            startingYear: user.startingYear,
+            nickname: user.nickname,
+            favorites: user.favorites
+          });
+        }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'No token provided'});
+  }
+});
+
+app.put('/user', passport.authenticate('jwt', { session: false }), function(req, res) {
+  var token = getToken(req.headers);
+  if (token) {
+    var decoded = jwt.decode(token, config.secret);
+    User.findOne({
+      email: decoded.email
+    }, function(err, user) {
+        if (err) throw err;
+
+        if (!user) {
+          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+          _.each(req.body, function (value, key) {
+            if (value) {
+              user[key] = value;
+            }
+          });
+          user.save(function (err, updatedUser) {
+            if (err) {
+              console.log(err);
+              var errors = errorParser(err);
+
+              return res.json({
+                success: false,
+                message: `Something went wrong. Hopefully helpful description:\n${errors}`,
+              });
+            }
+            res.status(200).send({success: true, msg: `Success! ${user}`});
+          });
         }
     });
   } else {

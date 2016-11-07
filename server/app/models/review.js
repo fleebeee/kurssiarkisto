@@ -11,11 +11,11 @@ var ReviewSchema = new Schema({
     required: true,
   },
   courseID: {
-    type: String, // courseID
+    type: Schema.Types.Objectid, // courseID
     required: true,
   },
   userID: {
-    type: String, // userID
+    type: Schema.Types.Objectid, // userID
     required: true,
   },
 });

@@ -14,6 +14,26 @@ var UserSchema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  role: {
+    type: String,
+    required: false,
+  },
+  track: {
+    type: String,
+    required: false,
+  },
+  startingYear: {
+    type: Number,
+    required: false,
+  },
+  nickname: {
+    type: String,
+    required: false,
+  },
+  favorites: {
+    type: [Schema.Types.Objectid],
+    required: false,
   }
 });
 

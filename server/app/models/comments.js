@@ -3,12 +3,12 @@ var Schema = mongoose.Schema;
 
 var CommentSchema = new Schema({
 	userID: {
-		type: String, // userID
+		type: Schema.Types.Objectid,
 		required: true,
 	},
 
 	courseID: {
-		type: String, // courseID
+		type: Schema.Types.Objectid,
 		required: true,
 	},
 
