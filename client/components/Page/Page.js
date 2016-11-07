@@ -26,13 +26,12 @@ const HeaderContainer = styled.div`
 const Content = styled.div`
   flex: 1 0 auto;
   padding: 5%;
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
+  background-image: url(/static/images/lib.jpg);
+  background-size: cover;
 `;
 
-const FooterContainer = HeaderContainer;
+const FooterContainer = styled(HeaderContainer)`
+`;
 
 class Page extends Component {
   constructor(props) {
