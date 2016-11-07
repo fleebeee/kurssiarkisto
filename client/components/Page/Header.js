@@ -6,6 +6,8 @@ import Head from 'next/head';
 
 import Navigation from './Navigation.js';
 
+global.jQuery = global.$ = require('jquery');
+
 const propTypes = {
   children: PropTypes.node,
 };
@@ -35,6 +37,7 @@ class Header extends Component {
         <Head>
           <title>Kurssiarkisto</title>
           <meta charSet='utf-8' />
+          <meta name='viewport' content='width=device-width, initial-scale=1' />
           {/* eslint-disable max-len */}
           <link rel='stylesheet' href='/static/css/bootstrap.min.css' />
           <link rel='stylesheet' href='/static/css/ionicons.min.css' />
