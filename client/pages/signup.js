@@ -30,7 +30,7 @@ const Label = styled.label`
   margin-bottom: 4px;
   color: ${palette.white};
   text-transform: uppercase;
-  font-size: 0.8em;
+  font-size: 0.9em;
   font-weight: 500;
 `;
 
