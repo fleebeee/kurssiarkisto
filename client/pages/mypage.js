@@ -102,7 +102,7 @@ class Mypage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {},
+      // user: {},
       firstName: '',
       surName: '',
       email: '',
@@ -185,7 +185,6 @@ class Mypage extends Component {
   }
 
   render() {
-
     return (
       <Page>
         <myPageContainer>
@@ -201,7 +200,7 @@ class Mypage extends Component {
                     type='text'
                     placeholder='etunimi'
                     value={this.state.firstName}
-                    onChange={this.handleTextChange}
+                    onChange={this.handleTextChange.bind(this, 'firstName')}
                   />
                 </QuestionBox>
 
@@ -213,7 +212,7 @@ class Mypage extends Component {
                     type='text'
                     placeholder='sukunimi'
                     value={this.state.surName}
-                    onChange={this.handleTextChange}
+                    onChange={this.handleTextChange.bind(this, 'surName')}
                   />
                 </QuestionBox>
 
@@ -225,7 +224,7 @@ class Mypage extends Component {
                     type='text'
                     placeholder={this.state.user.email}
                     value={this.state.email}
-                    onChange={this.handleTextChange}
+                    onChange={this.handleTextChange.bind(this, 'email')}
                   />
                 </QuestionBox>
 
@@ -403,7 +402,7 @@ class Mypage extends Component {
                     type='text'
                     placeholder='opintojen aloitusvuosi'
                     value={this.state.freshmanYear}
-                    onChange={this.handleTextChange}
+                    onChange={this.handleTextChange.bind(this, 'freshmanYear')}
                   />
                 </QuestionBox>
               </BasicInformation>
