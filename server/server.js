@@ -103,27 +103,6 @@ authRoutes.post('/authenticate', function(req, res) {
   });
 });
 
-// TODO Move out of authRoutes
-authRoutes.get('/memberinfo', passport.authenticate('jwt', { session: false }), function(req, res) {
-  var token = getToken(req.headers);
-  if (token) {
-    var decoded = jwt.decode(token, config.secret);
-    User.findOne({
-      email: decoded.email
-    }, function(err, user) {
-        if (err) throw err;
-
-        if (!user) {
-          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
-        } else {
-          res.json({success: true, msg: 'Welcome in the member area ' + user.email + '!'});
-        }
-    });
-  } else {
-    return res.status(403).send({success: false, msg: 'No token provided'});
-  }
-});
-
 // Helper function for routes that require authorization
 getToken = function (headers) {
   if (headers && headers.authorization) {
@@ -139,6 +118,27 @@ getToken = function (headers) {
 };
 
 app.use('/auth', authRoutes);
+
+
+app.get('/user', passport.authenticate('jwt', { session: false }), function(req, res) {
+  var token = getToken(req.headers);
+  if (token) {
+    var decoded = jwt.decode(token, config.secret);
+    User.findOne({
+      email: decoded.email
+    }, function(err, user) {
+        if (err) throw err;
+
+        if (!user) {
+          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+          res.json({ success: true, data: user.email });
+        }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'No token provided'});
+  }
+});
 
 // Course routes
 
