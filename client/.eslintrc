@@ -11,6 +11,8 @@
     "import/no-extraneous-dependencies": 0,
     "import/no-unresolved": 0,
     "react/jsx-filename-extension": 0,
+    # We need this for passing both event and a parameter on onClick I believe
+    "react/jsx-no-bind": 0,
     # Because we depend on componentDidMount for authorization
     # TODO Change this to use something better when it's figured out
     "react/no-did-mount-set-state": 0,

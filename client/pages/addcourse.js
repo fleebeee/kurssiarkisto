@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
+import _ from 'lodash';
 import styled from 'styled-components';
 import palette from '../utils/palette.js';
 
@@ -152,54 +153,14 @@ class addCourse extends Component {
       hasMandatoryAttendance: false,
     };
 
-    this.handleCourseNameChange = this.handleCourseNameChange.bind(this);
-    this.handleCourseCodeChange = this.handleCourseCodeChange.bind(this);
-    this.handleSchoolChange = this.handleSchoolChange.bind(this);
-
-    this.handleHasExamChange = this.handleHasExamChange.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.handleHasExercisesChange = this.handleHasExercisesChange.bind(this);
-    this.handleHasGroupworkChange = this.handleHasGroupworkChange.bind(this);
-    this.handleHasDiaryChange = this.handleHasDiaryChange.bind(this);
-    this.handleHasAssignmentChange = this.handleHasAssignmentChange.bind(this);
-    this.handleHasLabAssignmentChange
-      = this.handleHasLabAssignmentChange.bind(this);
-
-    this.handleIPeriodChange = this.handleIPeriodChange.bind(this);
-    this.handleIIPeriodChange = this.handleIIPeriodChange.bind(this);
-    this.handleIIIPeriodChange = this.handleIIIPeriodChange.bind(this);
-    this.handleIVPeriodChange = this.handleIVPeriodChange.bind(this);
-    this.handleVPeriodChange = this.handleVPeriodChange.bind(this);
-
+    this.handlePeriodChange = this.handlePeriodChange.bind(this);
     this.handleCreditsChange = this.handleCreditsChange.bind(this);
-    this.handleHasMandatoryAttendanceChange =
-      this.handleHasMandatoryAttendanceChange.bind(this);
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-/*
-courseName: '',
-courseCode: '',
-school: '',
-
-hasExam: false,
-hasExercises: false,
-hasGroupwork: false,
-hasDiary: false,
-hasAssignment: false,
-hasLabAssignment: false,
-
-periods: {
-  i: false,
-  ii: false,
-  iii: false,
-  iv: false,
-  v: false,
-},
-
-credits: '',
-hasMandatoryAttendance: false,
-*/
 
   async handleSubmit() {
     console.log('Submitting', this.state);
@@ -218,37 +179,20 @@ hasMandatoryAttendance: false,
 
     const passingMechanisms = [];
 
-    if (this.state.hasExam) {
-      passingMechanisms.push('tentti');
-    }
-
     if (this.state.hasExercises && this.stateHasExercises !== 'ei') {
       passingMechanisms.push(`${this.state.hasExercises} viikkoharjoitukset`);
     }
 
-    if (this.state.hasGroupwork) {
-      passingMechanisms.push('ryhmätyö');
-    }
+    if (this.state.hasExam) passingMechanisms.push('tentti');
+    if (this.state.hasGroupwork) passingMechanisms.push('ryhmätyö');
+    if (this.state.hasDiary) passingMechanisms.push('luentopäiväkirja');
+    if (this.state.hasAssignment) passingMechanisms.push('harjoitustyö');
+    if (this.state.hasLabAssignment) passingMechanisms.push('laboratoriotyö');
 
-    if (this.state.hasDiary) {
-      passingMechanisms.push('luentopäiväkirja');
-    }
-
-    if (this.state.hasAssignment) {
-      passingMechanisms.push('harjoitustyö');
-    }
-
-    if (this.state.hasLabAssignment) {
-      passingMechanisms.push('laboratoriotyö');
-    }
-
-    // This could be more elegant...
     const periods = [];
-    if (this.state.periods.i) periods.push('I');
-    if (this.state.periods.ii) periods.push('II');
-    if (this.state.periods.iii) periods.push('III');
-    if (this.state.periods.iv) periods.push('IV');
-    if (this.state.periods.v) periods.push('V');
+    _.each(this.state.periods, (value, key) => {
+      if (value) periods.push(key.toUpperCase());
+    });
 
     const res = await fetch('http://localhost:3003/course', {
       method: 'POST',
@@ -268,82 +212,36 @@ hasMandatoryAttendance: false,
     });
     const data = await res.json();
     console.debug('ADD COURSE response', data);
+
+    if (data.success) {
+      console.debug('Add course successful!');
+      // TODO toast and redirect here
+    } else {
+      console.debug('Add course failed');
+      // TODO toast
+    }
   }
 
-  handleCourseNameChange(event) {
-    this.setState({ courseName: event.target.value });
+  handleTextChange(field, event) {
+    this.setState({ [field]: event.target.value });
   }
 
-  handleCourseCodeChange(event) {
-    this.setState({ courseCode: event.target.value });
-  }
-
-  handleSchoolChange(event) {
-    this.setState({ school: event.target.value });
-  }
-
-  handleHasExamChange() {
-    this.setState({ hasExam: !this.state.hasExam });
+  handleCheckboxChange(field) {
+    this.setState({ [field]: !this.state[field] });
   }
 
   handleHasExercisesChange(value) {
     this.setState({ hasExercises: value });
   }
 
-  handleHasGroupworkChange() {
-    this.setState({ hasGroupwork: !this.state.hasGroupwork });
-  }
-
-  handleHasDiaryChange() {
-    this.setState({ hasDiary: !this.state.hasDiary });
-  }
-
-  handleHasAssignmentChange() {
-    this.setState({ hasAssignment: !this.state.hasAssignment });
-  }
-
-  handleHasLabAssignmentChange() {
-    this.setState({ hasLabAssignment: !this.state.hasLabAssignment });
-  }
-
-  handleIPeriodChange() {
+  handlePeriodChange(period) {
     this.setState({
-      periods: { ...this.state.periods, i: !this.state.periods.i },
-    });
-  }
-
-  handleIIPeriodChange() {
-    this.setState({
-      periods: { ...this.state.periods, ii: !this.state.periods.ii },
-    });
-  }
-
-  handleIIIPeriodChange() {
-    this.setState({
-      periods: { ...this.state.periods, iii: !this.state.periods.iii },
-    });
-  }
-
-  handleIVPeriodChange() {
-    this.setState({
-      periods: { ...this.state.periods, iv: !this.state.periods.iv },
-    });
-  }
-
-  handleVPeriodChange() {
-    this.setState({
-      periods: { ...this.state.periods, v: !this.state.periods.v },
+      periods: { ...this.state.periods, [period]: !this.state.periods[period] },
     });
   }
 
   handleCreditsChange(event) {
     this.setState({ credits: event.target.value });
-  }
-
-  handleHasMandatoryAttendanceChange() {
-    this.setState({
-      hasMandatoryAttendance: !this.state.hasMandatoryAttendance,
-    });
   }
 
   render() {
@@ -362,7 +260,7 @@ hasMandatoryAttendance: false,
                   type='text'
                   placeholder='kurssin nimi'
                   value={this.state.courseName}
-                  onChange={this.handleCourseNameChange}
+                  onChange={this.handleTextChange.bind(this, 'courseName')}
                 />
 
                 <Label htmlFor='courseCode'>Kurssikoodi</Label>
@@ -372,7 +270,7 @@ hasMandatoryAttendance: false,
                   type='text'
                   placeholder='kurssikoodi'
                   value={this.state.courseCode}
-                  onChange={this.handleCourseCodeChange}
+                  onChange={this.handleTextChange.bind(this, 'courseCode')}
                 />
 
                 <Label htmlFor='school'>Korkeakoulu</Label>
@@ -382,7 +280,7 @@ hasMandatoryAttendance: false,
                   type='text'
                   placeholder='korkeakoulu'
                   value={this.state.school}
-                  onChange={this.handleSchoolChange}
+                  onChange={this.handleTextChange.bind(this, 'school')}
                 />
               </BasicInformation>
 
@@ -412,36 +310,21 @@ hasMandatoryAttendance: false,
                           className='dropdown-menu'
                           aria-labelledby='exercisesDropdown'
                         >
-                          <li>
-                            <a
-                              tabIndex='0'
-                              onClick={() =>
-                                this.handleHasExercisesChange('ei')
-                              }
-                            >
-                              ei
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              tabIndex='0'
-                              onClick={() =>
-                                this.handleHasExercisesChange('vapaaehtoiset')
-                              }
-                            >
-                              vapaaehtoiset
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              tabIndex='0'
-                              onClick={() =>
-                                this.handleHasExercisesChange('pakolliset')
-                              }
-                            >
-                              pakolliset
-                            </a>
-                          </li>
+                          {
+                            ['ei', 'vapaaehtoiset', 'pakolliset'].map(
+                            option =>
+                              <li key={option}>
+                                <a
+                                  tabIndex='0'
+                                  onClick={() =>
+                                    this.handleHasExercisesChange(option)
+                                  }
+                                >
+                                  {option}
+                                </a>
+                              </li>
+                            )
+                          }
                         </ul>
                       </div>
                       <CheckboxText>viikkoharjoitukset</CheckboxText>
@@ -451,7 +334,9 @@ hasMandatoryAttendance: false,
                       <input
                         type='checkbox'
                         value={this.state.hasExam}
-                        onChange={this.handleHasExamChange}
+                        onChange={
+                          () => this.handleCheckboxChange('hasExam')
+                        }
                       />
                       <CheckboxText>tentti</CheckboxText>
                     </CheckboxField>
@@ -460,7 +345,9 @@ hasMandatoryAttendance: false,
                       <input
                         type='checkbox'
                         value={this.state.hasGroupwork}
-                        onChange={this.handleHasGroupworkChange}
+                        onChange={
+                          () => this.handleCheckboxChange('hasGroupwork')
+                        }
                       />
                       <CheckboxText>ryhmätyö</CheckboxText>
                     </CheckboxField>
@@ -469,7 +356,9 @@ hasMandatoryAttendance: false,
                       <input
                         type='checkbox'
                         value={this.state.hasDiary}
-                        onChange={this.handleHasDiaryChange}
+                        onChange={
+                          () => this.handleCheckboxChange('hasDiary')
+                        }
                       />
                       <CheckboxText>
                         luentopäiväkirja
@@ -480,7 +369,9 @@ hasMandatoryAttendance: false,
                       <input
                         type='checkbox'
                         value={this.state.hasAssignment}
-                        onChange={this.handleHasAssignmentChange}
+                        onChange={
+                          () => this.handleCheckboxChange('hasAssignment')
+                        }
                       />
                       <CheckboxText>harjoitustyö</CheckboxText>
                     </CheckboxField>
@@ -489,7 +380,9 @@ hasMandatoryAttendance: false,
                       <input
                         type='checkbox'
                         value={this.state.hasLabAssignment}
-                        onChange={this.handleHasLabAssignmentChange}
+                        onChange={
+                          () => this.handleCheckboxChange('hasGroupwork')
+                        }
                       />
                       <CheckboxText>laboratoriotyö</CheckboxText>
                     </CheckboxField>
@@ -497,50 +390,16 @@ hasMandatoryAttendance: false,
 
                   <Periods>
                     <Label>Periodi</Label>
-                    <CheckboxField>
-                      <input
-                        type='checkbox'
-                        value={this.state.periods.i}
-                        onChange={this.handleIPeriodChange}
-                      />
-                      <CheckboxText>I</CheckboxText>
-                    </CheckboxField>
-
-                    <CheckboxField>
-                      <input
-                        type='checkbox'
-                        value={this.state.periods.ii}
-                        onChange={this.handleIIPeriodChange}
-                      />
-                      <CheckboxText>II</CheckboxText>
-                    </CheckboxField>
-
-                    <CheckboxField>
-                      <input
-                        type='checkbox'
-                        value={this.state.periods.iii}
-                        onChange={this.handleIIIPeriodChange}
-                      />
-                      <CheckboxText>III</CheckboxText>
-                    </CheckboxField>
-
-                    <CheckboxField>
-                      <input
-                        type='checkbox'
-                        value={this.state.periods.iv}
-                        onChange={this.handleIVPeriodChange}
-                      />
-                      <CheckboxText>IV</CheckboxText>
-                    </CheckboxField>
-
-                    <CheckboxField>
-                      <input
-                        type='checkbox'
-                        value={this.state.periods.v}
-                        onChange={this.handleVPeriodChange}
-                      />
-                      <CheckboxText>V</CheckboxText>
-                    </CheckboxField>
+                    {['i', 'ii', 'iii', 'iv', 'v'].map(period =>
+                      <CheckboxField key={period}>
+                        <input
+                          type='checkbox'
+                          value={this.state.periods[period]}
+                          onChange={() => this.handlePeriodChange(period)}
+                        />
+                        <CheckboxText>{period.toUpperCase()}</CheckboxText>
+                      </CheckboxField>
+                    )}
                   </Periods>
 
                   <Misc>
@@ -558,7 +417,9 @@ hasMandatoryAttendance: false,
                       <input
                         type='checkbox'
                         value={this.state.hasMandatoryAttendance}
-                        onChange={this.handleHasMandatoryAttendanceChange}
+                        onChange={() =>
+                          this.handleCheckboxChange('hasMandatoryAttendance')
+                        }
                       />
                       <CheckboxText>kyllä</CheckboxText>
                     </CheckboxField>
