@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { DropdownButton } from 'react-bootstrap';
 import styled from 'styled-components';
 // import _ from 'lodash';
 import fetch from 'isomorphic-fetch';
@@ -52,7 +51,6 @@ const QuestionBox = styled.div`
   flex: 1 1 auto;
 `;
 
-
 const SmallHeader = styled.h4`
 text-transform: uppercase;
 color: ${palette.white};
@@ -74,17 +72,17 @@ const TrackText = styled.span`
   font-size: 1em;
 `;
 
+const DropdownBox = styled.div`
+  flex: 1 1 auto;
+  max-width: 80%;
+`;
+
 const OptionboxField = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 5px;
 `;
 
-const MenuItem = styled.div`
-  color: ${palette.headerGrey}
-  margin-left: 5px;
-  padding-left: 5px;
-  `;
 const SaveMyPageButton = styled.button`
   background-color: ${palette.headerGrey};
   color: ${palette.white};
@@ -239,7 +237,7 @@ class Mypage extends Component {
                 <QuestionBox>
                   <SmallHeader>Opintolinja</SmallHeader>
                   <OptionboxField>
-                    <div className='dropdown'>
+                    <DropdownBox className='dropdown'>
                       <button
                         className='btn btn-xs btn-default dropdown-toggle'
                         type='button'
@@ -274,7 +272,7 @@ class Mypage extends Component {
                           )
                         }
                       </ul>
-                    </div>
+                    </DropdownBox>
                   </OptionboxField>
                 </QuestionBox>
 
