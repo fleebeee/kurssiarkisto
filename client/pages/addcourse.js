@@ -6,11 +6,9 @@ import styled from 'styled-components';
 import palette from '../utils/palette.js';
 
 import Page from '../components/Page/Page.js';
-import AuthService from '../utils/AuthService.js';
-import withAuth from '../utils/withAuth.js';
 
 const propTypes = {
-  auth: PropTypes.instanceOf(AuthService),
+  url: PropTypes.object,
 };
 
 const addCourseContainer = styled.div`

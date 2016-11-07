@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { DropdownButton } from 'react-bootstrap';
 import styled from 'styled-components';
 // import _ from 'lodash';
 import fetch from 'isomorphic-fetch';
@@ -79,6 +80,11 @@ const OptionboxField = styled.div`
   margin-bottom: 5px;
 `;
 
+const MenuItem = styled.div`
+  color: ${palette.headerGrey}
+  margin-left: 5px;
+  padding-left: 5px;
+  `;
 const SaveMyPageButton = styled.button`
   background-color: ${palette.headerGrey};
   color: ${palette.white};
@@ -243,7 +249,7 @@ class Mypage extends Component {
                         aria-expanded='true'
                       >
                         <TrackText>
-                          {'opintolinja'}&nbsp;
+                          {this.state.track || 'opintolinja'}&nbsp;
                         </TrackText>
                         <span className='caret' />
                       </button>
@@ -251,146 +257,22 @@ class Mypage extends Component {
                         className='dropdown-menu'
                         aria-labelledby='trackDropdown'
                       >
-                        <li>
-                          <a
-                            tabIndex='0'
-                            onClick={() =>
-                              this.handleTrackChange('tuotantotalous')
-                            }
-                          >
-                            tuotantotalous
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            tabIndex='0'
-                            onClick={() =>
-                              this.handleTrackChange('tietotekniikka')
-                            }
-                          >
-                            tietotekniikka
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            tabIndex='0'
-                            onClick={() =>
-                              this.handleTrackChange('informaatioverkostot')
-                            }
-                          >
-                            informaatioverkostot
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            tabIndex='0'
-                            onClick={() =>
-                              this.handleTrackChange('teknillinen fys. ja mat.')
-                            }
-                          >
-                            teknillinen fys. ja mat.
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            tabIndex='0'
-                            onClick={() =>
-                              this.handleTrackChange('rakennettu ympäristö')
-                            }
-                          >
-                            rakennettu ympäristö
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            tabIndex='0'
-                            onClick={() =>
-                              this.handleTrackChange('prosessitekniikka')
-                            }
-                          >
-                            prosessitekniikka
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            tabIndex='0'
-                            onClick={() =>
-                              this.handleTrackChange('bioinformaatioteknologia')
-                            }
-                          >
-                            bioinformaatioteknologia
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            tabIndex='0'
-                            onClick={() =>
-                              this.handleTrackChange('sähkötekniikka')
-                            }
-                          >
-                            sähkötekniikka
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            tabIndex='0'
-                            onClick={() =>
-                              this.handleTrackChange('Konetekniikka')
-                            }
-                          >
-                            Konetekniikka
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            tabIndex='0'
-                            onClick={() =>
-                              this.handleTrackChange('Rakennustekniikka')
-                            }
-                          >
-                            Rakennustekniikka
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            tabIndex='0'
-                            onClick={() =>
-                              this.handleTrackChange('AS')
-                            }
-                          >
-                            AS
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            tabIndex='0'
-                            onClick={() =>
-                              this.handleTrackChange('kauppakorkeakoulu')
-                            }
-                          >
-                            kauppakorkeakoulu
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            tabIndex='0'
-                            onClick={() =>
-                              this.handleTrackChange('ARTS')
-                            }
-                          >
-                            ARTS
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            tabIndex='0'
-                            onClick={() =>
-                              this.handleTrackChange('muu kuin Aalto-yliopisto')
-                            }
-                          >
-                            muu kuin Aalto-yliopisto
-                          </a>
-                        </li>
+                        {
+                          ['TUO', 'TIK', 'INF', 'AUT', 'BTT', 'ENE', 'KON',
+                            'TFM', 'RYM', 'RRT', 'BIO', 'EST', 'ARK'].map(
+                          option =>
+                            <li key={option}>
+                              <a
+                                tabIndex='0'
+                                onClick={() =>
+                                  this.handleTrackChange(option)
+                                }
+                              >
+                                {option}
+                              </a>
+                            </li>
+                          )
+                        }
                       </ul>
                     </div>
                   </OptionboxField>
