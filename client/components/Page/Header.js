@@ -19,7 +19,8 @@ const HeaderContainer = styled.div`
 
 const Logo = styled.img`
   width: 80px;
-  height: 80px;
+  height: 75px;
+  margin: 5px;
 `;
 
 class Header extends Component {
