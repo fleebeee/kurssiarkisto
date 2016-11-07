@@ -9,6 +9,13 @@ const propTypes = {
   url: PropTypes.object,
 };
 
+const aa = styled.div`
+  flex: 1 0 auto;
+  padding: 5%;
+  background-image: url(/static/images/lib.jpg);
+  background-size: cover;
+`;
+
 // Replace this with your own style
 const IndexContainer = styled.div`
   display: block;
@@ -22,12 +29,14 @@ class Index extends Component {
 
   render() {
     return (
+
       <Page>
         <IndexContainer>
           <h1>Kurssiarkisto</h1>
           <p>Tervetuloa!</p>
         </IndexContainer>
       </Page>
+
     );
   }
 }

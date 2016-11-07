@@ -58,6 +58,8 @@ const MSGContainer = styled.div`
   flex-direction: column;
   width: 40%;
   background-color: #E0CAA5;
+  border-radius: 10px;
+  padding: 10px;
 `;
 
 

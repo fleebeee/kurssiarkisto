@@ -13,7 +13,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   color: ${palette.white};
-  background-color: ${palette.orange};
+  background-color: ${palette.yellow};
   border-radius: 10px;
   padding: 20px;
   width: 100%;
@@ -30,7 +30,7 @@ const Label = styled.label`
   margin-bottom: 4px;
   color: ${palette.white};
   text-transform: uppercase;
-  font-size: 0.7em;
+  font-size: 0.8em;
   font-weight: 500;
 `;
 
@@ -181,7 +181,7 @@ class Signup extends Component {
               className='form-control'
               id='role'
               type='text'
-              placeholder='rooli'
+              placeholder='opiskelija / opettaja / kurssihenkilökunta'
               value={this.state.role}
               onChange={this.handleTextChange.bind(this, 'role')}
             />

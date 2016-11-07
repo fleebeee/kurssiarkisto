@@ -26,7 +26,6 @@ const HeaderContainer = styled.div`
 const Content = styled.div`
   flex: 1 0 auto;
   padding: 5%;
-  background-image: url(/static/images/lib.jpg);
   background-size: cover;
 `;
 
