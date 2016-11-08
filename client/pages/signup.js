@@ -2,11 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import fetch from 'isomorphic-fetch';
 import styled from 'styled-components';
 
+import withToast from '../utils/withToast.js';
 import Page from '../components/Page/Page.js';
 import palette from '../utils/palette.js';
 
 const propTypes = {
   url: PropTypes.object.isRequired,
+  addToast: PropTypes.func.isRequired,
 };
 
 const Content = styled.div`
@@ -113,6 +115,11 @@ class Signup extends Component {
       this.props.url.pushTo('/');
     } else {
       console.debug('Invalid sign up');
+      this.props.addToast({
+        title: 'Rekisteröityminen epäonnistui',
+        message: 'Sähköposti voi olla jo käytössä',
+        level: 'error',
+      });
     }
   }
 
@@ -218,4 +225,4 @@ class Signup extends Component {
 
 Signup.propTypes = propTypes;
 
-export default Signup;
+export default withToast(Signup);

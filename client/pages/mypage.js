@@ -7,11 +7,13 @@ import palette from '../utils/palette.js';
 import Page from '../components/Page/Page.js';
 import AuthService from '../utils/AuthService.js';
 import withAuth from '../utils/withAuth.js';
+import withToast from '../utils/withToast.js';
 
 
 // Formatting
 const propTypes = {
   // url: PropTypes.object,
+  addToast: PropTypes.func.isRequired,
   auth: PropTypes.instanceOf(AuthService),
 };
 
@@ -128,28 +130,42 @@ class Mypage extends Component {
   async handleSubmit() {
     console.log('Submitting', this.state);
 
+    const errorTitle = 'Käyttäjätietojen päivitys epäonnistui';
+    const missingField = (message) => {
+      this.props.addToast({
+        title: errorTitle,
+        message,
+        level: 'warning',
+      });
+    };
+
     if (!this.state.firstName) {
       console.debug('Firstname is required!');
+      missingField('Etunimi on pakollinen kenttä');
       return;
     }
 
     if (!this.state.surName) {
       console.debug('Surname is required!');
+      missingField('Sukunimi on pakollinen kenttä');
       return;
     }
 
     if (!this.state.email) {
       console.debug('Email is required!');
+      missingField('Sähköposti on pakollinen kenttä');
       return;
     }
 
     if (!this.state.track) {
       console.debug('Track is required!');
+      missingField('Opintolinja on pakollinen kenttä');
       return;
     }
 
     if (!this.state.freshmanYear) {
       console.debug('Freshman Year is required!');
+      missingField('Opintojen aloitusvuosi on pakollinen kenttä');
       return;
     }
 
@@ -178,7 +194,10 @@ class Mypage extends Component {
       // TODO toast and redirect here
     } else {
       console.debug('Save my page failed');
-      // TODO toast
+      this.props.addToast({
+        message: errorTitle,
+        level: 'error',
+      });
     }
   }
 
@@ -336,4 +355,4 @@ class Mypage extends Component {
 
 Mypage.propTypes = propTypes;
 
-export default withAuth(Mypage);
+export default withAuth(withToast(Mypage));
