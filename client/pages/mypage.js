@@ -62,6 +62,8 @@ margin-bottom: 5px;
 
 const TextField = styled.input`
   max-width: 80%;
+  font-family: Helvetica;
+  font-size: 1.2em;
 `;
 
 const TextFieldWithPaddings = styled.input`
@@ -71,12 +73,18 @@ const TextFieldWithPaddings = styled.input`
 
 const TrackText = styled.span`
   color: ${palette.titleGrey}
-  font-size: 1em;
+  font-size: 1.2em;
+  font-family: Helvetica;
+  padding: 7px;
 `;
 
 const DropdownBox = styled.div`
   flex: 1 1 auto;
   max-width: 80%;
+`;
+
+const button = styled.button`
+  height: 35px;
 `;
 
 const OptionboxField = styled.div`
@@ -98,7 +106,6 @@ const SaveMyPageButton = styled.button`
   transition-duration: 0.3s;
   -webkit-transition-property: color, background-color;
   transition-property: color, background-color;
-
   &:hover {
     background-color: ${palette.orange};
     color: ${palette.white};
