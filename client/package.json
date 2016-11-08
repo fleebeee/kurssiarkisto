@@ -23,6 +23,7 @@
     "next": "^1.0.2",
     "react-bootstrap": "^0.30.6",
     "react-notification-system": "^0.2.10",
+    "react-select": "^1.0.0-rc.2",
     "styled-components": "^1.0.10"
   },
   "private": true

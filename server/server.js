@@ -234,6 +234,7 @@ app.post('/course', function (req, res) {
   }
 });
 
+// Get a single course
 app.get('/course/:code', function (req, res) {
   var code = req.params.code;
   Course.findOne({
@@ -247,6 +248,24 @@ app.get('/course/:code', function (req, res) {
         });
       } else {
         res.json({ success: true, course });
+      }
+  });
+});
+
+app.get('/search/:keyword', function (req, res) {
+  var keyword = req.params.keyword;
+  Course.find({
+    name: new RegExp(keyword, 'i'),
+  }, function(err, courses) {
+      if (err) throw err;
+      if (!courses.length) {
+        // We don't want to spam the console with 403, so send 200
+        return res.status(200).send({
+          success: false,
+          message: 'Courses not found'
+        });
+      } else {
+        res.json({ success: true, courses });
       }
   });
 });

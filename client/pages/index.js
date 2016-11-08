@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react';
 import styled from 'styled-components';
 
 import Page from '../components/Page/Page.js';
+import Search from '../components/Search.js';
 
 const propTypes = {
   url: PropTypes.object,
@@ -28,6 +29,7 @@ class Index extends Component {
         <IndexContainer>
           <h1>Kurssiarkisto</h1>
           <p>Tervetuloa!</p>
+          <Search url={this.props.url} />
         </IndexContainer>
 
       </Page>
