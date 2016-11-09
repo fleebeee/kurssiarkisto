@@ -21,6 +21,14 @@ const myPageContainer = styled.div`
   display: block;
 `;
 
+const Box = styled.div`
+  display: block;
+  position: relative;
+  width: 92%;
+  margin-top: 30px;
+  left: 4%;
+`;
+
 const Title = styled.h1`
   text-transform: uppercase;
   color: ${palette.titleGrey};
@@ -219,6 +227,7 @@ class Mypage extends Component {
   render() {
     return (
       <Page>
+      <Box>
         <myPageContainer>
           <Title>Omat tiedot</Title>
           <Content>
@@ -353,6 +362,7 @@ class Mypage extends Component {
             </Form>
           </Content>
         </myPageContainer>
+        </Box>
       </Page>
 
     );
