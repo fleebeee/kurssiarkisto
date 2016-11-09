@@ -19,6 +19,16 @@ const NameContainer = styled.div`
   color: #6A7C90;
 `;
 
+const Box = styled.div`
+  display: block;
+  position: relative;
+  width: 92%;
+  margin-top: 30px;
+  position: absolute;
+  left: 4%;
+`;
+
+
 const Arrow = styled.img`
   width: 55px;
   height: 55px;
@@ -143,12 +153,13 @@ class Course extends Component {
   render() {
     return (
       <Page>
+      <Box>
         <NameContainer>
           <Arrow
             src='/static/images/back-arrow.png'
             alt='Takaisin hakuun'
           />
-          <h1>CSE-E4400 Design of WWW Services</h1>  <h1>{this.state.course.name}</h1>
+           <h1>{this.state.course.name}</h1>
         </NameContainer>
         <CourseContainer>
 
@@ -190,11 +201,12 @@ class Course extends Component {
           <MSGContainer>
             <p>
               tämän pitäisi näkyä oikealla.
-              Tähän alle tulee kommentti boksi. Ja alla näkyy kurssin nimi
+              Tähän alle tulee kommentti boksi. Ja alla näkyy kurssin nimi <br/>
               {this.state.course.name}
             </p>
           </MSGContainer>
         </CourseContainer>
+      </Box>
       </Page>
     );
   }
