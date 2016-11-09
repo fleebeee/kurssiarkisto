@@ -18,6 +18,7 @@ const Content = styled.div`
   background-color: ${palette.yellow};
   border-radius: 10px;
   padding: 20px;
+  margin:5px;
   width: 100%;
 `;
 
@@ -56,6 +57,15 @@ const RegisterButton = styled.button`
     background-color: ${palette.white};
     color: ${palette.black};
   }
+`;
+
+const Box = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 92%;
+  margin-top: 30px;
+  position: absolute;
+  left: 4%;
 `;
 
 class Signup extends Component {
@@ -126,8 +136,10 @@ class Signup extends Component {
   render() {
     return (
       <Page>
+      <Box>
         <Content>
           <div>
+
             <h2>Rekisteröidy</h2>
             <Label>sähköposti</Label>
             <input
@@ -211,6 +223,8 @@ class Signup extends Component {
               onChange={this.handleTextChange.bind(this, 'nickname')}
             />
           </div>
+          <br/>
+          <p> Rekisteröitymällä sitoudut noudattamaan palvelun sääntöjä.</p>
           <RegisterButton
             className='btn btn-default'
             onClick={this.handleSubmit}
@@ -218,6 +232,7 @@ class Signup extends Component {
             Rekisteröidy
           </RegisterButton>
         </Content>
+        </Box>
       </Page>
     );
   }

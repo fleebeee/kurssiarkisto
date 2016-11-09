@@ -62,6 +62,7 @@ const DataContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 70%;
+  padding-right: 10px;
 `;
 
 const MSGContainer = styled.div`
@@ -159,7 +160,7 @@ class Course extends Component {
             src='/static/images/back-arrow.png'
             alt='Takaisin hakuun'
           />
-           <h1>{this.state.course.name}</h1>
+           <h1>{this.state.course.code} {this.state.course.name}</h1>
         </NameContainer>
         <CourseContainer>
 
@@ -172,7 +173,7 @@ class Course extends Component {
                 close={this.close}
               />
 
-              <Button bsStyle='warning' href='/login.js'>Muokkaa</Button>
+              <Button bsStyle='warning' href='/index.js'>Muokkaa</Button>
               <Button bsStyle='warning'>Lisää suosikkeihin</Button>
             </ButtonGroup>
             </CourseContainer>
@@ -183,25 +184,25 @@ class Course extends Component {
               <p>Yleisarvosana</p>
               <p>Kuormittavuus</p>
               <p>Periodit</p>
-              <p>Tentti</p>
-              <p>Harjoitustyö</p>
-              <p>Läsnäolopakko</p>
               <p>Opintopisteet</p>
+              <p>Suoritusmuodot</p>
+              <p>Läsnäolopakko</p>
+              <p>Linkki MyCoursesiin</p>
             </TextContainer>
             <DataContainer>
               <p> 4.5</p>
               <p> 3.5</p>
-              <p> I, II</p>
-              <p> Kyllä</p>
+              <p> {this.state.course.periods} </p>
+              <p> {this.state.course.credits}</p>
+              <p> {this.state.course.passingMechanisms}</p>
               <p> Ei</p>
-              <p> Ei</p>
-              <p> 5</p>
+              <p> {this.state.course.myCoursesLink}</p>
             </DataContainer>
           </InfoContainer>
           <MSGContainer>
             <p>
               tämän pitäisi näkyä oikealla.
-              Tähän alle tulee kommentti boksi. Ja alla näkyy kurssin nimi <br/>
+              Tähän tulee kommentti boksi. Ja alla näkyy kurssin nimi <br/>
               {this.state.course.name}
             </p>
           </MSGContainer>
