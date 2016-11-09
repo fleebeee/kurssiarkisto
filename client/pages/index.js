@@ -95,7 +95,7 @@ class Search extends Component {
         </Link>
         <div>
           tähdet kuormittavuus 3,2
-          | opintopisteet {option.credits || 'ei dataa '}
+          | opintopisteet {option.credits || 'ei dataa'}&nbsp;
           | 123 arvostelua
         </div>
       </Course>
