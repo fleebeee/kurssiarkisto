@@ -256,6 +256,7 @@ app.get('/course/:code', function (req, res) {
 app.get('/search/:keyword', function (req, res) {
   var keyword = req.params.keyword;
   var regexp = new RegExp(keyword, 'i');
+  // TODO what if user writes "CS-E4400 Web Services"? This will return []
   Course.find({
     $or: [
       { name: regexp },
@@ -263,7 +264,7 @@ app.get('/search/:keyword', function (req, res) {
     ]
   })
   .limit(10)
-  .select('code name')
+  .select('code name credits')
   .lean()
   .exec(function(err, courses) {
       if (err) throw err;
@@ -274,11 +275,6 @@ app.get('/search/:keyword', function (req, res) {
           message: 'Courses not found'
         });
       } else {
-        // This is done for react-select value display
-        courses.map(function(course) {
-          course.searchName = `${course.code} - ${course.name}`;
-        });
-
         res.json({ success: true, courses });
       }
   });
