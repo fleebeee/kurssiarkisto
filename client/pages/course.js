@@ -24,7 +24,6 @@ const Box = styled.div`
   position: relative;
   width: 92%;
   margin-top: 30px;
-  position: absolute;
   left: 4%;
 `;
 

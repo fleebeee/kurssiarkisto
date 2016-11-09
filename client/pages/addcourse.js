@@ -15,6 +15,14 @@ const addCourseContainer = styled.div`
   display: block;
 `;
 
+const Box = styled.div`
+  display: block;
+  width: 92%;
+  margin-top: 30px;
+  position: absolute;
+  left: 4%;
+`;
+
 const Title = styled.h1`
   text-transform: uppercase;
   color: ${palette.titleGrey};
@@ -247,7 +255,7 @@ class addCourse extends Component {
   render() {
     return (
       <Page>
-        <addCourseContainer>
+        <addCourseContainer><Box>
           <Title>Lisää kurssi</Title>
           <Content>
             <Form>
@@ -433,7 +441,7 @@ class addCourse extends Component {
             >
               Lisää kurssi
             </AddCourseButton>
-          </Content>
+          </Content></Box>
         </addCourseContainer>
       </Page>
     );
