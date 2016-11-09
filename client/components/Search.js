@@ -57,16 +57,15 @@ class Search extends Component {
 
     return (
       <SearchContainer>
-        Search
         <AsyncComponent
           onChange={this.onChange}
-          valueKey='name'
-          labelKey='name'
+          valueKey='searchName'
+          labelKey='searchName'
           loadOptions={this.getCourses}
           instanceId='DoWWWs' // NOTE required for isomorphism
           placeholder='Hae kursseja'
           noResultsText='Ei hakutuloksia'
-          searchPromptText=''
+          searchPromptText='Kirjoita osa kurssin koodista tai nimestä'
         />
       </SearchContainer>
     );

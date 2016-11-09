@@ -252,11 +252,20 @@ app.get('/course/:code', function (req, res) {
   });
 });
 
+// Search courses
 app.get('/search/:keyword', function (req, res) {
   var keyword = req.params.keyword;
+  var regexp = new RegExp(keyword, 'i');
   Course.find({
-    name: new RegExp(keyword, 'i'),
-  }, function(err, courses) {
+    $or: [
+      { name: regexp },
+      { code: regexp }
+    ]
+  })
+  .limit(10)
+  .select('code name')
+  .lean()
+  .exec(function(err, courses) {
       if (err) throw err;
       if (!courses.length) {
         // We don't want to spam the console with 403, so send 200
@@ -265,6 +274,11 @@ app.get('/search/:keyword', function (req, res) {
           message: 'Courses not found'
         });
       } else {
+        // This is done for react-select value display
+        courses.map(function(course) {
+          course.searchName = `${course.code} - ${course.name}`;
+        });
+
         res.json({ success: true, courses });
       }
   });

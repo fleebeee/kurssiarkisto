@@ -52,14 +52,13 @@ class Page extends Component {
           <link rel='stylesheet' href='/static/css/loadingindicator.css' />
           <script src='/static/js/jquery-3.1.1.min.js' />
           <script src='/static/js/bootstrap.min.js' />
-
-          <script src='https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.min.js' />
-          <script src='https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.min.js' />
-          <script src='https://unpkg.com/classnames/index.js' />
-          <script src='https://unpkg.com/react-input-autosize/dist/react-input-autosize.js' />
-          <script src='https://unpkg.com/react-select/dist/react-select.js' />
-
-          <link rel='stylesheet' href='https://unpkg.com/react-select/dist/react-select.css' />
+          {/* react-select dependencies */}
+          <script src='/static/js/react-select/react.min.js' />
+          <script src='/static/js/react-select/react-dom.min.js' />
+          <script src='/static/js/react-select/classnames.js' />
+          <script src='/static/js/react-select/react-input-autosize.js' />
+          <script src='/static/js/react-select/react-select.js' />
+          <link rel='stylesheet' href='/static/css/react-select.css' />
           {/* eslint-enable max-len */}
         </Head>
         <HeaderContainer>
