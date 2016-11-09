@@ -1,9 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import Select from 'react-select';
 import fetch from 'isomorphic-fetch';
+import _ from 'lodash';
 
 // import ls from 'local-storage';
 import styled from 'styled-components';
+
+const API_MIN_DELAY = 500; // milliseconds
 
 const propTypes = {
   url: PropTypes.object.isRequired,
@@ -23,6 +26,7 @@ class Search extends Component {
       lastFetch: null,
     };
     this.getCourses = this.getCourses.bind(this);
+    this.getCoursesThrottled = this.getCoursesThrottled.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
@@ -32,25 +36,20 @@ class Search extends Component {
   }
 
   async getCourses(keyword) {
-    if (!keyword) {
+    if (!keyword /* || keyword.length < 3 */) {
       return Promise.resolve({ options: [] });
     }
 
-    const now = +new Date();
-    // NOTE TODO HACK this could really be improved
-    if ((this.state.lastFetch == null
-     || now - this.state.lastFetch > 500)
-     && keyword.length > 2) {
-      this.setState({ lastFetch: now });
-      const res = await fetch(`http://localhost:3003/search/${keyword}`);
-      const data = await res.json();
-      if (data.success) {
-        this.setState({ options: data.courses });
-        return { options: data.courses };
-      }
+    const res = await fetch(`http://localhost:3003/search/${keyword}`);
+    const data = await res.json();
+    if (data.success) {
+      this.setState({ options: data.courses });
+      return { options: data.courses };
     }
     return { options: this.state.options };
   }
+
+  getCoursesThrottled = _.throttle(this.getCourses, API_MIN_DELAY);
 
   render() {
     const AsyncComponent = Select.Async;
@@ -61,7 +60,7 @@ class Search extends Component {
           onChange={this.onChange}
           valueKey='searchName'
           labelKey='searchName'
-          loadOptions={this.getCourses}
+          loadOptions={this.getCoursesThrottled}
           instanceId='DoWWWs' // NOTE required for isomorphism
           placeholder='Hae kursseja'
           noResultsText='Ei hakutuloksia'
