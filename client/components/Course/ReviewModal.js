@@ -3,22 +3,32 @@ import { ButtonGroup, Button, Modal } from 'react-bootstrap';
 // import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
 import styled from 'styled-components';
+import Rating from 'react-rating';
+import palette from '../../utils/palette.js';
 
 const propTypes = {
   show: PropTypes.bool.isRequired,
   close: PropTypes.func.isRequired,
+  submit: PropTypes.func.isRequired,
 };
 
-// Replace this with your own style
 const ReviewModalContainer = styled.div`
   display: inline;
+`;
+
+const StarRating = styled(Rating)`
+  font-size: 35px;
+  color: ${palette.yellow};
 `;
 
 class ReviewModal extends Component {
   constructor(props) {
     super(props);
-    // Bind class functions here: this.function = this.function.bind(this)
-    this.state = {};
+
+    this.state = {
+      score: null,
+      workload: null,
+    };
   }
 
   render() {
@@ -31,17 +41,35 @@ class ReviewModal extends Component {
           <Modal.Body>
             {/* eslint-disable max-len */}
             <h4>Yleisarvosana</h4>
-            <p>Anna kurssille yleisarvosana asteikolla 1-5 (1=huono, 5= erinomainen).</p>
+            <p>Anna kurssille yleisarvosana asteikolla 1-5 (1 = huono, 5 = erinomainen).</p>
+            <StarRating
+              empty='ion-ios-star-outline'
+              full='ion-ios-star'
+              initialRate={this.state.score}
+              onClick={rate => this.setState({ score: rate })}
+            />
             <h4>Kuormittavuus</h4>
-            <p>Arvioi kurssin kuormittavuus asteikolla 1-5 (1=kevyt, 5= todella raskas).</p>
+            <p>Arvioi kurssin kuormittavuus asteikolla 1-5 (1 = kevyt, 5 = todella raskas).</p>
+            <StarRating
+              empty='ion-ios-star-outline'
+              full='ion-ios-star'
+              initialRate={this.state.workload}
+              onClick={rate => this.setState({ workload: rate })}
+            />
             {/* eslint-enable max-len */}
           </Modal.Body>
           <Modal.Footer>
             <ButtonGroup>
-              <Button bsStyle='warning' onClick={this.props.close}>
+              <Button
+                bsStyle='warning'
+                onClick={() => this.props.submit(this.state)}
+              >
                 Tallenna
               </Button>
-              <Button bsStyle='warning' onClick={this.props.close}>
+              <Button
+                bsStyle='warning'
+                onClick={this.props.close}
+              >
                 Sulje
               </Button>
             </ButtonGroup>

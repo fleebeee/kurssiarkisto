@@ -70,6 +70,7 @@ class Course extends Component {
     this.state = { course: {}, showModal: false };
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
+    this.submitReview = this.submitReview.bind(this);
   }
 
   async componentDidMount() {
@@ -103,6 +104,42 @@ class Course extends Component {
     this.setState({ showModal: true });
   }
 
+  async submitReview(options) {
+    const { score, workload } = options;
+
+    if (!score || score < 1 || score > 5) {
+      // TODO show modal
+      console.debug('Score not set');
+      return;
+    }
+
+    if (!workload || workload < 1 || workload > 5) {
+      console.debug('Workload not set');
+      return;
+    }
+
+    // TODO Submit review to server
+    /* console.log(score, workload);
+    const res = await fetch('http://localhost:3003/review', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        score,
+        workload,
+        userID: profile._id,
+        courseID: this.state.course._id,
+      }),
+    });
+    const data = await res.json();
+    console.log('Review response', data); */
+
+    // If successful, close modal and show toast
+    this.close();
+  }
+
   render() {
     return (
       <Page>
@@ -118,7 +155,11 @@ class Course extends Component {
             <ButtonGroup>
               <Button bsStyle='warning' onClick={this.open}>Arvostele</Button>
 
-              <ReviewModal show={this.state.showModal} close={this.close} />
+              <ReviewModal
+                show={this.state.showModal}
+                submit={this.submitReview}
+                close={this.close}
+              />
 
               <Button bsStyle='warning' href='/login.js'>Muokkaa</Button>
               <Button bsStyle='warning'>Lisää suosikkeihin</Button>

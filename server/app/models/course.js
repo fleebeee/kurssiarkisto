@@ -11,6 +11,14 @@ var CourseSchema = new Schema({
     required: [true, 'Course code is required'],
     unique: [true, 'Course code has to be unique'], // 'Primary key', let's trust Aalto not to have duplicate course codes
   },
+  reviews: {
+    type: [Schema.Types.Objectid],
+    required: false,
+  },
+  comments: {
+    type: [Schema.Types.Objectid],
+    required: false,
+  },
   myCoursesLink: {
     type: String,
     validate: {

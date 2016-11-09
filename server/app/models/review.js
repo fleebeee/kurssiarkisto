@@ -11,7 +11,7 @@ var ReviewSchema = new Schema({
     required: true,
   },
   courseID: {
-    type: Schema.Types.Objectid, // courseID
+    type: Schema.Types.Objectid, // this is not strictly needed
     required: true,
   },
   userID: {
