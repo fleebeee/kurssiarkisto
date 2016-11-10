@@ -79,7 +79,7 @@ const MSGContainer = styled.div`
 class Course extends Component {
   constructor(props) {
     super(props);
-    this.state = { course: {}, showModal: false };
+    this.state = { course: {}, showModal: false, reviews: [] };
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
     this.submitReview = this.submitReview.bind(this);
@@ -90,7 +90,7 @@ class Course extends Component {
     const query = this.props.url.query;
     if (_.has(query, 'code')) {
       // TODO Probably move API calls elsewhere to reduce clutter
-      const res = await fetch(`http://localhost:3003/course/${query.code}`, {
+      let res = await fetch(`http://localhost:3003/course/${query.code}`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -98,10 +98,28 @@ class Course extends Component {
         },
       });
 
-      const data = await res.json();
+      let data = await res.json();
       if (data.success) {
         console.debug('Course data:', data.course);
         this.setState({ course: data.course });
+
+        // Fetch review data
+        res = await fetch(`http://localhost:3003/review/${query.code}`, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });
+        data = await res.json();
+        if (data.success) {
+          console.debug(
+            `Review data fetched, ${data.reviews.length} review(s)`
+          );
+          this.setState({ reviews: data.reviews });
+        } else {
+          console.debug('Review data couldn\'t be fetched:', data);
+        }
       } else {
         console.debug('Course data couldn\'t be fetched:', data);
       }
@@ -121,22 +139,41 @@ class Course extends Component {
 
     if (!userID) {
       console.debug('You need to log in');
+      this.props.addToast({
+        title: 'Arvostelun lisääminen epäonnistui',
+        message: 'Et ole kirjautunut sisään',
+        level: 'warning',
+      });
       return;
     }
 
     if (!this.state.course.code) {
       console.debug('No course chosen');
+      this.props.addToast({
+        title: 'Arvostelun lisääminen epäonnistui',
+        message: 'Kurssia ei ole valittu',
+        level: 'warning',
+      });
       return;
     }
 
     if (!score || score < 1 || score > 5) {
-      // TODO show modal
       console.debug('Score not set');
+      this.props.addToast({
+        title: 'Arvostelun lisääminen epäonnistui',
+        message: 'Yleisarvosana puuttuu',
+        level: 'warning',
+      });
       return;
     }
 
     if (!workload || workload < 1 || workload > 5) {
       console.debug('Workload not set');
+      this.props.addToast({
+        title: 'Arvostelun lisääminen epäonnistui',
+        message: 'Kuormittavuus puuttuu',
+        level: 'warning',
+      });
       return;
     }
 

@@ -20,7 +20,7 @@ class Preferences extends Component {
     return (
       <Page>
         <div>
-        <h1> Suosikit </h1>
+          <h1> Suosikit </h1>
         Tälle sivulle tulee lista suosikeista. Current user: {user.data}</div>
       </Page>
     );
