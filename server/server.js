@@ -285,23 +285,29 @@ app.get('/search/:keyword', function (req, res) {
 
 // Review routes
 
+// Add a new FIRST review
 app.post('/review', function (req, res) {
+  var score = req.body.score;
+  var workload = req.body.workload;
+  var courseCode = req.body.courseCode;
+  var userID = req.body.userID;
+
   if (!req.body.score || !req.body.workload) {
     res.json({
       success: false,
       message: 'Please enter both workload and score'
     });
-  } else if (!req.body.courseCode || !req.body.userID) {
+  } else if (!courseCode || !userID) {
       res.json({
         success: false,
-        message: 'Course or User ID not given'
+        message: 'Course code or User ID not given'
       });
   } else {
     var newReview = new Review({
-      score: req.body.score,
-      workload: req.body.workload,
-      courseCode: req.body.courseCode,
-      userID: mongoose.Types.ObjectId(req.body.userID),
+      score: score,
+      workload: workload,
+      courseCode: courseCode,
+      userID: mongoose.Types.ObjectId(userID),
     });
 
     newReview.save(function(err) {
@@ -314,9 +320,10 @@ app.post('/review', function (req, res) {
           message: `Something went wrong. Hopefully helpful description:\n${errors}`,
         });
       }
+
       // Add Review to Course
       Course.findOne({
-        code: req.body.courseCode
+        code: courseCode
       }, function(err, course) {
         if (err) throw err;
         if (!course) {
@@ -325,15 +332,21 @@ app.post('/review', function (req, res) {
             message: 'Course not found when adding review'
           });
         }
-        course.reviews.push(newReview._id);
-        // TODO HACK Just hope this doesn't throw an error
-        // Perhaps some day add some transaction logic here
-        course.save();
-      });
 
-      res.json({
-        success: true,
-        message: `Successfully added new review`,
+        course.reviews.push(newReview._id);
+
+        course.save(function(err) {
+          if (err) {
+            newReview.remove(function(err) {
+              console.log('Backtracking failed review add failed, PANIC!');
+            })
+            throw err;
+          }
+          res.json({
+            success: true,
+            message: `Successfully added new review`,
+          });
+        });
       });
     });
   }

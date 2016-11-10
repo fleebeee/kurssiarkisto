@@ -13,6 +13,7 @@ const propTypes = {
   // url: PropTypes.object.isRequired,
   submit: PropTypes.func.isRequired,
   auth: PropTypes.instanceOf(AuthService),
+  close: PropTypes.func.isRequired,
 };
 
 const ReviewModalContainer = styled.div`
@@ -29,7 +30,7 @@ class ReviewModal extends Component {
     super(props);
 
     this.state = {
-      userID: this.props.auth.getProfile()._id,
+      userID: this.props.auth.getProfile().id,
       score: null,
       workload: null,
     };

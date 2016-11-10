@@ -20,4 +20,7 @@ var ReviewSchema = new Schema({
   },
 });
 
+// One user can only have one review per course
+ReviewSchema.index({ courseCode: 1, userID: 1 }, { unique: true });
+
 module.exports = mongoose.model('Review', ReviewSchema);
