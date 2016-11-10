@@ -1,7 +1,5 @@
 use kurssiarkisto
 
-db.dropDatabase();
-
 db.courses.insert({
   name: "Design of WWW Services",
   code: "CS-E4400",
