@@ -23,6 +23,8 @@ require('./config/passport')(passport);
 // Database models
 var User = require('./app/models/user');
 var Course = require('./app/models/course');
+var Review = require('./app/models/review');
+var Comment = require('./app/models/comment');
 
 mongoose.Promise = require('bluebird');
 mongoose.connect(config.database);
@@ -280,11 +282,78 @@ app.get('/search/:keyword', function (req, res) {
   });
 });
 
-// TODO Keyword search or something similar
-
 // Review routes
 
-// TODO
+app.post('/review', function (req, res) {
+  if (!req.body.score || !req.body.workload) {
+    res.json({
+      success: false,
+      message: 'Please enter both workload and score'
+    });
+  } else if (!req.body.courseCode || !req.body.userID) {
+      res.json({
+        success: false,
+        message: 'Course or User ID not given'
+      });
+  } else {
+    console.log(req.body);
+    var newReview = new Review({
+      score: req.body.score,
+      workload: req.body.workload,
+      courseCode: req.body.courseCode,
+      userID: mongoose.Types.ObjectId(req.body.userID),
+    });
+
+    newReview.save(function(err) {
+      if (err) {
+        console.log(err);
+        var errors = errorParser(err);
+
+        return res.json({
+          success: false,
+          message: `Something went wrong. Hopefully helpful description:\n${errors}`,
+        });
+      }
+      // Add Review to Course
+      Course.findOne({
+        code: req.body.courseCode
+      }, function(err, course) {
+        if (err) throw err;
+        if (!course) {
+          return res.status(404).send({
+            success: false,
+            message: 'Course not found when adding review'
+          });
+        }
+        course.reviews.push(newReview._id);
+        // TODO HACK Just hope this doesn't throw an error
+        // Perhaps some day add some transaction logic here
+        course.save();
+      });
+
+      res.json({
+        success: true,
+        message: `Successfully added new review`,
+      });
+    });
+  }
+});
+
+// Get Review by ObjectId (Course has a list of IDs)
+app.get('/review/:id', function (req, res) {
+  var id = mongoose.Types.ObjectId(req.params.id);
+  Review.findById(id, function(err, review) {
+      if (err) throw err;
+      if (!review) {
+        return res.status(404).send({
+          success: false,
+          message: 'Review not found'
+        });
+      } else {
+        res.json({ success: true, review });
+      }
+  });
+});
 
 // Comment routes
 

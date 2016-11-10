@@ -10,12 +10,12 @@ var ReviewSchema = new Schema({
     type: Number, // a number from 0 to 5
     required: true,
   },
-  courseID: {
-    type: Schema.Types.Objectid, // this is not strictly needed
+  courseCode: {
+    type: String, // this is not strictly needed
     required: true,
   },
   userID: {
-    type: Schema.Types.Objectid, // userID
+    type: Schema.Types.ObjectId, // userID
     required: true,
   },
 });

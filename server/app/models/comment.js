@@ -3,12 +3,12 @@ var Schema = mongoose.Schema;
 
 var CommentSchema = new Schema({
 	userID: {
-		type: Schema.Types.Objectid,
+		type: Schema.Types.ObjectId,
 		required: true,
 	},
 
-	courseID: {
-		type: Schema.Types.Objectid,
+	courseCode: {
+		type: String,
 		required: true,
 	},
 
@@ -26,4 +26,4 @@ var CommentSchema = new Schema({
 
 
 
-module.exports = mongoose.model('Comments', CommentSchema);
+module.exports = mongoose.model('Comment', CommentSchema);
