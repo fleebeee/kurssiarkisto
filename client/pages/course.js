@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { ButtonGroup, Button } from 'react-bootstrap';
+import { ButtonGroup, Button, Modal } from 'react-bootstrap';
 import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
 import styled from 'styled-components';
@@ -129,8 +129,8 @@ class Course extends Component {
     }
 
     // TODO Submit review to server
-    /* console.log(score, workload);
-    const res = await fetch('http://localhost:3003/review', {
+    console.log(score, workload);
+    /* const res = await fetch('http://localhost:3003/review', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -140,7 +140,7 @@ class Course extends Component {
         score,
         workload,
         userID: profile._id,
-        courseID: this.state.course._id,
+        courseCode: this.state.course._id,
       }),
     });
     const data = await res.json();
@@ -166,11 +166,12 @@ class Course extends Component {
             <ButtonGroup>
               <Button bsStyle='warning' onClick={this.open}>Arvostele</Button>
 
-              <ReviewModal
-                show={this.state.showModal}
-                submit={this.submitReview}
-                close={this.close}
-              />
+              <Modal show={this.state.showModal} onHide={this.close}>
+                <ReviewModal
+                  close={this.close}
+                  submit={this.submitReview}
+                />
+              </Modal>
 
               <Button bsStyle='warning' href='/index.js'>Muokkaa</Button>
               <Button bsStyle='warning'>Lisää suosikkeihin</Button>

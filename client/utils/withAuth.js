@@ -1,11 +1,17 @@
 // A HOC for protected pages
-import React, { Component, PropTypes } from 'react';
+import React, { Component /* PropTypes */ } from 'react';
+import Link from 'next/link';
+import styled from 'styled-components';
 import AuthService from './AuthService.js';
 import LoadingIndicator from '../components/LoadingIndicator.js';
 
 const propTypes = {
-  url: PropTypes.object.isRequired,
+  // something: PropTypes.any,
 };
+
+const AuthContainer = styled.div`
+  padding: 30px;
+`;
 
 export default (AuthComponent) => {
   const Auth = new AuthService('http://localhost:3003');
@@ -15,27 +21,34 @@ export default (AuthComponent) => {
       super(props);
       this.state = {
         isLoading: true,
+        authorized: null,
       };
     }
 
     componentDidMount() {
       if (!Auth.loggedIn()) {
         console.debug('You do not have sufficient permissions');
-        this.props.url.pushTo('/');
+        this.setState({ authorized: false });
+        this.setState({ isLoading: false });
+        return;
       }
+      this.setState({ authorized: true });
       this.setState({ isLoading: false });
     }
 
     render() {
+      if (this.state.isLoading) {
+        return <LoadingIndicator />;
+      }
+
+      if (this.state.authorized) {
+        return <AuthComponent {...this.props} auth={Auth} />;
+      }
+
       return (
-        <div>
-          {this.state.isLoading
-          ?
-            <LoadingIndicator />
-          :
-            <AuthComponent {...this.props} auth={Auth} />
-          }
-        </div>
+        <AuthContainer>
+          Please <Link href='/login'>log in.</Link>
+        </AuthContainer>
       );
     }
   }

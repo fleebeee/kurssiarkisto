@@ -6,10 +6,13 @@ import styled from 'styled-components';
 import Rating from 'react-rating';
 import palette from '../../utils/palette.js';
 
+import AuthService from '../../utils/AuthService.js';
+import withAuth from '../../utils/withAuth.js';
+
 const propTypes = {
-  show: PropTypes.bool.isRequired,
-  close: PropTypes.func.isRequired,
+  // url: PropTypes.object.isRequired,
   submit: PropTypes.func.isRequired,
+  auth: PropTypes.instanceOf(AuthService),
 };
 
 const ReviewModalContainer = styled.div`
@@ -26,6 +29,7 @@ class ReviewModal extends Component {
     super(props);
 
     this.state = {
+      userID: this.props.auth.getProfile()._id,
       score: null,
       workload: null,
     };
@@ -34,47 +38,45 @@ class ReviewModal extends Component {
   render() {
     return (
       <ReviewModalContainer>
-        <Modal show={this.props.show} onHide={this.props.close}>
-          <Modal.Header closeButton>
-            <Modal.Title>Arvostele kurssi</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {/* eslint-disable max-len */}
-            <h4>Yleisarvosana</h4>
-            <p>Anna kurssille yleisarvosana asteikolla 1-5 (1 = huono, 5 = erinomainen).</p>
-            <StarRating
-              empty='ion-ios-star-outline'
-              full='ion-ios-star'
-              initialRate={this.state.score}
-              onClick={rate => this.setState({ score: rate })}
-            />
-            <h4>Kuormittavuus</h4>
-            <p>Arvioi kurssin kuormittavuus asteikolla 1-5 (1 = kevyt, 5 = todella raskas).</p>
-            <StarRating
-              empty='ion-ios-star-outline'
-              full='ion-ios-star'
-              initialRate={this.state.workload}
-              onClick={rate => this.setState({ workload: rate })}
-            />
-            {/* eslint-enable max-len */}
-          </Modal.Body>
-          <Modal.Footer>
-            <ButtonGroup>
-              <Button
-                bsStyle='warning'
-                onClick={() => this.props.submit(this.state)}
-              >
-                Tallenna
-              </Button>
-              <Button
-                bsStyle='warning'
-                onClick={this.props.close}
-              >
-                Sulje
-              </Button>
-            </ButtonGroup>
-          </Modal.Footer>
-        </Modal>
+        <Modal.Header closeButton>
+          <Modal.Title>Arvostele kurssi</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {/* eslint-disable max-len */}
+          <h4>Yleisarvosana</h4>
+          <p>Anna kurssille yleisarvosana asteikolla 1-5 (1 = huono, 5 = erinomainen).</p>
+          <StarRating
+            empty='ion-ios-star-outline'
+            full='ion-ios-star'
+            initialRate={this.state.score}
+            onClick={rate => this.setState({ score: rate })}
+          />
+          <h4>Kuormittavuus</h4>
+          <p>Arvioi kurssin kuormittavuus asteikolla 1-5 (1 = kevyt, 5 = todella raskas).</p>
+          <StarRating
+            empty='ion-ios-star-outline'
+            full='ion-ios-star'
+            initialRate={this.state.workload}
+            onClick={rate => this.setState({ workload: rate })}
+          />
+          {/* eslint-enable max-len */}
+        </Modal.Body>
+        <Modal.Footer>
+          <ButtonGroup>
+            <Button
+              bsStyle='warning'
+              onClick={() => this.props.submit(this.state)}
+            >
+              Tallenna
+            </Button>
+            <Button
+              bsStyle='warning'
+              onClick={this.props.close}
+            >
+              Sulje
+            </Button>
+          </ButtonGroup>
+        </Modal.Footer>
       </ReviewModalContainer>
     );
   }
@@ -82,4 +84,4 @@ class ReviewModal extends Component {
 
 ReviewModal.propTypes = propTypes;
 
-export default ReviewModal;
+export default withAuth(ReviewModal);

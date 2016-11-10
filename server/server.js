@@ -99,6 +99,7 @@ authRoutes.post('/authenticate', function(req, res) {
             success: true,
             token: 'JWT ' + token,
             profile: {
+              id: user._id,
               email: user.email,
               role: user.role,
               track: user.track,
@@ -296,7 +297,6 @@ app.post('/review', function (req, res) {
         message: 'Course or User ID not given'
       });
   } else {
-    console.log(req.body);
     var newReview = new Review({
       score: req.body.score,
       workload: req.body.workload,
