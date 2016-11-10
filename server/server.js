@@ -339,6 +339,7 @@ app.post('/review', function (req, res) {
           if (err) {
             newReview.remove(function(err) {
               console.log('Backtracking failed review add failed, PANIC!');
+              throw err;
             })
             throw err;
           }
@@ -352,19 +353,34 @@ app.post('/review', function (req, res) {
   }
 });
 
-// Get Review by ObjectId (Course has a list of IDs)
-app.get('/review/:id', function (req, res) {
-  var id = mongoose.Types.ObjectId(req.params.id);
-  Review.findById(id, function(err, review) {
+// Get Reviews for a course by course code
+app.get('/review/:code', function (req, res) {
+  var code = req.params.code;
+  Course.findOne({
+    code
+  }, function(err, course) {
+    if (err) throw err;
+    if (!course) {
+      return res.status(404).send({
+        success: false,
+        message: 'Course not found when getting reviews'
+      });
+    }
+
+    Review.find({
+        '_id': { $in: course.reviews }
+    }, function(err, reviews) {
       if (err) throw err;
-      if (!review) {
+
+      if (!reviews) {
         return res.status(404).send({
           success: false,
-          message: 'Review not found'
+          message: 'Reviews not found for course'
         });
-      } else {
-        res.json({ success: true, review });
       }
+
+      res.json({ success: true, reviews });
+    });
   });
 });
 
