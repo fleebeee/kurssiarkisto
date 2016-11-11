@@ -46,7 +46,7 @@ const CourseContainer = styled.div`
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 60%;
+  flex: 6;
   font-family: 'Raleway', Helvetica, sans serif;
   font-weight: bold;
   font-size: 1.5em;
@@ -56,20 +56,20 @@ const InfoContainer = styled.div`
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 30%;
+  flex: 3;
 `;
 
 const DataContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 70%;
+  flex: 7;
   padding-right: 10px;
 `;
 
 const MSGContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 40%;
+  flex: 4;
   background-color: #E0CAA5;
   border-radius: 10px;
   padding: 10px;
@@ -80,7 +80,7 @@ const ModalStyled = styled(Modal)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20% 10% 10% 10%;
+  padding: 10% 10% 10% 10%;
 `;
 
 
