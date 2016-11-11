@@ -1,12 +1,14 @@
 // A HOC for protected pages
-import React, { Component /* PropTypes */ } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
+
 import AuthService from './AuthService.js';
 import LoadingIndicator from '../components/LoadingIndicator.js';
+import Page from '../components/Page/Page.js';
 
 const propTypes = {
-  // something: PropTypes.any,
+  isNotPage: PropTypes.bool,
 };
 
 const AuthContainer = styled.div`
@@ -23,6 +25,8 @@ export default (AuthComponent) => {
         isLoading: true,
         authorized: null,
       };
+
+      this.logInComponent = this.logInComponent.bind(this);
     }
 
     componentDidMount() {
@@ -36,6 +40,14 @@ export default (AuthComponent) => {
       this.setState({ isLoading: false });
     }
 
+    logInComponent() {
+      return (
+        <AuthContainer>
+          Please <Link href='/login'>log in.</Link>
+        </AuthContainer>
+      );
+    }
+
     render() {
       if (this.state.isLoading) {
         return <LoadingIndicator />;
@@ -45,10 +57,13 @@ export default (AuthComponent) => {
         return <AuthComponent {...this.props} auth={Auth} />;
       }
 
+      if (this.props.isNotPage) {
+        return this.logInComponent();
+      }
       return (
-        <AuthContainer>
-          Please <Link href='/login'>log in.</Link>
-        </AuthContainer>
+        <Page>
+          {this.logInComponent()}
+        </Page>
       );
     }
   }

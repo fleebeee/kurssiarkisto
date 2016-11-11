@@ -230,6 +230,7 @@ class Course extends Component {
 
               <Modal show={this.state.showModal} onHide={this.close}>
                 <ReviewModal
+                  isNotPage
                   close={this.close}
                   submit={this.submitReview}
                 />
