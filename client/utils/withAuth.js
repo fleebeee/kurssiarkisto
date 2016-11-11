@@ -13,6 +13,14 @@ const propTypes = {
 
 const AuthContainer = styled.div`
   padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+const Split = styled.div`
+  padding: 10px 0 10px 0;
 `;
 
 export default (AuthComponent) => {
@@ -22,6 +30,7 @@ export default (AuthComponent) => {
     constructor(props) {
       super(props);
       this.state = {
+        showLogin: false,
         isLoading: true,
         authorized: null,
       };
@@ -43,7 +52,10 @@ export default (AuthComponent) => {
     logInComponent() {
       return (
         <AuthContainer>
-          Please <Link href='/login'>log in.</Link>
+          <p>Et ole kirjautunut.</p>
+          <Link href='/login'>Kirjaudu sisään</Link>
+          <Split>tai</Split>
+          <Link href='/signup'>Rekisteröidy</Link>
         </AuthContainer>
       );
     }

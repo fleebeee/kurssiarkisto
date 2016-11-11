@@ -75,6 +75,14 @@ const MSGContainer = styled.div`
   padding: 10px;
 `;
 
+const ModalStyled = styled(Modal)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20% 10% 10% 10%;
+`;
+
 
 class Course extends Component {
   constructor(props) {
@@ -228,13 +236,13 @@ class Course extends Component {
             <ButtonGroup>
               <Button bsStyle='warning' onClick={this.open}>Arvostele</Button>
 
-              <Modal show={this.state.showModal} onHide={this.close}>
+              <ModalStyled show={this.state.showModal} onHide={this.close}>
                 <ReviewModal
                   isNotPage
                   close={this.close}
                   submit={this.submitReview}
                 />
-              </Modal>
+              </ModalStyled>
 
               <Button bsStyle='warning' href='/index.js'>Muokkaa</Button>
               <Button bsStyle='warning'>Lisää suosikkeihin</Button>
