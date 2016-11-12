@@ -5,6 +5,7 @@ import fetch from 'isomorphic-fetch';
 import styled from 'styled-components';
 import _ from 'lodash';
 
+import globals from '../utils/globals.js';
 import withToast from '../utils/withToast.js';
 import Page from '../components/Page/Page.js';
 import ReviewModal from '../components/Course/ReviewModal.js';
@@ -98,13 +99,15 @@ class Course extends Component {
     const query = this.props.url.query;
     if (_.has(query, 'code')) {
       // TODO Probably move API calls elsewhere to reduce clutter
-      let res = await fetch(`http://localhost:3003/course/${query.code}`, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      });
+      let res = await fetch(
+        `${globals.API_ADDRESS}/course/${query.code}`,
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });
 
       let data = await res.json();
       if (data.success) {
@@ -112,13 +115,15 @@ class Course extends Component {
         this.setState({ course: data.course });
 
         // Fetch review data
-        res = await fetch(`http://localhost:3003/review/${query.code}`, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-        });
+        res = await fetch(
+          `${globals.API_ADDRESS}/review/${query.code}`,
+          {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+          });
         data = await res.json();
         if (data.success) {
           console.debug(
@@ -187,7 +192,7 @@ class Course extends Component {
 
     console.debug('Submitting review',
       { ...options, courseCode: this.state.course.code });
-    const res = await fetch('http://localhost:3003/review', {
+    const res = await fetch(`${globals.API_ADDRESS}/review`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

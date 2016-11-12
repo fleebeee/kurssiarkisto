@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import withToast from '../utils/withToast.js';
 import Page from '../components/Page/Page.js';
 import palette from '../utils/palette.js';
+import globals from '../utils/globals.js';
 
 const propTypes = {
   url: PropTypes.object.isRequired,
@@ -75,7 +76,7 @@ class Signup extends Component {
   }
 
   async signUp() {
-    const res = await fetch('http://localhost:3003/auth/signup', {
+    const res = await fetch(`${globals.API_ADDRESS}/auth/signup`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

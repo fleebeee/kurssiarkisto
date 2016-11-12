@@ -11,6 +11,7 @@ import Footer from './Footer.js';
 global.jQuery = global.$ = require('jquery');
 
 const propTypes = {
+  noPadding: PropTypes.bool,
   children: PropTypes.node,
 };
 
@@ -27,6 +28,10 @@ const HeaderContainer = styled.div`
 const Content = styled.div`
   flex: 1 0 auto;
   background-size: cover;
+`;
+
+const Padding = styled.div`
+  padding: 10%;
 `;
 
 const FooterContainer = styled(HeaderContainer)`
@@ -64,7 +69,11 @@ class Page extends Component {
           <Header />
         </HeaderContainer>
         <Content>
-          {this.props.children}
+          {
+            this.props.noPadding
+          ? this.props.children
+          : <Padding>{this.props.children}</Padding>
+          }
         </Content>
         <FooterContainer>
           <Footer />

@@ -4,6 +4,7 @@ import fetch from 'isomorphic-fetch';
 import _ from 'lodash';
 import styled from 'styled-components';
 import palette from '../utils/palette.js';
+import globals from '../utils/globals.js';
 
 import Page from '../components/Page/Page.js';
 
@@ -202,7 +203,7 @@ class addCourse extends Component {
       if (value) periods.push(key.toUpperCase());
     });
 
-    const res = await fetch('http://localhost:3003/course', {
+    const res = await fetch(`${globals.API_ADDRESS}/course`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

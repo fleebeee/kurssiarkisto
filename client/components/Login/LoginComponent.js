@@ -3,8 +3,9 @@ import styled from 'styled-components';
 
 import AuthService from '../../utils/AuthService';
 import palette from '../../utils/palette.js';
+import globals from '../../utils/globals.js';
 
-const auth = new AuthService('http://localhost:3003');
+const auth = new AuthService(`${globals.API_ADDRESS}`);
 
 const propTypes = {
   url: PropTypes.object.isRequired,

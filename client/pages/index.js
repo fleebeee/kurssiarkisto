@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 import Page from '../components/Page/Page.js';
 import palette from '../utils/palette.js';
+import globals from '../utils/globals.js';
 
 const API_MIN_DELAY = 500; // milliseconds
 
@@ -69,7 +70,7 @@ class Search extends Component {
 
     // TODO Cache
 
-    const res = await fetch(`http://localhost:3003/search/${keywords}`);
+    const res = await fetch(`${globals.API_ADDRESS}/search/${keywords}`);
     const data = await res.json();
     if (data.success) {
       this.setState({ options: data.courses });
@@ -104,7 +105,7 @@ class Search extends Component {
 
   render() {
     return (
-      <Page>
+      <Page noPadding>
         <SearchContainer>
           <SearchInputContainer>
             <input

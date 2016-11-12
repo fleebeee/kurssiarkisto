@@ -3,12 +3,12 @@ import styled from 'styled-components';
 // import _ from 'lodash';
 import fetch from 'isomorphic-fetch';
 import palette from '../utils/palette.js';
+import globals from '../utils/globals.js';
 
 import Page from '../components/Page/Page.js';
 import AuthService from '../utils/AuthService.js';
 import withAuth from '../utils/withAuth.js';
 import withToast from '../utils/withToast.js';
-
 
 // Formatting
 const propTypes = {
@@ -184,7 +184,7 @@ class Mypage extends Component {
       return;
     }
 
-    const res = await fetch('http://localhost:3003/user', {
+    const res = await fetch(`${globals.API_ADDRESS}/user`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
