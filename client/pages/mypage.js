@@ -126,8 +126,8 @@ class Mypage extends Component {
     super(props);
     this.state = {
       user: props.auth.getProfile(),
-      firstName: '',
-      surName: '',
+      nickName: '',
+      role: '',
       email: '',
       track: '',
       freshmanYear: '',
@@ -154,15 +154,9 @@ class Mypage extends Component {
       });
     };
 
-    if (!this.state.firstName) {
-      console.debug('Firstname is required!');
-      missingField('Etunimi on pakollinen kenttä');
-      return;
-    }
-
-    if (!this.state.surName) {
-      console.debug('Surname is required!');
-      missingField('Sukunimi on pakollinen kenttä');
+    if (!this.state.nickName) {
+      console.debug('Nickname is required!');
+      missingField('Nimimerkki on pakollinen kenttä');
       return;
     }
 
@@ -172,16 +166,9 @@ class Mypage extends Component {
       return;
     }
 
-    if (!this.state.track) {
-      console.debug('Track is required!');
-      missingField('Opintolinja on pakollinen kenttä');
-      return;
-    }
-
-    if (!this.state.freshmanYear) {
-      console.debug('Freshman Year is required!');
-      missingField('Opintojen aloitusvuosi on pakollinen kenttä');
-      return;
+    if (this.state.newPassword !== this.state.newPasswordAgain) {
+      console.debug('Passwords dont match!');
+      missingField('Uuden salasanan vahvistus epäonnistui');
     }
 
     const res = await fetch(`${globals.API_ADDRESS}/user`, {
@@ -191,8 +178,8 @@ class Mypage extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        firstname: this.state.firstName,
-        surname: this.state.surName,
+        nick: this.state.nickName,
+        role: this.state.role,
         email: this.state.email,
         track: this.state.track,
         freshmanYear: this.state.freshmanYear,
@@ -234,26 +221,14 @@ class Mypage extends Component {
               <Form>
                 <BasicInformation>
                   <QuestionBox>
-                    <SmallHeader>Etunimi</SmallHeader>
+                    <SmallHeader>Nimimerkki</SmallHeader>
                     <TextField
                       className='form-control'
-                      id='firstName'
+                      id='nickName'
                       type='text'
-                      placeholder='etunimi'
-                      value={this.state.firstName}
-                      onChange={this.handleTextChange.bind(this, 'firstName')}
-                    />
-                  </QuestionBox>
-
-                  <QuestionBox>
-                    <SmallHeader>Sukunimi</SmallHeader>
-                    <TextField
-                      className='form-control'
-                      id='surName'
-                      type='text'
-                      placeholder='sukunimi'
-                      value={this.state.surName}
-                      onChange={this.handleTextChange.bind(this, 'surName')}
+                      placeholder='nimimerkki'
+                      value={this.state.nickName}
+                      onChange={this.handleTextChange.bind(this, 'nickName')}
                     />
                   </QuestionBox>
 
@@ -266,6 +241,18 @@ class Mypage extends Component {
                       placeholder={this.state.user.data}
                       value={this.state.email}
                       onChange={this.handleTextChange.bind(this, 'email')}
+                    />
+                  </QuestionBox>
+
+                  <QuestionBox>
+                    <SmallHeader>Rooli</SmallHeader>
+                    <TextField
+                      className='form-control'
+                      id='role'
+                      type='text'
+                      placeholder='opiskelija/ opettaja/ kurssihenkilökunta'
+                      value={this.state.role}
+                      onChange={this.handleTextChange.bind(this, 'role')}
                     />
                   </QuestionBox>
 
@@ -335,7 +322,7 @@ class Mypage extends Component {
                       type='text'
                       placeholder='nykyinen salasana'
                       value={this.state.oldPassword}
-                      onChange={this.handleTextChange}
+                      onChange={this.handleTextChange.bind(this, 'oldPassword')}
                     />
                     <TextFieldWithPaddings
                       className='form-control'
@@ -343,7 +330,7 @@ class Mypage extends Component {
                       type='text'
                       placeholder='uusi salasana'
                       value={this.state.newPassword}
-                      onChange={this.handleTextChange}
+                      onChange={this.handleTextChange.bind(this, 'newPassword')}
                     />
                     <TextFieldWithPaddings
                       className='form-control'
@@ -351,7 +338,8 @@ class Mypage extends Component {
                       type='text'
                       placeholder='uusi salasana uudestaan'
                       value={this.state.newPasswordAgain}
-                      onChange={this.handleTextChange}
+                      onChange={this.handleTextChange.bind(this,
+                        'newPasswordAgain')}
                     />
                   </QuestionBox>
                   <SaveMyPageButton
