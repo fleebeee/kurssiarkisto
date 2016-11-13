@@ -303,7 +303,7 @@ class Mypage extends Component {
                     <TextField
                       className='form-control'
                       id='freshmanYear'
-                      type='text'
+                      type='number'
                       placeholder='opintojen aloitusvuosi'
                       value={this.state.freshmanYear}
                       onChange={
@@ -319,7 +319,7 @@ class Mypage extends Component {
                     <TextFieldWithPaddings
                       className='form-control'
                       id='oldPassword'
-                      type='text'
+                      type='password'
                       placeholder='nykyinen salasana'
                       value={this.state.oldPassword}
                       onChange={this.handleTextChange.bind(this, 'oldPassword')}
@@ -327,7 +327,7 @@ class Mypage extends Component {
                     <TextFieldWithPaddings
                       className='form-control'
                       id='newPassword'
-                      type='text'
+                      type='password'
                       placeholder='uusi salasana'
                       value={this.state.newPassword}
                       onChange={this.handleTextChange.bind(this, 'newPassword')}
@@ -335,7 +335,7 @@ class Mypage extends Component {
                     <TextFieldWithPaddings
                       className='form-control'
                       id='newPasswordAgain'
-                      type='text'
+                      type='password'
                       placeholder='uusi salasana uudestaan'
                       value={this.state.newPasswordAgain}
                       onChange={this.handleTextChange.bind(this,
