@@ -22,9 +22,20 @@ const Content = styled.div`
   margin: 5%;
 `;
 
+const RegisterText = styled.h2`
+  text-transform: uppercase;
+  padding-bottom: 20px;
+`;
+
 const TrackText = styled.span`
   color: ${palette.titleGrey}
   font-size: 1em;
+`;
+
+const OptionalText = styled.h4`
+  text-transform: uppercase;
+  padding-top: 20px;
+  color: ${palette.headerGrey}
 `;
 
 const Label = styled.label`
@@ -130,7 +141,8 @@ class Signup extends Component {
         <Content>
           <div>
 
-            <h2>Rekisteröidy</h2>
+            <RegisterText>Rekisteröidy</RegisterText>
+            <OptionalText>Pakolliset kentät</OptionalText>
             <Label>sähköposti</Label>
             <input
               className='form-control'
@@ -149,7 +161,7 @@ class Signup extends Component {
               value={this.state.password}
               onChange={this.handleTextChange.bind(this, 'password')}
             />
-            <h4>Valinnaiset kentät</h4>
+            <OptionalText>Valinnaiset kentät</OptionalText>
             <Label>opintolinja</Label>
             <div className='dropdown'>
               <button
@@ -203,12 +215,12 @@ class Signup extends Component {
               value={this.state.startingYear}
               onChange={this.handleTextChange.bind(this, 'startingYear')}
             />
-            <Label>lempinimi</Label>
+            <Label>nimimerkki</Label>
             <input
               className='form-control'
               id='nickname'
               type='text'
-              placeholder='lempinimi'
+              placeholder='nimimerkki'
               value={this.state.nickname}
               onChange={this.handleTextChange.bind(this, 'nickname')}
             />

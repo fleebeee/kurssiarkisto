@@ -19,6 +19,10 @@ const LoginContainer = styled.div`
   background-color: ${palette.orange};
   border-radius: 10px;
 `;
+const LoginText = styled.h2`
+  text-transform: uppercase;
+
+`;
 
 const Field = styled.input`
   margin-top: 10px;
@@ -99,7 +103,7 @@ class LoginComponent extends Component {
   render() {
     return (
       <LoginContainer>
-        <h2>Kirjaudu sisään</h2>
+        <LoginText>Kirjaudu sisään</LoginText>
         <Field
           className='form-control'
           type='text'
