@@ -7,7 +7,7 @@ First, install [Node.js](https://nodejs.org/en/) and verify that it's working by
 
     $ git clone https://github.com/Flibo/kurssiarkisto.git
 
-The service is split into three smaller services that you must run concurrently. Once they are running, you can access the website at localhost:8000.
+The service is split into three smaller services that you must run concurrently. Once they are running, you can access the website at localhost:3000.
 
 ### Database
 
@@ -25,7 +25,7 @@ Enter the following commands into your terminal:
     $ cd server
     $ npm install
 
-After these steps, you can run the server with `node server.js` and visit localhost:3003 in your browser to use the server API.
+After these steps, you can run the server with `npm run dev` and visit localhost:3003 in your browser to use the server API.
 
 ### Client
 
