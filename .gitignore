@@ -17,6 +17,8 @@ Desktop.ini
 node_modules
 *.log
 *.gz
+client/build
+server/build
 
 
 # Coveralls
