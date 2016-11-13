@@ -31,7 +31,7 @@ const Content = styled.div`
 `;
 
 const Padding = styled.div`
-  padding: 10%;
+  padding: 5%;
 `;
 
 const FooterContainer = styled(HeaderContainer)`
