@@ -32,8 +32,8 @@ const Arrow = styled.img`
 
 const CourseContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
-  width: 100%;
   margin-top: 15px;
 `;
 
@@ -48,13 +48,11 @@ const InfoContainer = styled.div`
 `;
 
 const TextContainer = styled.div`
-  display: flex;
   flex-direction: column;
   flex: 3;
 `;
 
 const DataContainer = styled.div`
-  display: flex;
   flex-direction: column;
   flex: 7;
   padding-right: 10px;
@@ -62,12 +60,9 @@ const DataContainer = styled.div`
 `;
 
 const MSGContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 4;
   background-color: #E0CAA5;
   border-radius: 10px;
-  padding: 10px;
+  padding: 15px;
 `;
 
 const ModalStyled = styled(Modal)`
