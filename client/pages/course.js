@@ -19,17 +19,10 @@ const propTypes = {
 const NameContainer = styled.div`
   display: flex;
   font-family: 'Raleway', Helvetica, sans serif;
-  color: #6A7C90;
+  font-weight: bold;
+  color: #95989A;
+  font-size: 3em;
 `;
-
-const Box = styled.div`
-  display: block;
-  position: relative;
-  width: 92%;
-  margin-top: 30px;
-  left: 4%;
-`;
-
 
 const Arrow = styled.img`
   width: 55px;
@@ -65,6 +58,7 @@ const DataContainer = styled.div`
   flex-direction: column;
   flex: 7;
   padding-right: 10px;
+  padding-left: 10px;
 `;
 
 const MSGContainer = styled.div`
@@ -228,13 +222,12 @@ class Course extends Component {
   render() {
     return (
       <Page>
-        <Box>
           <NameContainer>
             <Arrow
               src='/static/images/back-arrow.png'
               alt='Takaisin hakuun'
             />
-            <h1>{this.state.course.code} {this.state.course.name}</h1>
+            <p>{this.state.course.code} {this.state.course.name}</p>
           </NameContainer>
           <CourseContainer>
 
@@ -249,7 +242,7 @@ class Course extends Component {
                 />
               </ModalStyled>
 
-              <Button bsStyle='warning' href='/index.js'>Muokkaa</Button>
+              <Button bsStyle='warning'>Muokkaa</Button>
               <Button bsStyle='warning'>Lisää suosikkeihin</Button>
             </ButtonGroup>
           </CourseContainer>
@@ -283,7 +276,6 @@ class Course extends Component {
               </p>
             </MSGContainer>
           </CourseContainer>
-        </Box>
       </Page>
     );
   }
