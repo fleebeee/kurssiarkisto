@@ -1,7 +1,14 @@
 # kurssiarkisto
 Kurssiarkisto, project for CS-E4400 - Design of WWW Services in Autumn 2016
 
-## Setting up the environment on OS X
+## Description
+A service for Aalto university students and personnel to write and read reviews and comments about courses and find basic information about them.
+
+## Technologies
+
+The service consists of a Express.js REST API that feeds into a Next.js (a React-based framework) client. There's a MongoDB database that the server uses to fetch and store data. We use Babel to enable ES6 syntax and eslint to enforce a common programming style throughout the project.
+
+## Setting up the development environment on OS X
 
 First, install [Node.js](https://nodejs.org/en/) and verify that it's working by typing `node -v` into your terminal. Then you need to clone the repository:
 
@@ -36,6 +43,35 @@ The client can be set up by entering these commands into your terminal:
 
 You can run the client with `npm run dev`. The client i.e. the public interface for the web service is available at localhost:3000.
 
+## Deployment
+
+TODO: Build instructions for server
+
+### DigitalOcean
+
+Rough instructions on Ubuntu 16:
+
+    $ curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+    $ sudo apt-get install -y nodejs
+
+Setup a SSH key for GitHub
+    
+    $ git clone git@github.com:Flibo/kurssiarkisto.git
+    $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+    $ echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+    $ sudo apt-get update
+    $ sudo apt-get install -y mongodb-org=3.2.10 mongodb-org-server=3.2.10 mongodb-org-shell=3.2.10 mongodb-org-mongos=3.2.10 mongodb-org-tools=3.2.10
+    $ sudo service mongod start
+    $ sudo apt-get install python
+    $ npm install -g node-gyp
+    $ sudo apt-get install build-essential
+    $ npm install
+    $ export LC_ALL=C
+
+Setup nginx
+
+    $ sudo service nginx restart
+    
 ## Basic workflow
 
 When you start working on something, first do a `git pull`. When you're done with changing stuff, type `git add .` and `git commit -m "Useful commit message"`. If everything went smoothly, you can push your changes to this repository with `git push`.
