@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 // import ls from 'local-storage';
 import styled from 'styled-components';
 
+import palette from '../../utils/palette.js';
 import Navigation from './Navigation.js';
 
 const propTypes = {
@@ -13,7 +14,7 @@ const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #6A7C90;
+  background-color: ${palette.headerGrey};
 `;
 
 const Logo = styled.img`

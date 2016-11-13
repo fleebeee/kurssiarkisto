@@ -3,15 +3,28 @@ import React, { Component, PropTypes } from 'react';
 // import ls from 'local-storage';
 import styled from 'styled-components';
 import Link from 'next/link';
+import _ from 'lodash';
 
+import AuthService from '../../utils/AuthService';
 import palette from '../../utils/palette.js';
+import globals from '../../utils/globals.js';
+
+const auth = new AuthService(`${globals.API_ADDRESS}`);
 
 const propTypes = {
   children: PropTypes.node,
 };
 
 const NavigationContainer = styled.div`
+  display: flex;
+  align-items: center;
   margin-right: 15px;
+`;
+
+const Email = styled.div`
+  color: ${palette.white};
+  font-size: 13px;
+  margin-right: 10px;
 `;
 
 const Icon = styled.i`
@@ -45,12 +58,19 @@ const Icon = styled.i`
 class Navigation extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { user: {} };
+  }
+
+  componentDidMount() {
+    this.setState({ user: auth.getProfile() });
   }
 
   render() {
     return (
       <NavigationContainer>
+        <Email>
+          {this.state.user.email}
+        </Email>
         <div className='dropdown'>
           <div
             className='dropdown-toggle'
@@ -61,19 +81,31 @@ class Navigation extends Component {
           >
             <Icon className='ion-navicon' />
           </div>
-          <ul
-            className='dropdown-menu pull-right'
-            aria-labelledby='dropdownMenu1'
-          >
-            <li><Link href='/'>Etusivu</Link></li>
-            <li><Link href='/login'>Kirjaudu sisään</Link></li>
-            <li><Link href='/signup'>Rekisteröidy</Link></li>
-            <li role='separator' className='divider' />
-            <li><Link href='/course'>Kurssi</Link></li>
-            <li><Link href='/addcourse'>Lisää kurssi</Link></li>
-            <li><Link href='/preferences'>Suosikit</Link></li>
-            <li><Link href='/mypage'>Omat tiedot</Link></li>
-          </ul>
+          {
+            _.isEmpty(this.state.user)
+          ?
+            <ul
+              className='dropdown-menu pull-right'
+              aria-labelledby='dropdownMenu1'
+            >
+              <li><Link href='/'>Etusivu</Link></li>
+              <li role='separator' className='divider' />
+              <li><Link href='/login'>Kirjaudu sisään</Link></li>
+              <li><Link href='/signup'>Rekisteröidy</Link></li>
+            </ul>
+          :
+            <ul
+              className='dropdown-menu pull-right'
+              aria-labelledby='dropdownMenu1'
+            >
+              <li><Link href='/'>Etusivu</Link></li>
+              <li><Link href='/addcourse'>Lisää kurssi</Link></li>
+              <li><Link href='/preferences'>Suosikit</Link></li>
+              <li><Link href='/mypage'>Omat tiedot</Link></li>
+              <li role='separator' className='divider' />
+              <li><Link href='/logout'>Kirjaudu ulos</Link></li>
+            </ul>
+          }
         </div>
       </NavigationContainer>
     );

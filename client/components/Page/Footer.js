@@ -3,16 +3,25 @@ import React, { Component, PropTypes } from 'react';
 // import ls from 'local-storage';
 import styled from 'styled-components';
 
+import palette from '../../utils/palette.js';
+
 const propTypes = {
   children: PropTypes.node,
 };
 
 const FooterContainer = styled.div`
-  background-color: #FF7E00;
+  display: flex;
+  align-items: center;
+  background-color: ${palette.headerGrey};
+  min-height: 40px;
   font-family: 'Helvetica Neue', Helvetica, sans serif;
   font-size: 0.9em;
-  color: #FFFFFF;
+  color: ${palette.white};
   padding-left: 10px;
+`;
+
+const Content = styled.div`
+  display: block;
 `;
 
 class Footer extends Component {
@@ -24,7 +33,7 @@ class Footer extends Component {
   render() {
     return (
       <FooterContainer>
-        CSE-E4400 Design of WWW Services
+        <Content>CSE-E4400 Design of WWW Services</Content>
       </FooterContainer>
     );
   }

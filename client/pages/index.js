@@ -94,11 +94,7 @@ class Search extends Component {
         <Link href={`/course?code=${option.code}`}>
           <CourseLink>{option.code} - {option.name}</CourseLink>
         </Link>
-        <div>
-          tähdet kuormittavuus 3,2
-          | opintopisteet {option.credits || 'ei dataa'}&nbsp;
-          | 123 arvostelua
-        </div>
+        <div>opintopisteet {option.credits || 'n/a'}</div>
       </Course>
     );
   }
