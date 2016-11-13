@@ -1,4 +1,3 @@
-/* eslint-disable */
 use kurssiarkisto
 
 db.courses.insert({
