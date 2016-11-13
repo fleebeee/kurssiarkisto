@@ -1,29 +1,28 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+import mongoose from 'mongoose';
 
-var CommentSchema = new Schema({
-	userID: {
-		type: Schema.Types.ObjectId,
-		required: true,
-	},
+const Schema = mongoose.Schema;
 
-	courseCode: {
-		type: String,
-		required: true,
-	},
+const CommentSchema = new Schema({
+  userID: {
+    type: Schema.Types.ObjectId,
+    required: true,
+  },
 
-	timestamp: { // timestamp of the comment in UTC milliseconds
-		type: Date,
-		required: true,
-	},
+  courseCode: {
+    type: String,
+    required: true,
+  },
 
-	content: { // comment content
-		type: String,
-		required: true,
-	},
+  timestamp: { // timestamp of the comment in UTC milliseconds
+    type: Date,
+    required: true,
+  },
 
-})
-
+  content: { // comment content
+    type: String,
+    required: true,
+  },
+});
 
 
 module.exports = mongoose.model('Comment', CommentSchema);

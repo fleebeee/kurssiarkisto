@@ -1,19 +1,19 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-require('mongoose-type-email');
-var bcrypt = require('bcrypt');
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
-var UserSchema = new Schema({
+const Schema = mongoose.Schema;
+require('mongoose-type-email');
+
+const UserSchema = new Schema({
   email: {
     type: mongoose.SchemaTypes.Email,
     unique: true,
     trim: true,
     lowercase: true,
-    unique: true
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   role: {
     type: String,
@@ -34,36 +34,69 @@ var UserSchema = new Schema({
   favorites: {
     type: [Schema.Types.Objectid],
     required: false,
-  }
+  },
 });
 
-UserSchema.pre('save', function (next) {
-    var user = this;
-    if (this.isModified('password') || this.isNew) {
-        bcrypt.genSalt(10, function (err, salt) {
-            if (err) {
-                return next(err);
-            }
-            bcrypt.hash(user.password, salt, function (err, hash) {
-                if (err) {
-                    return next(err);
-                }
-                user.password = hash;
-                next();
-            });
-        });
-    } else {
-        return next();
-    }
-});
-
-UserSchema.methods.comparePassword = function (passw, cb) {
-    bcrypt.compare(passw, this.password, function (err, isMatch) {
-        if (err) {
-            return cb(err);
+/* UserSchema.pre('save', (next) => {
+  const user = this;
+  if (this.isModified('password') || this.isNew) {
+    bcrypt.genSalt(10, (err, salt) => {
+      if (err) {
+        return next(err);
+      }
+      bcrypt.hash(user.password, salt, (err2, hash) => {
+        if (err2) {
+          return next(err2);
         }
-        cb(null, isMatch);
+        user.password = hash;
+        return next();
+      });
+      console.log('Something went wrong');
+      return next();
     });
+  }
+  return next();
+});
+
+UserSchema.methods.comparePassword = (passw, cb) => {
+  bcrypt.compare(passw, this.password, (err, isMatch) => {
+    if (err) {
+      return cb(err);
+    }
+    return cb(null, isMatch);
+  });
+}; */
+
+UserSchema.pre('save', function s(next) {
+  const user = this;
+  if (this.isModified('password') || this.isNew) {
+    bcrypt.genSalt(10, (err, salt) => {
+      if (err) {
+        return next(err);
+      }
+      bcrypt.hash(user.password, salt, (err2, hash) => {
+        if (err2) {
+          return next(err2);
+        }
+        user.password = hash;
+        return next();
+      });
+      return next();
+    });
+  }
+  return next();
+});
+
+// Since this can't be bound to anything else in arrow functions,
+// they can't be used with the new keyword, since that needs to bind
+// this to a new object.
+UserSchema.methods.comparePassword = function cp(passw, cb) {
+  bcrypt.compare(passw, this.password, (err, isMatch) => {
+    if (err) {
+      return cb(err);
+    }
+    return cb(null, isMatch);
+  });
 };
 
 module.exports = mongoose.model('User', UserSchema);

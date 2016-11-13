@@ -1,7 +1,8 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+import mongoose from 'mongoose';
 
-var ReviewSchema = new Schema({
+const Schema = mongoose.Schema;
+
+const ReviewSchema = new Schema({
   workload: {
     type: Number, // a number from 0 to 5
     required: true,

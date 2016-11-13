@@ -1,7 +1,8 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+import mongoose from 'mongoose';
 
-var CourseSchema = new Schema({
+const Schema = mongoose.Schema;
+
+const CourseSchema = new Schema({
   name: {
     type: String, // 'Design of WWW Services'
     required: [true, 'Course name is required'],
@@ -9,7 +10,8 @@ var CourseSchema = new Schema({
   code: {
     type: String, // 'CS-E4400'
     required: [true, 'Course code is required'],
-    unique: [true, 'Course code has to be unique'], // 'Primary key', let's trust Aalto not to have duplicate course codes
+    // 'Primary key', let's trust Aalto not to have duplicate course codes
+    unique: [true, 'Course code has to be unique'],
   },
   reviews: {
     type: [Schema.Types.ObjectId],
@@ -22,10 +24,11 @@ var CourseSchema = new Schema({
   myCoursesLink: {
     type: String,
     validate: {
-      validator: function(v) {
-        return /^$|^https:\/\/mycourses\.aalto\.fi\/course\/view\.php\?id\=[0-9]+$/g.test(v);
+      validator: (v) => {
+        /* eslint-disable max-len */
+        return /^$|^https:\/\/mycourses\.aalto\.fi\/course\/view\.php\?id=[0-9]+$/g.test(v);
       },
-      message: '\'{VALUE}\' is not a valid MyCoursesLink. It should satisfy this RegExp: /^$|^https:\/\/mycourses\.aalto\.fi\/course\/view\.php\?id\=[0-9]+$/g'
+      message: '\'{VALUE}\' is not a valid MyCoursesLink. It should satisfy this RegExp: /^$|^https:\\/\\/mycourses\\.aalto\\.fi\\/course\\/view\\.php\\?id=[0-9]+$/g',
     },
     required: false,
   },
@@ -39,7 +42,7 @@ var CourseSchema = new Schema({
   },
   credits: {
     type: Number,
-    required: false
+    required: false,
   },
   periods: {
     type: [String], // ['I', 'III-IV' ] for example

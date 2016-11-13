@@ -4,7 +4,9 @@
   "description": "Course archive web service for users to spread information about courses",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint app/** config/** server.js; exit 0",
+    "start-dev": "babel-node server",
+    "dev": "nodemon --exec \"npm run lint && npm run start-dev\""
   },
   "repository": {
     "type": "git",
@@ -39,5 +41,14 @@
     "passport": "^0.3.2",
     "passport-jwt": "^2.1.0"
   },
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-eslint": "^7.1.0",
+    "babel-preset-es2015": "^6.18.0",
+    "eslint": "^3.10.0",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "nodemon": "^1.11.0"
+  }
 }
