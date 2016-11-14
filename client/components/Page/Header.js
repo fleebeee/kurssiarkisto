@@ -3,6 +3,8 @@ import React, { Component, PropTypes } from 'react';
 // import ls from 'local-storage';
 import styled from 'styled-components';
 import Link from 'next/link';
+
+import globals from '../../utils/globals.js';
 import palette from '../../utils/palette.js';
 import Navigation from './Navigation.js';
 
@@ -27,6 +29,9 @@ const PageTitle = styled.div`
   left: 50%;
   vertical-align: center;
   transform: translate(-50%);
+  @media (max-width: ${globals.XS_BREAKPOINT}) { 
+    display: none;
+  }
 `;
 
 const Logo = styled.img`
@@ -45,12 +50,12 @@ class Header extends Component {
     return (
       <HeaderContainer>
         <Link href='/'>
-        <Logo
-          src='/static/images/logo-oranssi.png'
-          alt='Kurssiarkisto logo'
-        />
+          <Logo
+            src='/static/images/logo-oranssi.png'
+            alt='Kurssiarkisto logo'
+          />
         </Link>
-        <PageTitle> Kurssiarkisto </PageTitle>
+        <PageTitle>Kurssiarkisto</PageTitle>
         <Navigation />
       </HeaderContainer>
     );
