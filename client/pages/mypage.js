@@ -344,7 +344,145 @@ class Mypage extends Component {
             </Form>
           </Content>
         </myPageContainer>
+=======
 
+          <myPageContainer>
+            <Title>Omat tiedot</Title>
+            <Content>
+              <Form>
+                <BasicInformation>
+                  <QuestionBox>
+                    <SmallHeader>Nimimerkki</SmallHeader>
+                    <TextField
+                      className='form-control'
+                      id='nickName'
+                      type='text'
+                      placeholder='nimimerkki'
+                      value={this.state.nickName}
+                      onChange={this.handleTextChange.bind(this, 'nickName')}
+                    />
+                  </QuestionBox>
+
+                  <QuestionBox>
+                    <SmallHeader>Sähköposti</SmallHeader>
+                    <TextField
+                      className='form-control'
+                      id='email'
+                      type='text'
+                      placeholder={this.state.user.data}
+                      value={this.state.email}
+                      onChange={this.handleTextChange.bind(this, 'email')}
+                    />
+                  </QuestionBox>
+
+                  <QuestionBox>
+                    <SmallHeader>Rooli</SmallHeader>
+                    <TextField
+                      className='form-control'
+                      id='role'
+                      type='text'
+                      placeholder='opiskelija/ opettaja/ kurssihenkilökunta'
+                      value={this.state.role}
+                      onChange={this.handleTextChange.bind(this, 'role')}
+                    />
+                  </QuestionBox>
+
+                  <QuestionBox>
+                    <SmallHeader>Opintolinja</SmallHeader>
+                    <OptionboxField>
+                      <DropdownBox className='dropdown'>
+                        <button
+                          className='btn btn-xs btn-default dropdown-toggle'
+                          type='button'
+                          id='dropdownMenu'
+                          data-toggle='dropdown'
+                          aria-haspopup='true'
+                          aria-expanded='true'
+                        >
+                          <TrackText>
+                            {this.state.track || 'opintolinja'}&nbsp;
+                          </TrackText>
+                          <span className='caret' />
+                        </button>
+                        <ul
+                          className='dropdown-menu'
+                          aria-labelledby='trackDropdown'
+                        >
+                          {
+                            ['TUO', 'TIK', 'INF', 'AUT', 'BTT', 'ENE', 'KON',
+                              'TFM', 'RYM', 'RRT', 'BIO', 'EST', 'ARK'].map(
+                            option =>
+                              <li key={option}>
+                                <a
+                                  tabIndex='0'
+                                  onClick={() =>
+                                    this.handleTrackChange(option)
+                                  }
+                                >
+                                  {option}
+                                </a>
+                              </li>
+                            )
+                          }
+                        </ul>
+                      </DropdownBox>
+                    </OptionboxField>
+                  </QuestionBox>
+
+                  <QuestionBox>
+                    <SmallHeader>Opintojen aloitusvuosi</SmallHeader>
+                    <TextField
+                      className='form-control'
+                      id='freshmanYear'
+                      type='number'
+                      placeholder='opintojen aloitusvuosi'
+                      value={this.state.freshmanYear}
+                      onChange={
+                        this.handleTextChange.bind(this, 'freshmanYear')
+                      }
+                    />
+                  </QuestionBox>
+                </BasicInformation>
+
+                <Password>
+                  <QuestionBox>
+                    <SmallHeader>Vaihda salasana</SmallHeader>
+                    <TextFieldWithPaddings
+                      className='form-control'
+                      id='oldPassword'
+                      type='password'
+                      placeholder='nykyinen salasana'
+                      value={this.state.oldPassword}
+                      onChange={this.handleTextChange.bind(this, 'oldPassword')}
+                    />
+                    <TextFieldWithPaddings
+                      className='form-control'
+                      id='newPassword'
+                      type='password'
+                      placeholder='uusi salasana'
+                      value={this.state.newPassword}
+                      onChange={this.handleTextChange.bind(this, 'newPassword')}
+                    />
+                    <TextFieldWithPaddings
+                      className='form-control'
+                      id='newPasswordAgain'
+                      type='password'
+                      placeholder='uusi salasana uudestaan'
+                      value={this.state.newPasswordAgain}
+                      onChange={this.handleTextChange.bind(this,
+                        'newPasswordAgain')}
+                    />
+                  </QuestionBox>
+                  <SaveMyPageButton
+                    className='btn'
+                    onClick={this.handleSubmit}
+                  >
+                    Tallenna muutokset
+                  </SaveMyPageButton>
+                </Password>
+              </Form>
+            </Content>
+          </myPageContainer>
       </Page>
 
     );
