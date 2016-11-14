@@ -7,6 +7,7 @@ import _ from 'lodash';
 
 import globals from '../utils/globals.js';
 import palette from '../utils/palette.js';
+import Link from 'next/link';
 import withToast from '../utils/withToast.js';
 import Page from '../components/Page/Page.js';
 import ReviewModal from '../components/Course/ReviewModal.js';
@@ -213,10 +214,12 @@ class Course extends Component {
     return (
       <Page>
           <NameContainer>
+            <Link href='/'>
             <Arrow
               src='/static/images/back-arrow.png'
               alt='Takaisin hakuun'
             />
+            </Link>
             <p>{this.state.course.code} {this.state.course.name}</p>
           </NameContainer>
           <CourseContainer>
@@ -269,11 +272,11 @@ class Course extends Component {
               </Row>
               <Row className="show-grid">
                 <ColStyled xs={6} sm={4} md={4}>Läsnäolopakko</ColStyled>
-                <ColStyled xs={4} sm={4} md={5}>{String(this.state.course.mandatoryAttendance)} </ColStyled>
+                <ColStyled xs={4} sm={4} md={5}> {this.state.course.mandatoryAttendance ? 'Kyllä' : 'Ei'} </ColStyled>
               </Row>
               <Row className="show-grid">
                 <ColStyled xs={6} sm={4} md={4}> MyCourses</ColStyled>
-                <ColStyled xs={4} sm={4} md={5}><a href={this.state.course.myCoursesLink}>Linkki </a></ColStyled>
+                <ColStyled xs={4} sm={4} md={5}><a href={this.state.course.myCoursesLink} target="_blank">Linkki </a></ColStyled>
               </Row>
             </InfoContainer>
 
