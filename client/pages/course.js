@@ -34,7 +34,6 @@ const Arrow = styled.img`
 const CourseContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
   margin-top: 15px;
 `;
 
@@ -65,6 +64,9 @@ const ModalStyled = styled(Modal)`
   padding: 10% 10% 10% 10%;
 `;
 
+const ColStyled = styled(Col)`
+  margin-right: 20px;
+`;
 
 class Course extends Component {
   constructor(props) {
@@ -237,32 +239,32 @@ class Course extends Component {
             <InfoContainer>
 
               <Row className="show-grid">
-                <Col xs={6} md={5}>Yleisarvosana</Col>
-                <Col xs={4} md={5}>4.5</Col>
+                <ColStyled xs={6} sm={4} md={4}>Yleisarvosana</ColStyled>
+                <ColStyled xs={4} sm={4} md={5}>4.5</ColStyled>
               </Row>
               <Row className="show-grid">
-                <Col xs={6} md={5}>Kuormittavuus</Col>
-                <Col xs={4} md={5}>3</Col>
+                <ColStyled xs={6} sm={4} md={4}>Kuormittavuus</ColStyled>
+                <ColStyled xs={4} sm={4} md={5}>3</ColStyled>
               </Row>
               <Row className="show-grid">
-                <Col xs={6} md={5}>Periodit </Col>
-                <Col xs={4} md={5}>{this.state.course.periods}</Col>
+                <ColStyled xs={6} sm={4} md={4}>Periodit </ColStyled>
+                <ColStyled xs={4} sm={4} md={5}>{this.state.course.periods}</ColStyled>
               </Row>
               <Row className="show-grid">
-                <Col xs={6} md={5}>Opintopisteet</Col>
-                <Col xs={4} md={5}>{this.state.course.credits}</Col>
+                <ColStyled xs={6} sm={4} md={4}>Opintopisteet</ColStyled>
+                <ColStyled xs={4} sm={4} md={5}>{this.state.course.credits}</ColStyled>
               </Row>
               <Row className="show-grid">
-                <Col xs={6} md={5}>Suoritusmuodot</Col>
-                <Col xs={4} md={5}>{this.state.course.passingMechanisms}</Col>
+                <ColStyled xs={6} sm={4} md={4}>Suoritusmuodot</ColStyled>
+                <ColStyled xs={4} sm={4} md={5}>{this.state.course.passingMechanisms}</ColStyled>
               </Row>
               <Row className="show-grid">
-                <Col xs={6} md={5}>Läsnäolopakko</Col>
-                <Col xs={4} md={5}>{this.state.course.mandatoryAttendance}</Col>
+                <ColStyled xs={6} sm={4} md={4}>Läsnäolopakko</ColStyled>
+                <ColStyled xs={4} sm={4} md={5}>{String(this.state.course.mandatoryAttendance)}</ColStyled>
               </Row>
               <Row className="show-grid">
-                <Col xs={6} md={5}> MyCourses</Col>
-                <Col xs={4} md={5}><a href={this.state.course.myCoursesLink}>Paina tästä </a></Col>
+                <ColStyled xs={6} sm={4} md={4}> MyCourses</ColStyled>
+                <ColStyled xs={4} sm={4} md={5}><a href={this.state.course.myCoursesLink}>Paina tästä </a></ColStyled>
               </Row>
             </InfoContainer>
 
