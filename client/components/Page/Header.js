@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 // import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
 import styled from 'styled-components';
-
+import Link from 'next/link';
 import palette from '../../utils/palette.js';
 import Navigation from './Navigation.js';
 
@@ -32,10 +32,12 @@ class Header extends Component {
   render() {
     return (
       <HeaderContainer>
+        <Link href='/'>
         <Logo
           src='/static/images/logo-oranssi.png'
           alt='Kurssiarkisto logo'
         />
+        </Link>
         <Navigation />
       </HeaderContainer>
     );
