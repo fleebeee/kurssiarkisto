@@ -68,6 +68,7 @@ userRoutes.put(
             user[key] = value;
           }
         });
+
         user.save((err2 /* , updatedUser */) => {
           if (err2) {
             console.log(err2);
@@ -83,11 +84,13 @@ userRoutes.put(
         });
         return true;
       });
+    } else {
+      return res.status(403).send({
+        success: false,
+        msg: 'No token provided',
+      });
     }
-    return res.status(403).send({
-      success: false,
-      msg: 'No token provided',
-    });
+    return true;
   },
 );
 

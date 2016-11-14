@@ -21,13 +21,6 @@ const myPageContainer = styled.div`
   display: block;
 `;
 
-const Box = styled.div`
-  display: block;
-  position: relative;
-  width: 92%;
-  margin-top: 30px;
-  left: 4%;
-`;
 
 const Title = styled.h1`
   text-transform: uppercase;
@@ -160,10 +153,14 @@ class Mypage extends Component {
       missingField('Tarkista, että toistit salasanan samalla lailla');
     }
 
-    if (this.state.newPassword && this.state.oldPassword !==
-        this.state.user.password) {
+    if (this.state.newPassword && !this.state.oldPassword) {
       console.debug('Old Password not filled!');
       missingField('Et voi vaihtaa salasanaa kirjoittamatta vanhaa.');
+    }
+
+    if (this.state.oldPassword !== this.state.user.password) {
+      console.debug('OldPassword does not match!');
+      missingField('Vanha salasana on väärin.');
     }
 
     const res = await fetch(`${globals.API_ADDRESS}/user`, {
@@ -174,12 +171,12 @@ class Mypage extends Component {
         Authorization: this.props.auth.getToken(),
       },
       body: JSON.stringify({
-        nickname: this.state.user.nickname || this.state.nickName,
-        role: this.state.user.role || this.state.role,
-        email: this.state.user.email || this.state.email,
-        track: this.state.user.track || this.state.track,
-        startingYear: this.state.user.startingYear || this.state.freshmanYear,
-        password: this.state.user.password || this.state.newPassword,
+        nickname: this.state.nickName,
+        role: this.state.role,
+        email: this.state.email,
+        track: this.state.track,
+        startingYear: this.state.freshmanYear,
+        password: this.state.newPassword,
       }),
     });
     const data = await res.json();
@@ -209,145 +206,145 @@ class Mypage extends Component {
     console.log(this.state.user);
     return (
       <Page>
-        <Box>
-          <myPageContainer>
-            <Title>Omat tiedot</Title>
-            <Content>
-              <Form>
-                <BasicInformation>
-                  <QuestionBox>
-                    <SmallHeader>Nimimerkki</SmallHeader>
-                    <TextField
-                      className='form-control'
-                      id='nickName'
-                      type='text'
-                      placeholder={this.state.user.nickname || 'nimimerkki'}
-                      value={this.state.nickName}
-                      onChange={this.handleTextChange.bind(this, 'nickName')}
-                    />
-                  </QuestionBox>
+        <myPageContainer>
+          <Title>Omat tiedot</Title>
+          <Content>
+            <Form>
+              <BasicInformation>
+                <QuestionBox>
+                  <SmallHeader>Nimimerkki</SmallHeader>
+                  <TextField
+                    className='form-control'
+                    id='nickName'
+                    type='text'
+                    placeholder={this.state.user.nickname || 'nimimerkki'}
+                    value={this.state.nickName}
+                    onChange={this.handleTextChange.bind(this, 'nickName')}
+                  />
+                </QuestionBox>
 
-                  <QuestionBox>
-                    <SmallHeader>Sähköposti</SmallHeader>
-                    <TextField
-                      className='form-control'
-                      id='email'
-                      type='text'
-                      placeholder={this.state.user.email}
-                      value={this.state.email}
-                      onChange={this.handleTextChange.bind(this, 'email')}
-                    />
-                  </QuestionBox>
+                <QuestionBox>
+                  <SmallHeader>Sähköposti</SmallHeader>
+                  <TextField
+                    className='form-control'
+                    id='email'
+                    type='text'
+                    placeholder={this.state.user.email}
+                    value={this.state.email}
+                    onChange={this.handleTextChange.bind(this, 'email')}
+                  />
+                </QuestionBox>
 
-                  <QuestionBox>
-                    <SmallHeader>Rooli</SmallHeader>
-                    <TextField
-                      className='form-control'
-                      id='role'
-                      type='text'
-                      placeholder='opiskelija/ opettaja/ kurssihenkilökunta'
-                      value={this.state.role}
-                      onChange={this.handleTextChange.bind(this, 'role')}
-                    />
-                  </QuestionBox>
+                <QuestionBox>
+                  <SmallHeader>Rooli</SmallHeader>
+                  <TextField
+                    className='form-control'
+                    id='role'
+                    type='text'
+                    placeholder={this.state.user.role || 'nimimerkki'}
+                    value={this.state.role}
+                    onChange={this.handleTextChange.bind(this, 'role')}
+                  />
+                </QuestionBox>
 
-                  <QuestionBox>
-                    <SmallHeader>Opintolinja</SmallHeader>
-                    <OptionboxField>
-                      <DropdownBox className='dropdown'>
-                        <button
-                          className='btn btn-xs btn-default dropdown-toggle'
-                          type='button'
-                          id='dropdownMenu'
-                          data-toggle='dropdown'
-                          aria-haspopup='true'
-                          aria-expanded='true'
-                        >
-                          <TrackText>
-                            {this.state.track || 'opintolinja'}&nbsp;
-                          </TrackText>
-                          <span className='caret' />
-                        </button>
-                        <ul
-                          className='dropdown-menu'
-                          aria-labelledby='trackDropdown'
-                        >
-                          {
-                            ['TUO', 'TIK', 'INF', 'AUT', 'BTT', 'ENE', 'KON',
-                              'TFM', 'RYM', 'RRT', 'BIO', 'EST', 'ARK'].map(
-                            option =>
-                              <li key={option}>
-                                <a
-                                  tabIndex='0'
-                                  onClick={() =>
-                                    this.handleTrackChange(option)
-                                  }
-                                >
-                                  {option}
-                                </a>
-                              </li>
-                            )
-                          }
-                        </ul>
-                      </DropdownBox>
-                    </OptionboxField>
-                  </QuestionBox>
+                <QuestionBox>
+                  <SmallHeader>Opintolinja</SmallHeader>
+                  <OptionboxField>
+                    <DropdownBox className='dropdown'>
+                      <button
+                        className='btn btn-xs btn-default dropdown-toggle'
+                        type='button'
+                        id='dropdownMenu'
+                        data-toggle='dropdown'
+                        aria-haspopup='true'
+                        aria-expanded='true'
+                      >
+                        <TrackText>
+                          {this.state.user.track || this.state.track}&nbsp;
+                        </TrackText>
+                        <span className='caret' />
+                      </button>
+                      <ul
+                        className='dropdown-menu'
+                        aria-labelledby='trackDropdown'
+                      >
+                        {
+                          ['TUO', 'TIK', 'INF', 'AUT', 'BTT', 'ENE', 'KON',
+                            'TFM', 'RYM', 'RRT', 'BIO', 'EST', 'ARK'].map(
+                          option =>
+                            <li key={option}>
+                              <a
+                                tabIndex='0'
+                                onClick={() =>
+                                  this.handleTrackChange(option)
+                                }
+                              >
+                                {option}
+                              </a>
+                            </li>
+                          )
+                        }
+                      </ul>
+                    </DropdownBox>
+                  </OptionboxField>
+                </QuestionBox>
 
-                  <QuestionBox>
-                    <SmallHeader>Opintojen aloitusvuosi</SmallHeader>
-                    <TextField
-                      className='form-control'
-                      id='freshmanYear'
-                      type='number'
-                      placeholder='opintojen aloitusvuosi'
-                      value={this.state.freshmanYear}
-                      onChange={
-                        this.handleTextChange.bind(this, 'freshmanYear')
-                      }
-                    />
-                  </QuestionBox>
-                </BasicInformation>
+                <QuestionBox>
+                  <SmallHeader>Opintojen aloitusvuosi</SmallHeader>
+                  <TextField
+                    className='form-control'
+                    id='freshmanYear'
+                    type='number'
+                    placeholder={this.state.user.startingYear ||
+                      'opintojen aloitusvuosi'}
+                    value={this.state.freshmanYear}
+                    onChange={
+                      this.handleTextChange.bind(this, 'freshmanYear')
+                    }
+                  />
+                </QuestionBox>
+              </BasicInformation>
 
-                <Password>
-                  <QuestionBox>
-                    <SmallHeader>Vaihda salasana</SmallHeader>
-                    <TextFieldWithPaddings
-                      className='form-control'
-                      id='oldPassword'
-                      type='password'
-                      placeholder='nykyinen salasana'
-                      value={this.state.oldPassword}
-                      onChange={this.handleTextChange.bind(this, 'oldPassword')}
-                    />
-                    <TextFieldWithPaddings
-                      className='form-control'
-                      id='newPassword'
-                      type='password'
-                      placeholder='uusi salasana'
-                      value={this.state.newPassword}
-                      onChange={this.handleTextChange.bind(this, 'newPassword')}
-                    />
-                    <TextFieldWithPaddings
-                      className='form-control'
-                      id='newPasswordAgain'
-                      type='password'
-                      placeholder='uusi salasana uudestaan'
-                      value={this.state.newPasswordAgain}
-                      onChange={this.handleTextChange.bind(this,
-                        'newPasswordAgain')}
-                    />
-                  </QuestionBox>
-                  <SaveMyPageButton
-                    className='btn'
-                    onClick={this.handleSubmit}
-                  >
-                    Tallenna muutokset
-                  </SaveMyPageButton>
-                </Password>
-              </Form>
-            </Content>
-          </myPageContainer>
-        </Box>
+              <Password>
+                <QuestionBox>
+                  <SmallHeader>Vaihda salasana</SmallHeader>
+                  <TextFieldWithPaddings
+                    className='form-control'
+                    id='oldPassword'
+                    type='password'
+                    placeholder='nykyinen salasana'
+                    value={this.state.oldPassword}
+                    onChange={this.handleTextChange.bind(this, 'oldPassword')}
+                  />
+                  <TextFieldWithPaddings
+                    className='form-control'
+                    id='newPassword'
+                    type='password'
+                    placeholder='uusi salasana'
+                    value={this.state.newPassword}
+                    onChange={this.handleTextChange.bind(this, 'newPassword')}
+                  />
+                  <TextFieldWithPaddings
+                    className='form-control'
+                    id='newPasswordAgain'
+                    type='password'
+                    placeholder='uusi salasana uudestaan'
+                    value={this.state.newPasswordAgain}
+                    onChange={this.handleTextChange.bind(this,
+                      'newPasswordAgain')}
+                  />
+                </QuestionBox>
+                <SaveMyPageButton
+                  className='btn'
+                  onClick={this.handleSubmit}
+                >
+                  Tallenna muutokset
+                </SaveMyPageButton>
+              </Password>
+            </Form>
+          </Content>
+        </myPageContainer>
+
       </Page>
 
     );

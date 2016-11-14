@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import _ from 'lodash';
 
 import globals from '../utils/globals.js';
+import palette from '../utils/palette.js';
 import withToast from '../utils/withToast.js';
 import Page from '../components/Page/Page.js';
 import ReviewModal from '../components/Course/ReviewModal.js';
@@ -15,21 +16,13 @@ const propTypes = {
   addToast: PropTypes.func.isRequired,
 };
 
-
 const NameContainer = styled.div`
   display: flex;
   font-family: 'Raleway', Helvetica, sans serif;
-  color: #6A7C90;
+  font-weight: bold;
+  color: ${palette.titleGrey};
+  font-size: 3em;
 `;
-
-const Box = styled.div`
-  display: block;
-  position: relative;
-  width: 92%;
-  margin-top: 30px;
-  left: 4%;
-`;
-
 
 const Arrow = styled.img`
   width: 55px;
@@ -39,8 +32,8 @@ const Arrow = styled.img`
 
 const CourseContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
-  width: 100%;
   margin-top: 15px;
 `;
 
@@ -51,29 +44,25 @@ const InfoContainer = styled.div`
   font-family: 'Raleway', Helvetica, sans serif;
   font-weight: bold;
   font-size: 1.5em;
-  color: #6A7C90;
+  color: ${palette.headerGrey};
 `;
 
 const TextContainer = styled.div`
-  display: flex;
   flex-direction: column;
   flex: 3;
 `;
 
 const DataContainer = styled.div`
-  display: flex;
   flex-direction: column;
   flex: 7;
   padding-right: 10px;
+  padding-left: 10px;
 `;
 
 const MSGContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 4;
   background-color: #E0CAA5;
   border-radius: 10px;
-  padding: 10px;
+  padding: 15px;
 `;
 
 const ModalStyled = styled(Modal)`
@@ -228,13 +217,12 @@ class Course extends Component {
   render() {
     return (
       <Page>
-        <Box>
           <NameContainer>
             <Arrow
               src='/static/images/back-arrow.png'
               alt='Takaisin hakuun'
             />
-            <h1>{this.state.course.code} {this.state.course.name}</h1>
+            <p>{this.state.course.code} {this.state.course.name}</p>
           </NameContainer>
           <CourseContainer>
 
@@ -249,7 +237,7 @@ class Course extends Component {
                 />
               </ModalStyled>
 
-              <Button bsStyle='warning' href='/index.js'>Muokkaa</Button>
+              <Button bsStyle='warning'>Muokkaa</Button>
               <Button bsStyle='warning'>Lisää suosikkeihin</Button>
             </ButtonGroup>
           </CourseContainer>
@@ -271,8 +259,8 @@ class Course extends Component {
                 <p> {this.state.course.periods} </p>
                 <p> {this.state.course.credits}</p>
                 <p> {this.state.course.passingMechanisms}</p>
-                <p> Ei</p>
-                <p> {this.state.course.myCoursesLink}</p>
+                <p> {String(this.state.course.mandatoryAttendance)}</p>
+                <p><a href={this.state.course.myCoursesLink}> Paina tästä </a></p>
               </DataContainer>
             </InfoContainer>
             <MSGContainer>
@@ -283,7 +271,6 @@ class Course extends Component {
               </p>
             </MSGContainer>
           </CourseContainer>
-        </Box>
       </Page>
     );
   }
