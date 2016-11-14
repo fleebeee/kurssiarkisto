@@ -5,6 +5,11 @@ import withToast from '../utils/withToast.js';
 import Page from '../components/Page/Page.js';
 import LoginComponent from '../components/Login/LoginComponent.js';
 
+const propTypes = {
+  url: PropTypes.object.isRequired,
+  addToast: PropTypes.func.isRequired,
+};
+
 const Aligner = styled.div`
   padding-top: 10%;
   display: flex;
@@ -12,11 +17,6 @@ const Aligner = styled.div`
   justify-content: center;
   flex-direction: column;
 `;
-
-const propTypes = {
-  url: PropTypes.object.isRequired,
-  addToast: PropTypes.func.isRequired,
-};
 
 class Login extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class Login extends Component {
 
   render() {
     return (
-      <Page>
+      <Page noPadding>
         <Aligner>
           <LoginComponent
             addToast={this.props.addToast}

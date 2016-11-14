@@ -140,7 +140,7 @@ class Mypage extends Component {
     console.log('Submitting', this.state);
 
     const errorTitle = 'Käyttäjätietojen päivitys epäonnistui';
-    const successTitle = 'Tiedot tallennettu'
+    const successTitle = 'Tiedot tallennettu';
     const missingField = (message) => {
       this.props.addToast({
         title: errorTitle,

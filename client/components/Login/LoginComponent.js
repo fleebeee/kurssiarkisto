@@ -21,7 +21,12 @@ const LoginContainer = styled.div`
 `;
 const LoginText = styled.h2`
   text-transform: uppercase;
+`;
 
+const SmallHeader = styled.h5`
+  color: white;
+  text-transform: uppercase;
+  padding-top: 10px;
 `;
 
 const Field = styled.input`
@@ -104,6 +109,7 @@ class LoginComponent extends Component {
     return (
       <LoginContainer>
         <LoginText>Kirjaudu sisään</LoginText>
+        <SmallHeader>sähköpostiosoite</SmallHeader>
         <Field
           className='form-control'
           type='text'
@@ -111,6 +117,7 @@ class LoginComponent extends Component {
           value={this.state.email}
           onChange={this.handleEmailChange}
         />
+        <SmallHeader>salasana</SmallHeader>
         <Field
           className='form-control'
           type='password'
