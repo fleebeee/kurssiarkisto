@@ -5,6 +5,7 @@ import Link from 'next/link';
 // import ls from 'local-storage';
 import styled from 'styled-components';
 
+import withToast from '../utils/withToast.js';
 import Page from '../components/Page/Page.js';
 import palette from '../utils/palette.js';
 import globals from '../utils/globals.js';
@@ -13,6 +14,7 @@ const API_MIN_DELAY = 500; // milliseconds
 
 const propTypes = {
   url: PropTypes.object.isRequired,
+  addToast: PropTypes.func.isRequired,
 };
 
 // Replace this with your own style
@@ -60,6 +62,19 @@ class Search extends Component {
     this.setOptionsThrottled = this.setOptionsThrottled.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.renderOption = this.renderOption.bind(this);
+  }
+
+  componentDidMount() {
+    const query = this.props.url.query;
+    if (_.has(query, 'toast')) {
+      if (query.toast) {
+        this.props.addToast({
+          title: 'Kurssin lisääminen onnistui',
+          message: `Lisäsit kurssin ${query.code || ''} - ${query.name || ''}`,
+          level: 'success',
+        });
+      }
+    }
   }
 
   async setOptions(keywords) {
@@ -128,4 +143,4 @@ class Search extends Component {
 
 Search.propTypes = propTypes;
 
-export default Search;
+export default withToast(Search);
