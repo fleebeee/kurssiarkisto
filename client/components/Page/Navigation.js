@@ -21,7 +21,12 @@ const NavigationContainer = styled.div`
   margin-right: 15px;
 `;
 
-const Email = styled.div`
+const Hello = styled.div`
+  color: ${palette.white};
+  font-size: 13px;
+  margin-right: 10px;
+`;
+const Nickname = styled.div`
   color: ${palette.white};
   font-size: 13px;
   margin-right: 10px;
@@ -68,9 +73,10 @@ class Navigation extends Component {
   render() {
     return (
       <NavigationContainer>
-        <Email>
-          {this.state.user.email}
-        </Email>
+        <Hello>Hei,</Hello>
+        <Nickname>
+          {this.state.user.nickname}
+        </Nickname>
         <div className='dropdown'>
           <div
             className='dropdown-toggle'
