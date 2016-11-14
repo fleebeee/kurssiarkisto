@@ -17,13 +17,20 @@ const propTypes = {
   addToast: PropTypes.func.isRequired,
 };
 
+const Title = styled.h1`
+  text-transform: uppercase;
+  color: ${palette.titleGrey};
+  font-weight: bold;
+  font-family: 'Raleway', Helvetica, sans serif;
+`;
+
 const NameContainer = styled.div`
   display: flex;
-  font-family: 'Raleway', Helvetica, sans serif;
-  font-weight: bold;
-  color: ${palette.titleGrey};
-  font-size: 3em;
-  text-transform: uppercase;
+`;
+
+const ulStyled = styled.ul`
+  margin: 0;
+  padding: 0;
 `;
 
 const Arrow = styled.img`
@@ -41,7 +48,7 @@ const CourseContainer = styled.div`
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 3 1 auto;
+  flex: 1 1 auto;
   font-family: 'Raleway', Helvetica, sans serif;
   font-weight: bold;
   font-size: 1.5em;
@@ -68,6 +75,8 @@ const ModalStyled = styled(Modal)`
 const ColStyled = styled(Col)`
   margin-right: 20px;
 `;
+
+
 
 class Course extends Component {
   constructor(props) {
@@ -220,7 +229,7 @@ class Course extends Component {
               alt='Takaisin hakuun'
             />
             </Link>
-            <p>{this.state.course.code} {this.state.course.name}</p>
+            <Title>{this.state.course.code} {this.state.course.name}</Title>
           </NameContainer>
           <CourseContainer>
 
@@ -261,13 +270,13 @@ class Course extends Component {
               <Row className="show-grid">
                 <ColStyled xs={6} sm={4} md={4}>Suoritusmuodot</ColStyled>
                 <ColStyled xs={4} sm={4} md={5}>
-                  <ul>
+                  <ulStyled>
                     {this.state.course.passingMechanisms &&
                       this.state.course.passingMechanisms.map(
                       passingMechanism =>
                         <li>{passingMechanism}</li>
                     )}
-                  </ul>
+                  </ulStyled>
                 </ColStyled>
               </Row>
               <Row className="show-grid">
