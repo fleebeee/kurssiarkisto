@@ -26,7 +26,7 @@ const PageTitle = styled.div`
   position: absolute;
   left: 50%;
   vertical-align: center;
-  transform: translate(-50%, 100%);
+  transform: translate(-50%);
 `;
 
 const Logo = styled.img`
