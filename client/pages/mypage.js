@@ -154,38 +154,32 @@ class Mypage extends Component {
       });
     };
 
-    if (!this.state.nickName) {
-      console.debug('Nickname is required!');
-      missingField('Nimimerkki on pakollinen kenttä');
-      return;
-    }
-
-    if (!this.state.email) {
-      console.debug('Email is required!');
-      missingField('Sähköposti on pakollinen kenttä');
-      return;
-    }
 
     if (this.state.newPassword !== this.state.newPasswordAgain) {
       console.debug('Passwords dont match!');
-      missingField('Uuden salasanan vahvistus epäonnistui');
+      missingField('Tarkista, että toistit salasanan samalla lailla');
+    }
+
+    if (this.state.newPassword && this.state.oldPassword !==
+        this.state.user.password) {
+      console.debug('Old Password not filled!');
+      missingField('Et voi vaihtaa salasanaa kirjoittamatta vanhaa.');
     }
 
     const res = await fetch(`${globals.API_ADDRESS}/user`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: this.props.auth.getToken(),
       },
       body: JSON.stringify({
-        nick: this.state.nickName,
-        role: this.state.role,
-        email: this.state.email,
-        track: this.state.track,
-        freshmanYear: this.state.freshmanYear,
-        oldPassword: this.state.oldPassword,
-        newPassword: this.state.newPassword,
-        newPasswordAgain: this.state.newPasswordAgain,
+        nickname: this.state.user.nickname || this.state.nickName,
+        role: this.state.user.role || this.state.role,
+        email: this.state.user.email || this.state.email,
+        track: this.state.user.track || this.state.track,
+        startingYear: this.state.user.startingYear || this.state.freshmanYear,
+        password: this.state.user.password || this.state.newPassword,
       }),
     });
     const data = await res.json();
@@ -212,6 +206,7 @@ class Mypage extends Component {
   }
 
   render() {
+    console.log(this.state.user);
     return (
       <Page>
         <Box>
@@ -226,7 +221,7 @@ class Mypage extends Component {
                       className='form-control'
                       id='nickName'
                       type='text'
-                      placeholder='nimimerkki'
+                      placeholder={this.state.user.nickname || 'nimimerkki'}
                       value={this.state.nickName}
                       onChange={this.handleTextChange.bind(this, 'nickName')}
                     />
@@ -238,7 +233,7 @@ class Mypage extends Component {
                       className='form-control'
                       id='email'
                       type='text'
-                      placeholder={this.state.user.data}
+                      placeholder={this.state.user.email}
                       value={this.state.email}
                       onChange={this.handleTextChange.bind(this, 'email')}
                     />
