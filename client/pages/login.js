@@ -9,6 +9,11 @@ const propTypes = {
   url: PropTypes.object.isRequired,
   addToast: PropTypes.func.isRequired,
 };
+const Container = styled.div`
+  background-image: url(/static/images/lib.jpg);
+  background-size: cover;
+  height: 100%;
+`;
 
 const Aligner = styled.div`
   padding-top: 10%;
@@ -27,12 +32,14 @@ class Login extends Component {
   render() {
     return (
       <Page noPadding>
-        <Aligner>
-          <LoginComponent
-            addToast={this.props.addToast}
-            url={this.props.url}
-          />
-        </Aligner>
+        <Container>
+          <Aligner>
+            <LoginComponent
+              addToast={this.props.addToast}
+              url={this.props.url}
+            />
+          </Aligner>
+        </Container>
       </Page>
     );
   }

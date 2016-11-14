@@ -33,6 +33,10 @@ const ulStyled = styled.ul`
   padding: 0;
 `;
 
+const liStyled = styled.li`
+  list-item-style: none;
+`;
+
 const Arrow = styled.img`
   width: 55px;
   height: 55px;
@@ -49,13 +53,14 @@ const CourseContainer = styled.div`
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
+  flex: 1 0;
   font-family: 'Raleway', Helvetica, sans serif;
   font-weight: bold;
   font-size: 1.5em;
   color: ${palette.headerGrey};
   margin-bottom: 20px;
   line-height: 175%;
+  min-width: 300px;
 `;
 
 const MSGContainer = styled.div`
@@ -63,6 +68,7 @@ const MSGContainer = styled.div`
   border-radius: 10px;
   padding: 15px;
   flex: 1 1 0;
+  min-width: 300px;
 `;
 
 const ModalStyled = styled(Modal)`
@@ -75,6 +81,7 @@ const ModalStyled = styled(Modal)`
 
 const ColStyled = styled(Col)`
   margin-left: 15px;
+  margin-right: 5px;
   padding: 0;
 `;
 
@@ -83,8 +90,6 @@ const RowStyled = styled(Row)`
   align-items: left;
   padding: 0;
 `;
-
-
 
 class Course extends Component {
   constructor(props) {
@@ -282,7 +287,7 @@ class Course extends Component {
                     {this.state.course.passingMechanisms &&
                       this.state.course.passingMechanisms.map(
                       passingMechanism =>
-                        <li>{passingMechanism}</li>
+                        <liStyled>{passingMechanism}<br /></liStyled>
                     )}
                   </ulStyled>
                 </ColStyled>
