@@ -256,7 +256,15 @@ class Course extends Component {
               </Row>
               <Row className="show-grid">
                 <ColStyled xs={6} sm={4} md={4}>Suoritusmuodot</ColStyled>
-                <ColStyled xs={4} sm={4} md={5}>{this.state.course.passingMechanisms}</ColStyled>
+                <ColStyled xs={4} sm={4} md={5}>
+                  <ul>
+                    {this.state.course.passingMechanisms &&
+                      this.state.course.passingMechanisms.map(
+                      passingMechanism =>
+                        <li>{passingMechanism}</li>
+                    )}
+                  </ul>
+                </ColStyled>
               </Row>
               <Row className="show-grid">
                 <ColStyled xs={6} sm={4} md={4}>Läsnäolopakko</ColStyled>

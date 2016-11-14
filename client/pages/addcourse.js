@@ -12,7 +12,7 @@ const propTypes = {
   url: PropTypes.object,
 };
 
-const addCourseContainer = styled.div`
+const AddCourseContainer = styled.div`
   display: block;
 `;
 
@@ -256,7 +256,7 @@ class addCourse extends Component {
   render() {
     return (
       <Page>
-        <addCourseContainer><Box>
+        <AddCourseContainer><Box>
           <Title>Lisää kurssi</Title>
           <Content>
             <Form>
@@ -443,7 +443,7 @@ class addCourse extends Component {
               Lisää kurssi
             </AddCourseButton>
           </Content></Box>
-        </addCourseContainer>
+        </AddCourseContainer>
       </Page>
     );
   }
