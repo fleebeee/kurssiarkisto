@@ -23,10 +23,10 @@ const PageTitle = styled.div`
   color: ${palette.white};
   font-size: 1.5em;
   text-transform: uppercase;
-  margin-top: 42px;
   position: absolute;
   left: 50%;
-  transform: translate(-50%, -50%);
+  vertical-align: center;
+  transform: translate(-50%, 100%);
 `;
 
 const Logo = styled.img`
