@@ -25,13 +25,19 @@ const SearchInputContainer = styled.div`
   background-color: ${palette.yellow};
 `;
 
+const FilterTitle = styled.h3`
+  color: white;
+  text-transform: uppercase;
+
+`;
+
 const Results = styled.div`
   padding: 30px;
 `;
 
 const SearchTitle = styled.h3`
   color: ${palette.headerGrey};
-  margin-bottom: 30px;
+  margin-bottom: 30 px;
 `;
 
 const CourseList = styled.ul`
@@ -40,11 +46,11 @@ const CourseList = styled.ul`
 `;
 
 const Course = styled.li`
-  margin-bottom: 20px;
+  margin-bottom: 20 px;
 `;
 
 const CourseLink = styled.span`
-  font-size: 2rem;
+  font-size: 2 rem;
   color: ${palette.orange};
 `;
 
@@ -111,6 +117,7 @@ class Search extends Component {
               value={this.state.keywords}
               onChange={this.handleChange}
             />
+            <FilterTitle>Rajaa hakua</FilterTitle>
           </SearchInputContainer>
           <Results>
             <SearchTitle>

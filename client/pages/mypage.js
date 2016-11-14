@@ -151,16 +151,20 @@ class Mypage extends Component {
     if (this.state.newPassword !== this.state.newPasswordAgain) {
       console.debug('Passwords dont match!');
       missingField('Tarkista, että toistit salasanan samalla lailla');
+      return;
     }
 
     if (this.state.newPassword && !this.state.oldPassword) {
       console.debug('Old Password not filled!');
       missingField('Et voi vaihtaa salasanaa kirjoittamatta vanhaa.');
+      return;
     }
 
-    if (this.state.oldPassword !== this.state.user.password) {
+    if (this.state.oldPassword && (this.state.oldPassword !==
+      this.state.user.password)) {
       console.debug('OldPassword does not match!');
       missingField('Vanha salasana on väärin.');
+      return;
     }
 
     const res = await fetch(`${globals.API_ADDRESS}/user`, {
