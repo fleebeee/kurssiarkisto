@@ -42,6 +42,7 @@ const Arrow = styled.img`
 const CourseContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  flex-direction: row;
   margin-top: 15px;
 `;
 
@@ -61,7 +62,7 @@ const MSGContainer = styled.div`
   background-color: #E0CAA5;
   border-radius: 10px;
   padding: 15px;
-  flex: 1 1 auto;
+  flex: 1 1 0;
 `;
 
 const ModalStyled = styled(Modal)`
@@ -73,7 +74,14 @@ const ModalStyled = styled(Modal)`
 `;
 
 const ColStyled = styled(Col)`
-  margin-right: 20px;
+  margin-left: 15px;
+  padding: 0;
+`;
+
+
+const RowStyled = styled(Row)`
+  align-items: left;
+  padding: 0;
 `;
 
 
@@ -251,25 +259,25 @@ class Course extends Component {
           <CourseContainer>
             <InfoContainer>
 
-              <Row className="show-grid">
-                <ColStyled xs={6} sm={4} md={4}>Yleisarvosana</ColStyled>
-                <ColStyled xs={4} sm={4} md={5}>4.5</ColStyled>
-              </Row>
-              <Row className="show-grid">
-                <ColStyled xs={6} sm={4} md={4}>Kuormittavuus</ColStyled>
-                <ColStyled xs={4} sm={4} md={5}>3</ColStyled>
-              </Row>
-              <Row className="show-grid">
-                <ColStyled xs={6} sm={4} md={4}>Periodit </ColStyled>
-                <ColStyled xs={4} sm={4} md={5}>{this.state.course.periods}</ColStyled>
-              </Row>
-              <Row className="show-grid">
-                <ColStyled xs={6} sm={4} md={4}>Opintopisteet</ColStyled>
-                <ColStyled xs={4} sm={4} md={5}>{this.state.course.credits}</ColStyled>
-              </Row>
-              <Row className="show-grid">
-                <ColStyled xs={6} sm={4} md={4}>Suoritusmuodot</ColStyled>
-                <ColStyled xs={4} sm={4} md={5}>
+              <RowStyled>
+                <ColStyled xs={6} sm={3.5} md={4}>Yleisarvosana</ColStyled>
+                <ColStyled xs={4} sm={3.5} md={5}>4.5</ColStyled>
+              </RowStyled>
+              <RowStyled>
+                <ColStyled xs={6} sm={3.5} md={4}>Kuormittavuus</ColStyled>
+                <ColStyled xs={4} sm={3.5} md={5}>3</ColStyled>
+              </RowStyled>
+              <RowStyled>
+                <ColStyled xs={6} sm={3.5} md={4}>Periodit </ColStyled>
+                <ColStyled xs={4} sm={3.5} md={5}>{this.state.course.periods}</ColStyled>
+              </RowStyled>
+              <RowStyled>
+                <ColStyled xs={6} sm={3.5} md={4}>Opintopisteet</ColStyled>
+                <ColStyled xs={4} sm={3.5} md={5}>{this.state.course.credits}</ColStyled>
+              </RowStyled>
+              <RowStyled>
+                <ColStyled xs={6} sm={3.5} md={4}>Suoritusmuodot</ColStyled>
+                <ColStyled xs={4} sm={3.5} md={5}>
                   <ulStyled>
                     {this.state.course.passingMechanisms &&
                       this.state.course.passingMechanisms.map(
@@ -278,15 +286,15 @@ class Course extends Component {
                     )}
                   </ulStyled>
                 </ColStyled>
-              </Row>
-              <Row className="show-grid">
-                <ColStyled xs={6} sm={4} md={4}>Läsnäolopakko</ColStyled>
-                <ColStyled xs={4} sm={4} md={5}> {this.state.course.mandatoryAttendance ? 'Kyllä' : 'Ei'} </ColStyled>
-              </Row>
-              <Row className="show-grid">
-                <ColStyled xs={6} sm={4} md={4}> MyCourses</ColStyled>
-                <ColStyled xs={4} sm={4} md={5}><a href={this.state.course.myCoursesLink} target="_blank">Linkki </a></ColStyled>
-              </Row>
+              </RowStyled>
+              <RowStyled>
+                <ColStyled xs={6} sm={3.5} md={4}>Läsnäolopakko</ColStyled>
+                <ColStyled xs={4} sm={3.5} md={5}> {this.state.course.mandatoryAttendance ? 'Kyllä' : 'Ei'} </ColStyled>
+              </RowStyled>
+              <RowStyled>
+                <ColStyled xs={6} sm={3.5} md={4}> MyCourses</ColStyled>
+                <ColStyled xs={4} sm={3.5} md={5}><a href={this.state.course.myCoursesLink} target="_blank">Linkki </a></ColStyled>
+              </RowStyled>
             </InfoContainer>
 
             <MSGContainer>
