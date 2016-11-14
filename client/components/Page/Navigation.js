@@ -21,11 +21,6 @@ const NavigationContainer = styled.div`
   margin-right: 15px;
 `;
 
-const Hello = styled.div`
-  color: ${palette.white};
-  font-size: 13px;
-  margin-right: 10px;
-`;
 const Nickname = styled.div`
   color: ${palette.white};
   font-size: 13px;
@@ -73,7 +68,7 @@ class Navigation extends Component {
   render() {
     return (
       <NavigationContainer>
-        <Hello>Hei,</Hello>
+
         <Nickname>
           {this.state.user.nickname}
         </Nickname>
