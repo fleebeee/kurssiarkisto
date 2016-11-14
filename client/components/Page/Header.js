@@ -17,6 +17,18 @@ const HeaderContainer = styled.div`
   background-color: ${palette.headerGrey};
 `;
 
+const PageTitle = styled.div`
+  font-family: 'Raleway', Helvetica, sans serif;
+  font-weight: bold;
+  color: ${palette.white};
+  font-size: 1.5em;
+  text-transform: uppercase;
+  margin-top: 42px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
 const Logo = styled.img`
   width: 80px;
   height: 75px;
@@ -38,6 +50,7 @@ class Header extends Component {
           alt='Kurssiarkisto logo'
         />
         </Link>
+        <PageTitle> Kurssiarkisto </PageTitle>
         <Navigation />
       </HeaderContainer>
     );
