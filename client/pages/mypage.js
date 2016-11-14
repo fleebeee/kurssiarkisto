@@ -117,13 +117,14 @@ class Mypage extends Component {
 
   constructor(props) {
     super(props);
+    const user = props.auth.getProfile();
     this.state = {
-      user: props.auth.getProfile(),
-      nickName: '',
-      role: '',
-      email: '',
-      track: '',
-      freshmanYear: '',
+      user,
+      nickname: user.nickname,
+      role: user.role,
+      email: user.email,
+      track: user.track,
+      startingYear: user.startingYear,
       oldPassword: '',
       newPassword: '',
       newPasswordAgain: '',
@@ -139,6 +140,7 @@ class Mypage extends Component {
     console.log('Submitting', this.state);
 
     const errorTitle = 'Käyttäjätietojen päivitys epäonnistui';
+    const successTitle = 'Tiedot tallennettu'
     const missingField = (message) => {
       this.props.addToast({
         title: errorTitle,
@@ -175,11 +177,11 @@ class Mypage extends Component {
         Authorization: this.props.auth.getToken(),
       },
       body: JSON.stringify({
-        nickname: this.state.nickName,
+        nickname: this.state.nickname,
         role: this.state.role,
         email: this.state.email,
         track: this.state.track,
-        startingYear: this.state.freshmanYear,
+        startingYear: this.state.startingYear,
         password: this.state.newPassword,
       }),
     });
@@ -188,6 +190,17 @@ class Mypage extends Component {
 
     if (data.success) {
       console.debug('Save my page successful!');
+      this.props.auth.setProfile({
+        nickname: this.state.nickname,
+        email: this.state.email,
+        role: this.state.role,
+        track: this.state.track,
+        startingYear: this.state.startingYear,
+      });
+      this.props.addToast({
+        message: successTitle,
+        level: 'success',
+      });
       // TODO toast and redirect here
     } else {
       console.debug('Save my page failed');
@@ -219,11 +232,11 @@ class Mypage extends Component {
                   <SmallHeader>Nimimerkki</SmallHeader>
                   <TextField
                     className='form-control'
-                    id='nickName'
+                    id='nickname'
                     type='text'
-                    placeholder={this.state.user.nickname || 'nimimerkki'}
-                    value={this.state.nickName}
-                    onChange={this.handleTextChange.bind(this, 'nickName')}
+                    placeholder={this.state.nickname || 'nimimerkki'}
+                    value={this.state.nickname}
+                    onChange={this.handleTextChange.bind(this, 'nickname')}
                   />
                 </QuestionBox>
 
@@ -233,7 +246,7 @@ class Mypage extends Component {
                     className='form-control'
                     id='email'
                     type='text'
-                    placeholder={this.state.user.email}
+                    placeholder={this.state.email}
                     value={this.state.email}
                     onChange={this.handleTextChange.bind(this, 'email')}
                   />
@@ -245,7 +258,8 @@ class Mypage extends Component {
                     className='form-control'
                     id='role'
                     type='text'
-                    placeholder={this.state.user.role || 'opiskelija'}
+                    placeholder={this.state.role ||
+                      'opiskelija/ opettaja /kurssihenkilökunta'}
                     value={this.state.role}
                     onChange={this.handleTextChange.bind(this, 'role')}
                   />
@@ -297,13 +311,13 @@ class Mypage extends Component {
                   <SmallHeader>Opintojen aloitusvuosi</SmallHeader>
                   <TextField
                     className='form-control'
-                    id='freshmanYear'
+                    id='startingYear'
                     type='number'
                     placeholder={this.state.user.startingYear ||
                       'opintojen aloitusvuosi'}
-                    value={this.state.freshmanYear}
+                    value={this.state.startingYear}
                     onChange={
-                      this.handleTextChange.bind(this, 'freshmanYear')
+                      this.handleTextChange.bind(this, 'startingYear')
                     }
                   />
                 </QuestionBox>

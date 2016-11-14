@@ -5,6 +5,7 @@ import Link from 'next/link';
 // import ls from 'local-storage';
 import styled from 'styled-components';
 
+import withToast from '../utils/withToast.js';
 import Page from '../components/Page/Page.js';
 import palette from '../utils/palette.js';
 import globals from '../utils/globals.js';
@@ -13,6 +14,7 @@ const API_MIN_DELAY = 500; // milliseconds
 
 const propTypes = {
   url: PropTypes.object.isRequired,
+  addToast: PropTypes.func.isRequired,
 };
 
 // Replace this with your own style
@@ -25,19 +27,13 @@ const SearchInputContainer = styled.div`
   background-color: ${palette.yellow};
 `;
 
-const FilterTitle = styled.h3`
-  color: white;
-  text-transform: uppercase;
-
-`;
-
 const Results = styled.div`
   padding: 30px;
 `;
 
 const SearchTitle = styled.h3`
   color: ${palette.headerGrey};
-  margin-bottom: 30 px;
+  margin-bottom: 30px;
 `;
 
 const CourseList = styled.ul`
@@ -46,11 +42,11 @@ const CourseList = styled.ul`
 `;
 
 const Course = styled.li`
-  margin-bottom: 20 px;
+  margin-bottom: 20px;
 `;
 
 const CourseLink = styled.span`
-  font-size: 2 rem;
+  font-size: 2rem;
   color: ${palette.orange};
 `;
 
@@ -66,6 +62,19 @@ class Search extends Component {
     this.setOptionsThrottled = this.setOptionsThrottled.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.renderOption = this.renderOption.bind(this);
+  }
+
+  componentDidMount() {
+    const query = this.props.url.query;
+    if (_.has(query, 'toast')) {
+      if (query.toast) {
+        this.props.addToast({
+          title: 'Kurssin lisääminen onnistui',
+          message: `Lisäsit kurssin ${query.code || ''} - ${query.name || ''}`,
+          level: 'success',
+        });
+      }
+    }
   }
 
   async setOptions(keywords) {
@@ -117,7 +126,6 @@ class Search extends Component {
               value={this.state.keywords}
               onChange={this.handleChange}
             />
-            <FilterTitle>Rajaa hakua</FilterTitle>
           </SearchInputContainer>
           <Results>
             <SearchTitle>
@@ -135,4 +143,4 @@ class Search extends Component {
 
 Search.propTypes = propTypes;
 
-export default Search;
+export default withToast(Search);

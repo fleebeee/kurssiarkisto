@@ -6,22 +6,16 @@ import styled from 'styled-components';
 import palette from '../utils/palette.js';
 import globals from '../utils/globals.js';
 
+import withToast from '../utils/withToast.js';
 import Page from '../components/Page/Page.js';
 
 const propTypes = {
-  url: PropTypes.object,
+  url: PropTypes.object.isRequired,
+  addToast: PropTypes.func.isRequired,
 };
 
 const AddCourseContainer = styled.div`
   display: block;
-`;
-
-const Box = styled.div`
-  display: block;
-  width: 92%;
-  margin-top: 30px;
-  position: absolute;
-  left: 4%;
 `;
 
 const Title = styled.h1`
@@ -176,11 +170,21 @@ class addCourse extends Component {
 
     if (!this.state.courseName) {
       console.debug('Course name is required!');
+      this.props.addToast({
+        title: 'Kurssin lisääminen epäonnistui',
+        message: 'Kurssin nimi puuttuu',
+        level: 'warning',
+      });
       return;
     }
 
     if (!this.state.courseCode) {
       console.debug('Course code is required!');
+      this.props.addToast({
+        title: 'Kurssin lisääminen epäonnistui',
+        message: 'Kurssin koodi puuttuu',
+        level: 'warning',
+      });
       return;
     }
 
@@ -224,10 +228,20 @@ class addCourse extends Component {
 
     if (data.success) {
       console.debug('Add course successful!');
-      // TODO toast and redirect here
+      this.props.url.pushTo(
+      /* eslint-disable prefer-template */
+        '/?toast=addcourse' +
+        '&code=' + this.state.courseCode +
+        '&name=' + this.state.courseName
+      );
+      /* eslint-enable prefer-template */
     } else {
       console.debug('Add course failed');
-      // TODO toast
+      this.props.addToast({
+        title: 'Kurssin lisääminen epäonnistui',
+        message: 'Jokin meni pieleen',
+        level: 'error',
+      });
     }
   }
 
@@ -256,7 +270,7 @@ class addCourse extends Component {
   render() {
     return (
       <Page>
-        <AddCourseContainer><Box>
+        <AddCourseContainer>
           <Title>Lisää kurssi</Title>
           <Content>
             <Form>
@@ -442,7 +456,7 @@ class addCourse extends Component {
             >
               Lisää kurssi
             </AddCourseButton>
-          </Content></Box>
+          </Content>
         </AddCourseContainer>
       </Page>
     );
@@ -451,4 +465,4 @@ class addCourse extends Component {
 
 addCourse.propTypes = propTypes;
 
-export default addCourse;
+export default withToast(addCourse);
