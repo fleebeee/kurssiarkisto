@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import _ from 'lodash';
 
 import globals from '../utils/globals.js';
+import palette from '../utils/palette.js';
 import withToast from '../utils/withToast.js';
 import Page from '../components/Page/Page.js';
 import ReviewModal from '../components/Course/ReviewModal.js';
@@ -15,12 +16,11 @@ const propTypes = {
   addToast: PropTypes.func.isRequired,
 };
 
-
 const NameContainer = styled.div`
   display: flex;
   font-family: 'Raleway', Helvetica, sans serif;
   font-weight: bold;
-  color: #95989A;
+  color: ${palette.titleGrey};
   font-size: 3em;
 `;
 
@@ -44,7 +44,7 @@ const InfoContainer = styled.div`
   font-family: 'Raleway', Helvetica, sans serif;
   font-weight: bold;
   font-size: 1.5em;
-  color: #6A7C90;
+  color: ${palette.headerGrey};
 `;
 
 const TextContainer = styled.div`
@@ -259,8 +259,8 @@ class Course extends Component {
                 <p> {this.state.course.periods} </p>
                 <p> {this.state.course.credits}</p>
                 <p> {this.state.course.passingMechanisms}</p>
-                <p> Ei</p>
-                <p> {this.state.course.myCoursesLink}</p>
+                <p> {String(this.state.course.mandatoryAttendance)}</p>
+                <p><a href={this.state.course.myCoursesLink}> Paina tästä </a></p>
               </DataContainer>
             </InfoContainer>
             <MSGContainer>
