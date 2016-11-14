@@ -119,6 +119,7 @@ class Course extends Component {
       } else {
         console.debug('Course data couldn\'t be fetched:', data);
       }
+
     }
   }
 
@@ -268,11 +269,11 @@ class Course extends Component {
               </Row>
               <Row className="show-grid">
                 <ColStyled xs={6} sm={4} md={4}>Läsnäolopakko</ColStyled>
-                <ColStyled xs={4} sm={4} md={5}>{String(this.state.course.mandatoryAttendance)}</ColStyled>
+                <ColStyled xs={4} sm={4} md={5}>{String(this.state.course.mandatoryAttendance)} </ColStyled>
               </Row>
               <Row className="show-grid">
                 <ColStyled xs={6} sm={4} md={4}> MyCourses</ColStyled>
-                <ColStyled xs={4} sm={4} md={5}><a href={this.state.course.myCoursesLink}>Paina tästä </a></ColStyled>
+                <ColStyled xs={4} sm={4} md={5}><a href={this.state.course.myCoursesLink}>Linkki </a></ColStyled>
               </Row>
             </InfoContainer>
 
