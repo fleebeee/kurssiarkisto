@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { ButtonGroup, Button, Modal } from 'react-bootstrap';
+import { ButtonGroup, Button, Modal, Grid, Row, Col, Clearfix } from 'react-bootstrap';
 import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
 import styled from 'styled-components';
@@ -22,6 +22,7 @@ const NameContainer = styled.div`
   font-weight: bold;
   color: ${palette.titleGrey};
   font-size: 3em;
+  text-transform: uppercase;
 `;
 
 const Arrow = styled.img`
@@ -39,30 +40,21 @@ const CourseContainer = styled.div`
 
 const InfoContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  flex: 6;
+  flex-direction: column;
+  flex: 3 1 auto;
   font-family: 'Raleway', Helvetica, sans serif;
   font-weight: bold;
   font-size: 1.5em;
   color: ${palette.headerGrey};
-`;
-
-const TextContainer = styled.div`
-  flex-direction: column;
-  flex: 3;
-`;
-
-const DataContainer = styled.div`
-  flex-direction: column;
-  flex: 7;
-  padding-right: 10px;
-  padding-left: 10px;
+  margin-bottom: 20px;
+  line-height: 175%;
 `;
 
 const MSGContainer = styled.div`
   background-color: #E0CAA5;
   border-radius: 10px;
   padding: 15px;
+  flex: 1 1 auto;
 `;
 
 const ModalStyled = styled(Modal)`
@@ -243,26 +235,37 @@ class Course extends Component {
           </CourseContainer>
           <CourseContainer>
             <InfoContainer>
-              <br />
-              <TextContainer>
-                <p>Yleisarvosana</p>
-                <p>Kuormittavuus</p>
-                <p>Periodit</p>
-                <p>Opintopisteet</p>
-                <p>Suoritusmuodot</p>
-                <p>Läsnäolopakko</p>
-                <p>Linkki MyCoursesiin</p>
-              </TextContainer>
-              <DataContainer>
-                <p> 4.5</p>
-                <p> 3.5</p>
-                <p> {this.state.course.periods} </p>
-                <p> {this.state.course.credits}</p>
-                <p> {this.state.course.passingMechanisms}</p>
-                <p> {String(this.state.course.mandatoryAttendance)}</p>
-                <p><a href={this.state.course.myCoursesLink}> Paina tästä </a></p>
-              </DataContainer>
+
+              <Row className="show-grid">
+                <Col xs={6} md={5}>Yleisarvosana</Col>
+                <Col xs={4} md={5}>4.5</Col>
+              </Row>
+              <Row className="show-grid">
+                <Col xs={6} md={5}>Kuormittavuus</Col>
+                <Col xs={4} md={5}>3</Col>
+              </Row>
+              <Row className="show-grid">
+                <Col xs={6} md={5}>Periodit </Col>
+                <Col xs={4} md={5}>{this.state.course.periods}</Col>
+              </Row>
+              <Row className="show-grid">
+                <Col xs={6} md={5}>Opintopisteet</Col>
+                <Col xs={4} md={5}>{this.state.course.credits}</Col>
+              </Row>
+              <Row className="show-grid">
+                <Col xs={6} md={5}>Suoritusmuodot</Col>
+                <Col xs={4} md={5}>{this.state.course.passingMechanisms}</Col>
+              </Row>
+              <Row className="show-grid">
+                <Col xs={6} md={5}>Läsnäolopakko</Col>
+                <Col xs={4} md={5}>{this.state.course.mandatoryAttendance}</Col>
+              </Row>
+              <Row className="show-grid">
+                <Col xs={6} md={5}> MyCourses</Col>
+                <Col xs={4} md={5}><a href={this.state.course.myCoursesLink}>Paina tästä </a></Col>
+              </Row>
             </InfoContainer>
+
             <MSGContainer>
               <p>
                 tämän pitäisi näkyä oikealla.
