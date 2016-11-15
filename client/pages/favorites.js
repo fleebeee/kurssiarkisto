@@ -1,13 +1,13 @@
 import React, { Component, PropTypes } from 'react';
+import Link from 'next/link';
+import styled from 'styled-components';
+// import _ from 'lodash';
 
 import AuthService from '../utils/AuthService.js';
 import withAuth from '../utils/withAuth.js';
 import Page from '../components/Page/Page.js';
-import Link from 'next/link';
-import styled from 'styled-components';
-import _ from 'lodash';
 
-import globals from '../utils/globals.js';
+// import globals from '../utils/globals.js';
 import palette from '../utils/palette.js';
 
 const propTypes = {
@@ -41,21 +41,23 @@ class Favorites extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <Page>
         <Title>Suosikit</Title>
-          <Content>
+        <Content>
           <h3>Suosikkikurssisi</h3>
           <ul>
             {this.state.favorites &&
-             this.state.favorites.map(favorite =>
-               <Link href={'/course?code='+favorite}>
-               <li key={favorite}>{favorite}</li>
-               </Link>
-             )}
+            this.state.favorites.map(favorite =>
+              <Link
+                href={`/course?code=${favorite}`}
+                key={favorite}
+              >
+                <li>{favorite}</li>
+              </Link>
+            )}
           </ul>
-          </Content>
+        </Content>
       </Page>
     );
   }

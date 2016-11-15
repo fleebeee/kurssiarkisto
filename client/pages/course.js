@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { ButtonGroup, Button, Modal, Grid, Row, Col, Clearfix } from 'react-bootstrap';
+import { ButtonGroup, Button, Modal,
+/* Grid, */ Row, Col /* , Clearfix */ } from 'react-bootstrap';
 import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
 import Link from 'next/link';
@@ -102,10 +103,17 @@ const RowStyled = styled(Row)`
 class Course extends Component {
   constructor(props) {
     super(props);
-    this.state = { course: {}, showModal: false, reviews: [] };
+    this.state = {
+      course: {},
+      showModal: false,
+      reviews: [],
+      score: null,
+      workload: null,
+    };
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
     this.submitReview = this.submitReview.bind(this);
+    this.calcAverage = this.calcAverage.bind(this);
   }
 
   async componentDidMount() {
@@ -143,7 +151,11 @@ class Course extends Component {
           console.debug(
             `Review data fetched, ${data.reviews.length} review(s)`
           );
-          this.setState({ reviews: data.reviews });
+          this.setState({
+            reviews: data.reviews,
+            score: this.calcAverage(data.reviews, 'score'),
+            workload: this.calcAverage(data.reviews, 'workload'),
+          });
         } else {
           console.debug('Review data couldn\'t be fetched:', data);
         }
@@ -151,6 +163,17 @@ class Course extends Component {
         console.debug('Course data couldn\'t be fetched:', data);
       }
     }
+  }
+
+  calcAverage(array, field) {
+    if (!array.length) {
+      return null;
+    }
+    let sum = 0;
+    for (const object of array) {
+      sum += parseInt(object[field], 10);
+    }
+    return sum / array.length;
   }
 
   close() {
@@ -228,18 +251,30 @@ class Course extends Component {
         message: 'Arvostelu lisätty!',
         level: 'success',
       });
+
+      const newReviews = [
+        ...this.state.reviews,
+        { ...options, courseCode: this.state.course.code },
+      ];
+      this.setState({
+        reviews: newReviews,
+        score: this.calcAverage(newReviews, 'score'),
+        workload: this.calcAverage(newReviews, 'workload'),
+      });
+
       this.close();
     } else {
       console.debug('Failed to add review', data);
       this.props.addToast({
         title: 'Arvostelun lisääminen epäonnistui',
-        message: 'Palvelimella meni jokin vikaan',
-        level: 'error',
+        message: 'Olet jo arvostellut kurssin', // HACK placeholder for gala
+        level: 'warning',
       });
     }
   }
 
   render() {
+    console.log(this.state);
     return (
       <Page>
         <NameContainer>
@@ -281,39 +316,60 @@ class Course extends Component {
 
             <RowStyled>
               <ColStyled xs={6} sm={3.5} md={4}>Yleisarvosana</ColStyled>
-              <ColStyled xs={4} sm={3.5} md={5}>4.5</ColStyled>
+              <ColStyled xs={4} sm={3.5} md={5}>
+                {this.state.score || 'N/A'}
+              </ColStyled>
             </RowStyled>
             <RowStyled>
               <ColStyled xs={6} sm={3.5} md={4}>Kuormittavuus</ColStyled>
-              <ColStyled xs={4} sm={3.5} md={5}>3</ColStyled>
+              <ColStyled xs={4} sm={3.5} md={5}>
+                {this.state.workload || 'N/A'}
+              </ColStyled>
             </RowStyled>
             <RowStyled>
               <ColStyled xs={6} sm={3.5} md={4}>Periodit </ColStyled>
-              <ColStyled xs={4} sm={3.5} md={5}>{this.state.course.periods}</ColStyled>
+              <ColStyled xs={4} sm={3.5} md={5}>
+                {this.state.course.periods}
+              </ColStyled>
             </RowStyled>
             <RowStyled>
               <ColStyled xs={6} sm={3.5} md={4}>Opintopisteet</ColStyled>
-              <ColStyled xs={4} sm={3.5} md={5}>{this.state.course.credits}</ColStyled>
+              <ColStyled xs={4} sm={3.5} md={5}>
+                {this.state.course.credits}
+              </ColStyled>
             </RowStyled>
             <RowStyled>
               <ColStyled xs={6} sm={3.5} md={4}>Suoritusmuodot</ColStyled>
               <ColStyled xs={4} sm={3.5} md={5}>
                 <ulStyled>
-                  {this.state.course.passingMechanisms &&
+                  {this.state.course.passingMechanisms ?
                     this.state.course.passingMechanisms.map(
                     passingMechanism =>
-                      <liStyled>{passingMechanism}<br /></liStyled>
-                  ) || 'N/A'}
+                      <liStyled key={passingMechanism}>
+                        {passingMechanism}
+                        <br />
+                      </liStyled>
+                  ) : 'N/A'}
                 </ulStyled>
               </ColStyled>
             </RowStyled>
             <RowStyled>
               <ColStyled xs={6} sm={3.5} md={4}>Läsnäolopakko</ColStyled>
-              <ColStyled xs={4} sm={3.5} md={5}> {this.state.course.mandatoryAttendance ? 'Kyllä' : 'Ei'} </ColStyled>
+              <ColStyled xs={4} sm={3.5} md={5}>
+                {this.state.course.mandatoryAttendance ? 'Kyllä' : 'Ei'}
+              </ColStyled>
             </RowStyled>
             <RowStyled>
               <ColStyled xs={6} sm={3.5} md={4}> MyCourses</ColStyled>
-              <ColStyled xs={4} sm={3.5} md={5}><a href={this.state.course.myCoursesLink} target="_blank">Linkki </a></ColStyled>
+              <ColStyled xs={4} sm={3.5} md={5}>
+                <a
+                  href={this.state.course.myCoursesLink}
+                  target='_blank'
+                  rel='noreferrer noopener'
+                >
+                  Linkki
+                </a>
+              </ColStyled>
             </RowStyled>
           </InfoContainer>
 
