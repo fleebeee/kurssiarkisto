@@ -101,7 +101,7 @@ class Navigation extends Component {
             >
               <li><Link href='/'>Etusivu</Link></li>
               <li><Link href='/addcourse'>Lisää kurssi</Link></li>
-              <li><Link href='/preferences'>Suosikit</Link></li>
+              <li><Link href='/favorites'>Suosikit</Link></li>
               <li><Link href='/mypage'>Omat tiedot</Link></li>
               <li role='separator' className='divider' />
               <li><Link href='/logout'>Kirjaudu ulos</Link></li>
