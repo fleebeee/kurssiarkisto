@@ -25,6 +25,10 @@ const SearchContainer = styled.div`
 const SearchInputContainer = styled.div`
   padding: 30px;
   background-color: ${palette.yellow};
+  color: ${palette.white};
+  font-size: 1.5em;
+  font-family: 'Raleway', Helvetica, sans serif;
+
 `;
 
 const Results = styled.div`
@@ -119,6 +123,7 @@ class Search extends Component {
       <Page noPadding>
         <SearchContainer>
           <SearchInputContainer>
+            <p> Hae kursseja! </p>
             <input
               className='form-control'
               type='text'
