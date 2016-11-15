@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 import withToast from '../utils/withToast.js';
 import Page from '../components/Page/Page.js';
+import FavoriteIcon from '../components/FavoriteIcon.js';
 import palette from '../utils/palette.js';
 import globals from '../utils/globals.js';
 
@@ -46,12 +47,20 @@ const CourseList = styled.ul`
 `;
 
 const Course = styled.li`
+  display: flex;
   margin-bottom: 20px;
 `;
 
 const CourseLink = styled.span`
   font-size: 2rem;
   color: ${palette.orange};
+`;
+
+const FavoriteIconContainer = styled.div`
+  display: inline-block;
+  margin-left: 10px;
+  min-width: 24px;
+  padding-top: 2px;
 `;
 
 class Search extends Component {
@@ -110,10 +119,18 @@ class Search extends Component {
   renderOption(option) {
     return (
       <Course key={option.code}>
-        <Link href={`/course?code=${option.code}`}>
-          <CourseLink>{option.code} - {option.name}</CourseLink>
-        </Link>
-        <div>opintopisteet {option.credits || 'n/a'}</div>
+        <div>
+          <Link href={`/course?code=${option.code}`}>
+            <CourseLink>{option.code} - {option.name}</CourseLink>
+          </Link>
+          <div>opintopisteet {option.credits || 'n/a'}</div>
+        </div>
+        <FavoriteIconContainer>
+          <FavoriteIcon
+            code={option.code}
+            addToast={this.props.addToast}
+          />
+        </FavoriteIconContainer>
       </Course>
     );
   }

@@ -17,6 +17,8 @@ const propTypes = {
 // Replace this with your own style
 const FavoriteIconContainer = styled.div`
   display: inline-block;
+  height: 100%;
+  width: 100%;
 `;
 
 const Button = styled.div`
@@ -35,24 +37,13 @@ const pulse = keyframes`
   }
 `;
 
-const pulseSpecial = keyframes`
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: rotate(180deg) scale(1.3);
-  }
-  100% {
-    transform: rotate(0deg) scale(1);
-  }
-`;
-
 const HeartEmpty = styled.svg`
   stroke: red;
   fill: white;
   position: relative;
   top: 2px;
-  width: 33px;
+  height: 100%;
+  min-height: 16px;
   transition: fill 0.5s;
 
   &:hover {

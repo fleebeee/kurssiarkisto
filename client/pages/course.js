@@ -28,6 +28,8 @@ const Title = styled.h1`
 const FavoriteIconContainer = styled.div`
   display: inline-block;
   margin-left: 10px;
+  min-width: 33px;
+  padding-top: 2px;
 `;
 
 const NameContainer = styled.div`
