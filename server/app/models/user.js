@@ -32,7 +32,7 @@ const UserSchema = new Schema({
     required: false,
   },
   favorites: {
-    type: [Schema.Types.Objectid],
+    type: [String], // Course codes
     required: false,
   },
 });
