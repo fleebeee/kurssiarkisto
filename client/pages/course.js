@@ -265,7 +265,6 @@ class Course extends Component {
             </ModalStyled>
 
             <Button bsStyle='warning'>Muokkaa</Button>
-            <Button bsStyle='warning'>Lisää suosikkeihin</Button>
           </ButtonGroup>
         </CourseContainer>
         <CourseContainer>
@@ -295,7 +294,7 @@ class Course extends Component {
                     this.state.course.passingMechanisms.map(
                     passingMechanism =>
                       <liStyled>{passingMechanism}<br /></liStyled>
-                  )}
+                  ) || 'N/A'}
                 </ulStyled>
               </ColStyled>
             </RowStyled>

@@ -10,7 +10,7 @@ const propTypes = {
   addToast: PropTypes.func.isRequired,
 };
 const Container = styled.div`
-  background-image: url(/static/images/lib.jpg);
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0.2) 100%), url(/static/images/lib.jpg);
   background-size: cover;
   height: 80vh;
 `;
