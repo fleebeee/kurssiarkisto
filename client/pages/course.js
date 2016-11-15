@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { ButtonGroup, Button, Modal,
 /* Grid, */ Row, Col /* , Clearfix */ } from 'react-bootstrap';
 import fetch from 'isomorphic-fetch';
-// import ls from 'local-storage';
+import ls from 'local-storage';
 import Link from 'next/link';
 import styled from 'styled-components';
 import _ from 'lodash';
@@ -109,6 +109,7 @@ class Course extends Component {
       reviews: [],
       score: null,
       workload: null,
+      loggedIn: null,
     };
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
@@ -117,6 +118,9 @@ class Course extends Component {
   }
 
   async componentDidMount() {
+    // Check if user is logged in
+    this.setState({ loggedIn: _.has(JSON.parse(ls.get('profile')), 'id') });
+
     // Fetch course data from server
     const query = this.props.url.query;
     if (_.has(query, 'code')) {
@@ -173,7 +177,7 @@ class Course extends Component {
     for (const object of array) {
       sum += parseInt(object[field], 10);
     }
-    return sum / array.length;
+    return (sum / array.length).toFixed(2);
   }
 
   close() {
@@ -274,7 +278,6 @@ class Course extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <Page>
         <NameContainer>
@@ -286,7 +289,7 @@ class Course extends Component {
           </Link>
           <Title>
             {this.state.course.code} {this.state.course.name}
-            {this.state.course.code &&
+            {(this.state.course.code && this.state.loggedIn) &&
               <FavoriteIconContainer>
                 <FavoriteIcon
                   code={this.state.course.code}

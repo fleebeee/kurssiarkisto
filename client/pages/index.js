@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import fetch from 'isomorphic-fetch';
 import _ from 'lodash';
 import Link from 'next/link';
-// import ls from 'local-storage';
+import ls from 'local-storage';
 import styled from 'styled-components';
 
 import withToast from '../utils/withToast.js';
@@ -78,6 +78,9 @@ class Search extends Component {
   }
 
   componentDidMount() {
+    // Check if user is logged in
+    this.setState({ loggedIn: _.has(JSON.parse(ls.get('profile')), 'id') });
+
     const query = this.props.url.query;
     if (_.has(query, 'toast')) {
       if (query.toast) {
@@ -92,7 +95,10 @@ class Search extends Component {
 
   async setOptions(keywords) {
     if (!keywords /* || keyword.length < 3 */) {
-      this.setState({ options: [] });
+      this.setState({
+        options: [],
+        loggedIn: null,
+      });
       return false;
     }
 
@@ -125,12 +131,14 @@ class Search extends Component {
           </Link>
           <div>opintopisteet {option.credits || 'n/a'}</div>
         </div>
+        {this.state.loggedIn &&
         <FavoriteIconContainer>
           <FavoriteIcon
             code={option.code}
             addToast={this.props.addToast}
           />
         </FavoriteIconContainer>
+        }
       </Course>
     );
   }
