@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import _ from 'lodash';
 
 import globals from '../utils/globals.js';
@@ -17,19 +17,88 @@ const propTypes = {
 // Replace this with your own style
 const FavoriteIconContainer = styled.div`
   display: inline-block;
-  margin: 5px;
 `;
 
-const Heart = styled.i`
-  color: red;
+const Button = styled.div`
+  outline: 0;
+`;
+
+const pulse = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
+
+const pulseSpecial = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.3);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+`;
+
+const HeartEmpty = styled.svg`
+  stroke: red;
+  fill: white;
+  position: relative;
+  top: 2px;
+  width: 33px;
+  transition: fill 0.5s;
+
+  &:hover {
+    fill: red;
+    animation: ${pulse} 1s ease infinite;
+  }
+`;
+
+const HeartEmptyLinger = styled(HeartEmpty)`
+  transition: none;
+
+  &:hover {
+    fill: white;
+    animation: none;
+  }
+`;
+
+const HeartFull = styled(HeartEmpty)`
+  fill: red;
+
+  &:hover {
+    fill: white;
+    animation: none;
+  }
+`;
+
+const HeartFullLinger = styled(HeartFull)`
+  transition: none;
+
+  &:hover {
+    fill: red;
+    animation: none;
+  }
 `;
 
 class FavoriteIcon extends Component {
   constructor(props) {
     super(props);
     // Bind class functions here: this.function = this.function.bind(this)
-    this.state = { favorited: null };
+    this.state = {
+      favorited: null,
+      hover: false,
+    };
     this.onFavorite = this.onFavorite.bind(this);
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
   }
 
   componentDidMount() {
@@ -43,11 +112,28 @@ class FavoriteIcon extends Component {
     }
   }
 
+  onMouseEnter() {
+    this.setState({
+      hover: true,
+      stillHovering: false, // just in case
+    });
+  }
+
+  onMouseLeave() {
+    this.setState({
+      hover: false,
+      stillHovering: false,
+    });
+  }
+
   async onFavorite() {
     const profile = this.props.auth.getProfile();
     const { favorites } = profile;
     if (!this.state.favorited) {
-      this.setState({ favorited: true });
+      this.setState({
+        favorited: true,
+        stillHovering: true,
+      });
       const moreFavorites = [...favorites, this.props.code];
       this.props.auth.setProfile(
         { ...profile, favorites: moreFavorites }
@@ -75,7 +161,10 @@ class FavoriteIcon extends Component {
         }
       }
     } else {
-      this.setState({ favorited: false });
+      this.setState({
+        favorited: false,
+        stillHovering: true,
+      });
       const lessFavorites = _.without(favorites, this.props.code);
       this.props.auth.setProfile(
         { ...profile, favorites: lessFavorites }
@@ -103,20 +192,34 @@ class FavoriteIcon extends Component {
   }
 
   render() {
+    let Heart = HeartEmpty;
+
+    if (this.state.stillHovering) {
+      if (this.state.favorited) {
+        Heart = HeartFullLinger;
+      } else {
+        Heart = HeartEmptyLinger;
+      }
+    } else if (this.state.favorited) {
+      Heart = HeartFull;
+    }
+
     return (
       <FavoriteIconContainer>
-        <a
+        <Button
           tabIndex='0'
           onClick={this.onFavorite}
         >
+          {/* eslint-disable max-len */}
           <Heart
-            className={
-                        this.state.favorited
-                      ? 'ion-ios-heart'
-                      : 'ion-ios-heart-outline'
-                      }
-          />
-        </a>
+            viewBox='-2 -2 36 33.6'
+            onMouseEnter={this.onMouseEnter}
+            onMouseLeave={this.onMouseLeave}
+          >
+            <path d='M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z' />
+          </Heart>
+          {/* eslint-enable max-len */}
+        </Button>
       </FavoriteIconContainer>
     );
   }

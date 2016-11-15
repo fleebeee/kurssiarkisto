@@ -25,6 +25,11 @@ const Title = styled.h1`
   font-family: 'Raleway', Helvetica, sans serif;
 `;
 
+const FavoriteIconContainer = styled.div`
+  display: inline-block;
+  margin-left: 10px;
+`;
+
 const NameContainer = styled.div`
   display: flex;
 `;
@@ -245,10 +250,12 @@ class Course extends Component {
           <Title>
             {this.state.course.code} {this.state.course.name}
             {this.state.course.code &&
-              <FavoriteIcon
-                code={this.state.course.code}
-                addToast={this.props.addToast}
-              />}
+              <FavoriteIconContainer>
+                <FavoriteIcon
+                  code={this.state.course.code}
+                  addToast={this.props.addToast}
+                />
+              </FavoriteIconContainer>}
           </Title>
         </NameContainer>
         <CourseContainer>
