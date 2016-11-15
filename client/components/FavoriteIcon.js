@@ -17,6 +17,7 @@ const propTypes = {
 // Replace this with your own style
 const FavoriteIconContainer = styled.div`
   display: inline-block;
+  margin: 5px;
 `;
 
 const Heart = styled.i`
