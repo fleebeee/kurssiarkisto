@@ -12,7 +12,7 @@ const propTypes = {
 const Container = styled.div`
   background-image: url(/static/images/lib.jpg);
   background-size: cover;
-  height: 100%;
+  height: 80vh;
 `;
 
 const Aligner = styled.div`
