@@ -4,7 +4,7 @@ import NotificationSystem from 'react-notification-system';
 
 /* eslint-disable react/no-unused-prop-types */
 const propTypes = {
-  url: PropTypes.object.isRequired,
+  something: PropTypes.any,
 };
 
 export default (ToastComponent) => {

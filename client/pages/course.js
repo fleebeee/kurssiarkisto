@@ -2,15 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import { ButtonGroup, Button, Modal, Grid, Row, Col, Clearfix } from 'react-bootstrap';
 import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
+import Link from 'next/link';
 import styled from 'styled-components';
 import _ from 'lodash';
 
 import globals from '../utils/globals.js';
 import palette from '../utils/palette.js';
-import Link from 'next/link';
 import withToast from '../utils/withToast.js';
 import Page from '../components/Page/Page.js';
 import ReviewModal from '../components/Course/ReviewModal.js';
+import FavoriteIcon from '../components/FavoriteIcon.js';
 
 const propTypes = {
   url: PropTypes.object,
@@ -33,6 +34,10 @@ const ulStyled = styled.ul`
   padding: 0;
 `;
 
+const liStyled = styled.li`
+  list-item-style: none;
+`;
+
 const Arrow = styled.img`
   width: 55px;
   height: 55px;
@@ -42,26 +47,29 @@ const Arrow = styled.img`
 const CourseContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  flex-direction: row;
   margin-top: 15px;
 `;
 
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
+  flex: 1 0;
   font-family: 'Raleway', Helvetica, sans serif;
   font-weight: bold;
   font-size: 1.5em;
   color: ${palette.headerGrey};
   margin-bottom: 20px;
   line-height: 175%;
+  min-width: 300px;
 `;
 
 const MSGContainer = styled.div`
   background-color: #E0CAA5;
   border-radius: 10px;
   padding: 15px;
-  flex: 1 1 auto;
+  flex: 1 1 0;
+  min-width: 300px;
 `;
 
 const ModalStyled = styled(Modal)`
@@ -73,10 +81,16 @@ const ModalStyled = styled(Modal)`
 `;
 
 const ColStyled = styled(Col)`
-  margin-right: 20px;
+  margin-left: 15px;
+  margin-right: 5px;
+  padding: 0;
 `;
 
 
+const RowStyled = styled(Row)`
+  align-items: left;
+  padding: 0;
+`;
 
 class Course extends Component {
   constructor(props) {
@@ -129,7 +143,6 @@ class Course extends Component {
       } else {
         console.debug('Course data couldn\'t be fetched:', data);
       }
-
     }
   }
 
@@ -222,81 +235,88 @@ class Course extends Component {
   render() {
     return (
       <Page>
-          <NameContainer>
-            <Link href='/'>
+        <NameContainer>
+          <Link href='/'>
             <Arrow
               src='/static/images/back-arrow.png'
               alt='Takaisin hakuun'
             />
-            </Link>
-            <Title>{this.state.course.code} {this.state.course.name}</Title>
-          </NameContainer>
-          <CourseContainer>
+          </Link>
+          <Title>
+            {this.state.course.code} {this.state.course.name}
+            {this.state.course.code &&
+              <FavoriteIcon
+                code={this.state.course.code}
+                addToast={this.props.addToast}
+              />}
+          </Title>
+        </NameContainer>
+        <CourseContainer>
 
-            <ButtonGroup>
-              <Button bsStyle='warning' onClick={this.open}>Arvostele</Button>
+          <ButtonGroup>
+            <Button bsStyle='warning' onClick={this.open}>Arvostele</Button>
 
-              <ModalStyled show={this.state.showModal} onHide={this.close}>
-                <ReviewModal
-                  isNotPage
-                  close={this.close}
-                  submit={this.submitReview}
-                />
-              </ModalStyled>
+            <ModalStyled show={this.state.showModal} onHide={this.close}>
+              <ReviewModal
+                isNotPage
+                close={this.close}
+                submit={this.submitReview}
+              />
+            </ModalStyled>
 
-              <Button bsStyle='warning'>Muokkaa</Button>
-              <Button bsStyle='warning'>Lisää suosikkeihin</Button>
-            </ButtonGroup>
-          </CourseContainer>
-          <CourseContainer>
-            <InfoContainer>
+            <Button bsStyle='warning'>Muokkaa</Button>
+            <Button bsStyle='warning'>Lisää suosikkeihin</Button>
+          </ButtonGroup>
+        </CourseContainer>
+        <CourseContainer>
+          <InfoContainer>
 
-              <Row className="show-grid">
-                <ColStyled xs={6} sm={4} md={4}>Yleisarvosana</ColStyled>
-                <ColStyled xs={4} sm={4} md={5}>4.5</ColStyled>
-              </Row>
-              <Row className="show-grid">
-                <ColStyled xs={6} sm={4} md={4}>Kuormittavuus</ColStyled>
-                <ColStyled xs={4} sm={4} md={5}>3</ColStyled>
-              </Row>
-              <Row className="show-grid">
-                <ColStyled xs={6} sm={4} md={4}>Periodit </ColStyled>
-                <ColStyled xs={4} sm={4} md={5}>{this.state.course.periods}</ColStyled>
-              </Row>
-              <Row className="show-grid">
-                <ColStyled xs={6} sm={4} md={4}>Opintopisteet</ColStyled>
-                <ColStyled xs={4} sm={4} md={5}>{this.state.course.credits}</ColStyled>
-              </Row>
-              <Row className="show-grid">
-                <ColStyled xs={6} sm={4} md={4}>Suoritusmuodot</ColStyled>
-                <ColStyled xs={4} sm={4} md={5}>
-                  <ulStyled>
-                    {this.state.course.passingMechanisms &&
-                      this.state.course.passingMechanisms.map(
-                      passingMechanism =>
-                        <li>{passingMechanism}</li>
-                    )}
-                  </ulStyled>
-                </ColStyled>
-              </Row>
-              <Row className="show-grid">
-                <ColStyled xs={6} sm={4} md={4}>Läsnäolopakko</ColStyled>
-                <ColStyled xs={4} sm={4} md={5}> {this.state.course.mandatoryAttendance ? 'Kyllä' : 'Ei'} </ColStyled>
-              </Row>
-              <Row className="show-grid">
-                <ColStyled xs={6} sm={4} md={4}> MyCourses</ColStyled>
-                <ColStyled xs={4} sm={4} md={5}><a href={this.state.course.myCoursesLink} target="_blank">Linkki </a></ColStyled>
-              </Row>
-            </InfoContainer>
+            <RowStyled>
+              <ColStyled xs={6} sm={3.5} md={4}>Yleisarvosana</ColStyled>
+              <ColStyled xs={4} sm={3.5} md={5}>4.5</ColStyled>
+            </RowStyled>
+            <RowStyled>
+              <ColStyled xs={6} sm={3.5} md={4}>Kuormittavuus</ColStyled>
+              <ColStyled xs={4} sm={3.5} md={5}>3</ColStyled>
+            </RowStyled>
+            <RowStyled>
+              <ColStyled xs={6} sm={3.5} md={4}>Periodit </ColStyled>
+              <ColStyled xs={4} sm={3.5} md={5}>{this.state.course.periods}</ColStyled>
+            </RowStyled>
+            <RowStyled>
+              <ColStyled xs={6} sm={3.5} md={4}>Opintopisteet</ColStyled>
+              <ColStyled xs={4} sm={3.5} md={5}>{this.state.course.credits}</ColStyled>
+            </RowStyled>
+            <RowStyled>
+              <ColStyled xs={6} sm={3.5} md={4}>Suoritusmuodot</ColStyled>
+              <ColStyled xs={4} sm={3.5} md={5}>
+                <ulStyled>
+                  {this.state.course.passingMechanisms &&
+                    this.state.course.passingMechanisms.map(
+                    passingMechanism =>
+                      <liStyled>{passingMechanism}<br /></liStyled>
+                  )}
+                </ulStyled>
+              </ColStyled>
+            </RowStyled>
+            <RowStyled>
+              <ColStyled xs={6} sm={3.5} md={4}>Läsnäolopakko</ColStyled>
+              <ColStyled xs={4} sm={3.5} md={5}> {this.state.course.mandatoryAttendance ? 'Kyllä' : 'Ei'} </ColStyled>
+            </RowStyled>
+            <RowStyled>
+              <ColStyled xs={6} sm={3.5} md={4}> MyCourses</ColStyled>
+              <ColStyled xs={4} sm={3.5} md={5}><a href={this.state.course.myCoursesLink} target="_blank">Linkki </a></ColStyled>
+            </RowStyled>
+          </InfoContainer>
 
-            <MSGContainer>
-              <p>
-                tämän pitäisi näkyä oikealla.
-                Tähän tulee kommentti boksi. Ja alla näkyy kurssin nimi <br />
-                {this.state.course.name}
-              </p>
-            </MSGContainer>
-          </CourseContainer>
+          <MSGContainer>
+            <p>
+              tämän pitäisi näkyä oikealla.
+              Tähän tulee kommentti boksi. Ja alla näkyy kurssin nimi <br />
+              {this.state.course.name}
+            </p>
+          </MSGContainer>
+        </CourseContainer>
       </Page>
     );
   }
