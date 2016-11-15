@@ -30,8 +30,7 @@ const PageTitle = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 80px;
-  height: 75px;
+  height: 12vh;
   margin: 5px;
 `;
 
@@ -45,10 +44,10 @@ class Header extends Component {
     return (
       <HeaderContainer>
         <Link href='/'>
-        <Logo
-          src='/static/images/logo-oranssi.png'
-          alt='Kurssiarkisto logo'
-        />
+          <Logo
+            src='/static/images/logo-oranssi.png'
+            alt='Kurssiarkisto logo'
+          />
         </Link>
         <PageTitle> Kurssiarkisto </PageTitle>
         <Navigation />

@@ -13,7 +13,7 @@ const FooterContainer = styled.div`
   display: flex;
   align-items: center;
   background-color: ${palette.headerGrey};
-  min-height: 40px;
+  min-height: 8vh;
   font-family: 'Helvetica Neue', Helvetica, sans serif;
   font-size: 0.9em;
   color: ${palette.white};
