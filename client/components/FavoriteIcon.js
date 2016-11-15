@@ -7,6 +7,7 @@ import _ from 'lodash';
 import globals from '../utils/globals.js';
 import withAuth from '../utils/withAuth.js';
 import AuthService from '../utils/AuthService.js';
+import palette from '../utils/palette.js';
 
 const propTypes = {
   addToast: PropTypes.func.isRequired,
@@ -38,7 +39,7 @@ const pulse = keyframes`
 `;
 
 const HeartEmpty = styled.svg`
-  stroke: red;
+  stroke: ${palette.headerGrey};
   fill: white;
   position: relative;
   top: 2px;
@@ -47,7 +48,7 @@ const HeartEmpty = styled.svg`
   transition: fill 0.5s;
 
   &:hover {
-    fill: red;
+    fill: ${palette.headerGrey};
     animation: ${pulse} 1s ease infinite;
   }
 `;
@@ -62,7 +63,7 @@ const HeartEmptyLinger = styled(HeartEmpty)`
 `;
 
 const HeartFull = styled(HeartEmpty)`
-  fill: red;
+  fill: ${palette.headerGrey};
 
   &:hover {
     fill: white;
@@ -74,7 +75,7 @@ const HeartFullLinger = styled(HeartFull)`
   transition: none;
 
   &:hover {
-    fill: red;
+    fill: ${palette.headerGrey};
     animation: none;
   }
 `;
