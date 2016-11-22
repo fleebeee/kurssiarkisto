@@ -135,10 +135,9 @@ class addCourse extends Component {
     this.state = {
       courseName: '',
       courseCode: '',
-      school: '',
 
       hasExam: false,
-      hasExercises: '',
+      hasExercises: false,
       hasGroupwork: false,
       hasDiary: false,
       hasAssignment: false,
@@ -192,9 +191,8 @@ class addCourse extends Component {
 
     const passingMechanisms = [];
 
-    if (this.state.hasExercises && this.stateHasExercises !== 'ei') {
-      passingMechanisms.push(`${this.state.hasExercises} viikkoharjoitukset`);
-    }
+    if (this.state.hasExercises) passingMechanisms.push(`viikkoharjoitukset`);
+
 
     if (this.state.hasExam) passingMechanisms.push('tentti');
     if (this.state.hasGroupwork) passingMechanisms.push('ryhmätyö');
@@ -220,7 +218,6 @@ class addCourse extends Component {
         passingMechanisms,
         credits: this.state.credits,
         periods,
-        school: this.state.school,
       }),
     });
     const data = await res.json();
@@ -296,15 +293,6 @@ class addCourse extends Component {
                   onChange={this.handleTextChange.bind(this, 'courseCode')}
                 />
 
-                <Label htmlFor='school'>Korkeakoulu</Label>
-                <TextField
-                  className='form-control'
-                  id='school'
-                  type='text'
-                  placeholder='korkeakoulu'
-                  value={this.state.school}
-                  onChange={this.handleTextChange.bind(this, 'school')}
-                />
               </BasicInformation>
 
               <Details>
@@ -315,41 +303,13 @@ class addCourse extends Component {
                     <Label>Suoritusmuodot</Label>
 
                     <CheckboxField>
-                      <div className='dropdown'>
-                        <button
-                          className='btn btn-xs btn-default dropdown-toggle'
-                          type='button'
-                          id='dropdownMenu'
-                          data-toggle='dropdown'
-                          aria-haspopup='true'
-                          aria-expanded='true'
-                        >
-                          <ExerciseText>
-                            {this.state.hasExercises || 'valitse'}&nbsp;
-                          </ExerciseText>
-                          <span className='caret' />
-                        </button>
-                        <ul
-                          className='dropdown-menu'
-                          aria-labelledby='exercisesDropdown'
-                        >
-                          {
-                            ['ei', 'vapaaehtoiset', 'pakolliset'].map(
-                            option =>
-                              <li key={option}>
-                                <a
-                                  tabIndex='0'
-                                  onClick={() =>
-                                    this.handleHasExercisesChange(option)
-                                  }
-                                >
-                                  {option}
-                                </a>
-                              </li>
-                            )
-                          }
-                        </ul>
-                      </div>
+                      <input
+                        type='checkbox'
+                        value={this.state.hasExercises}
+                        onChange={
+                          () => this.handleCheckboxChange('hasExercises')
+                        }
+                      />
                       <CheckboxText>viikkoharjoitukset</CheckboxText>
                     </CheckboxField>
 
