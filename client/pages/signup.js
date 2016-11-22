@@ -124,7 +124,7 @@ class Signup extends Component {
     } else if (res.success) {
       console.debug('Successful sign up');
       // Redirect to front page
-      this.props.url.pushTo('/');
+      this.props.url.pushTo('/login.js');
     } else {
       console.debug('Invalid sign up');
       this.props.addToast({
