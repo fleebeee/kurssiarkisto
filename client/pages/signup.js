@@ -98,7 +98,7 @@ class Signup extends Component {
         password: this.state.password,
         // Optional
         role: this.state.role,
-        track: this.state.track !== 'Ei valintaa' ? this.state.track : null,
+        track: this.state.track !== 'n/a' ? this.state.track : null,
         startingYear: this.state.startingYear,
         nickname: this.state.nickname,
       }),
@@ -173,7 +173,7 @@ class Signup extends Component {
                 aria-expanded='true'
               >
                 <TrackText>
-                  {this.state.track || 'Ei valintaa'}&nbsp;
+                  {this.state.track || 'n/a'}&nbsp;
                 </TrackText>
                 <span className='caret' />
               </button>
@@ -182,7 +182,7 @@ class Signup extends Component {
                 aria-labelledby='trackDropdown'
               >
                 {
-                  ['Ei valintaa', 'TUO', 'TIK', 'INF', 'AUT', 'BTT', 'ENE',
+                  ['n/a', 'TUO', 'TIK', 'INF', 'AUT', 'BTT', 'ENE',
                     'KON', 'TFM', 'RYM', 'RRT', 'BIO', 'EST', 'ARK'].map(
                   option =>
                     <li key={option}>

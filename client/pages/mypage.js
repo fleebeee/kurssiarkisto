@@ -224,24 +224,24 @@ class Mypage extends Component {
     return (
       <Page>
         <myPageContainer>
-          <Title>Omat tiedot</Title>
+          <Title>Personal information</Title>
           <Content>
             <Form>
               <BasicInformation>
                 <QuestionBox>
-                  <SmallHeader>Nimimerkki</SmallHeader>
+                  <SmallHeader>Nickname</SmallHeader>
                   <TextField
                     className='form-control'
                     id='nickname'
                     type='text'
-                    placeholder={this.state.nickname || 'nimimerkki'}
+                    placeholder={this.state.nickname || 'nickname'}
                     value={this.state.nickname}
                     onChange={this.handleTextChange.bind(this, 'nickname')}
                   />
                 </QuestionBox>
 
                 <QuestionBox>
-                  <SmallHeader>Sähköposti</SmallHeader>
+                  <SmallHeader>email</SmallHeader>
                   <TextField
                     className='form-control'
                     id='email'
@@ -253,7 +253,7 @@ class Mypage extends Component {
                 </QuestionBox>
 
                 <QuestionBox>
-                  <SmallHeader>Rooli</SmallHeader>
+                  <SmallHeader>Role</SmallHeader>
                   <TextField
                     className='form-control'
                     id='role'
@@ -266,7 +266,7 @@ class Mypage extends Component {
                 </QuestionBox>
 
                 <QuestionBox>
-                  <SmallHeader>Opintolinja</SmallHeader>
+                  <SmallHeader>Department</SmallHeader>
                   <OptionboxField>
                     <DropdownBox className='dropdown'>
                       <button
@@ -308,7 +308,7 @@ class Mypage extends Component {
                 </QuestionBox>
 
                 <QuestionBox>
-                  <SmallHeader>Opintojen aloitusvuosi</SmallHeader>
+                  <SmallHeader>First year of studies</SmallHeader>
                   <TextField
                     className='form-control'
                     id='startingYear'
@@ -325,12 +325,12 @@ class Mypage extends Component {
 
               <Password>
                 <QuestionBox>
-                  <SmallHeader>Vaihda salasana</SmallHeader>
+                  <SmallHeader>Change password</SmallHeader>
                   <TextFieldWithPaddings
                     className='form-control'
                     id='oldPassword'
                     type='password'
-                    placeholder='nykyinen salasana'
+                    placeholder='current password'
                     value={this.state.oldPassword}
                     onChange={this.handleTextChange.bind(this, 'oldPassword')}
                   />
@@ -338,7 +338,7 @@ class Mypage extends Component {
                     className='form-control'
                     id='newPassword'
                     type='password'
-                    placeholder='uusi salasana'
+                    placeholder='new password'
                     value={this.state.newPassword}
                     onChange={this.handleTextChange.bind(this, 'newPassword')}
                   />
@@ -346,7 +346,7 @@ class Mypage extends Component {
                     className='form-control'
                     id='newPasswordAgain'
                     type='password'
-                    placeholder='uusi salasana uudestaan'
+                    placeholder='new password again'
                     value={this.state.newPasswordAgain}
                     onChange={this.handleTextChange.bind(this,
                       'newPasswordAgain')}
@@ -356,7 +356,7 @@ class Mypage extends Component {
                   className='btn'
                   onClick={this.handleSubmit}
                 >
-                  Tallenna muutokset
+                  Save changes
                 </SaveMyPageButton>
               </Password>
             </Form>
