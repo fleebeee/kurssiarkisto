@@ -33,7 +33,7 @@ class LogOut extends Component {
     return (
       <Page>
         <LogOutContainer>
-          Kirjaudutaan ulos...
+          Logging out...
         </LogOutContainer>
       </Page>
     );

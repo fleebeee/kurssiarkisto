@@ -191,14 +191,14 @@ class addCourse extends Component {
 
     const passingMechanisms = [];
 
-    if (this.state.hasExercises) passingMechanisms.push(`viikkoharjoitukset`);
+    if (this.state.hasExercises) passingMechanisms.push(`exercises`);
 
 
-    if (this.state.hasExam) passingMechanisms.push('tentti');
-    if (this.state.hasGroupwork) passingMechanisms.push('ryhmätyö');
-    if (this.state.hasDiary) passingMechanisms.push('luentopäiväkirja');
-    if (this.state.hasAssignment) passingMechanisms.push('harjoitustyö');
-    if (this.state.hasLabAssignment) passingMechanisms.push('laboratoriotyö');
+    if (this.state.hasExam) passingMechanisms.push('exam');
+    if (this.state.hasGroupwork) passingMechanisms.push('groupwork');
+    if (this.state.hasDiary) passingMechanisms.push('lecture diaries');
+    if (this.state.hasAssignment) passingMechanisms.push('assignment');
+    if (this.state.hasLabAssignment) passingMechanisms.push('lab assignment');
 
     const periods = [];
     _.each(this.state.periods, (value, key) => {

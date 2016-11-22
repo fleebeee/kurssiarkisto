@@ -128,8 +128,8 @@ class Signup extends Component {
     } else {
       console.debug('Invalid sign up');
       this.props.addToast({
-        title: 'Rekisteröityminen epäonnistui',
-        message: 'Sähköposti voi olla jo käytössä',
+        title: 'Register failed',
+        message: 'email might be already in use',
         level: 'error',
       });
     }
@@ -141,9 +141,9 @@ class Signup extends Component {
         <Content>
           <div>
 
-            <RegisterText>Rekisteröidy</RegisterText>
-            <OptionalText>Pakolliset kentät</OptionalText>
-            <Label>sähköposti</Label>
+            <RegisterText>Register</RegisterText>
+            <OptionalText>Mandatory fields</OptionalText>
+            <Label>email</Label>
             <input
               className='form-control'
               id='email'
@@ -152,7 +152,7 @@ class Signup extends Component {
               value={this.state.email}
               onChange={this.handleTextChange.bind(this, 'email')}
             />
-            <Label>salasana</Label>
+            <Label>password</Label>
             <input
               className='form-control'
               id='password'
@@ -161,8 +161,8 @@ class Signup extends Component {
               value={this.state.password}
               onChange={this.handleTextChange.bind(this, 'password')}
             />
-            <OptionalText>Valinnaiset kentät</OptionalText>
-            <Label>opintolinja</Label>
+            <OptionalText>Optional fields</OptionalText>
+            <Label>Department</Label>
             <div className='dropdown'>
               <button
                 className='btn btn-xs btn-default dropdown-toggle'
@@ -197,41 +197,41 @@ class Signup extends Component {
                 }
               </ul>
             </div>
-            <Label>rooli</Label>
+            <Label>role</Label>
             <input
               className='form-control'
               id='role'
               type='text'
-              placeholder='opiskelija / opettaja / kurssihenkilökunta'
+              placeholder='student / teacher / course staff'
               value={this.state.role}
               onChange={this.handleTextChange.bind(this, 'role')}
             />
-            <Label>opintojen aloitusvuosi</Label>
+            <Label>first year of studies</Label>
             <input
               className='form-control'
               id='startingYear'
               type='text'
-              placeholder='opintojen aloitusvuosi'
+              placeholder='2010 / 2011 / 2012...'
               value={this.state.startingYear}
               onChange={this.handleTextChange.bind(this, 'startingYear')}
             />
-            <Label>nimimerkki</Label>
+            <Label>nickname</Label>
             <input
               className='form-control'
               id='nickname'
               type='text'
-              placeholder='nimimerkki'
+              placeholder='nickname'
               value={this.state.nickname}
               onChange={this.handleTextChange.bind(this, 'nickname')}
             />
           </div>
           <br />
-          <p> Rekisteröitymällä sitoudut noudattamaan palvelun sääntöjä.</p>
+          <p> By registering you agree to our terms and rules. </p>
           <RegisterButton
             className='btn btn-default'
             onClick={this.handleSubmit}
           >
-            Rekisteröidy
+            Register
           </RegisterButton>
         </Content>
       </Page>

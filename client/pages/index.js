@@ -85,8 +85,8 @@ class Search extends Component {
     if (_.has(query, 'toast')) {
       if (query.toast) {
         this.props.addToast({
-          title: 'Kurssin lisääminen onnistui',
-          message: `Lisäsit kurssin ${query.code || ''} - ${query.name || ''}`,
+          title: 'Adding course successful!',
+          message: `You added course ${query.code || ''} - ${query.name || ''}`,
           level: 'success',
         });
       }
@@ -148,18 +148,18 @@ class Search extends Component {
       <Page noPadding>
         <SearchContainer>
           <SearchInputContainer>
-            <p> Hae kursseja! </p>
+            <p> Search courses! </p>
             <input
               className='form-control'
               type='text'
-              placeholder='Hae kurssin koodilla tai nimellä'
+              placeholder='search with course name or code'
               value={this.state.keywords}
               onChange={this.handleChange}
             />
           </SearchInputContainer>
           <Results>
             <SearchTitle>
-              HAKUTULOKSET ({this.state.options.length} kpl)
+              SEARCH RESULTS ({this.state.options.length})
             </SearchTitle>
             <CourseList>
               {this.state.options.map(this.renderOption)}
