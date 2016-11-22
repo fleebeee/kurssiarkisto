@@ -43,9 +43,9 @@ class Favorites extends Component {
   render() {
     return (
       <Page>
-        <Title>Suosikit</Title>
+        <Title>Favorites</Title>
         <Content>
-          <h3>Suosikkikurssisi</h3>
+          <h3>Your favorite courses</h3>
           <ul>
             {this.state.favorites &&
             this.state.favorites.map(favorite =>

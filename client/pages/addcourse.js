@@ -170,8 +170,8 @@ class addCourse extends Component {
     if (!this.state.courseName) {
       console.debug('Course name is required!');
       this.props.addToast({
-        title: 'Kurssin lisääminen epäonnistui',
-        message: 'Kurssin nimi puuttuu',
+        title: 'Adding course failed',
+        message: 'Course name missing',
         level: 'warning',
       });
       return;
@@ -180,8 +180,8 @@ class addCourse extends Component {
     if (!this.state.courseCode) {
       console.debug('Course code is required!');
       this.props.addToast({
-        title: 'Kurssin lisääminen epäonnistui',
-        message: 'Kurssin koodi puuttuu',
+        title: 'Adding course failed',
+        message: 'Course code missing',
         level: 'warning',
       });
       return;
@@ -235,8 +235,8 @@ class addCourse extends Component {
     } else {
       console.debug('Add course failed');
       this.props.addToast({
-        title: 'Kurssin lisääminen epäonnistui',
-        message: 'Jokin meni pieleen',
+        title: 'Adding course failed',
+        message: 'Something went wrong :(',
         level: 'error',
       });
     }
@@ -268,27 +268,27 @@ class addCourse extends Component {
     return (
       <Page>
         <AddCourseContainer>
-          <Title>Lisää kurssi</Title>
+          <Title>Add course</Title>
           <Content>
             <Form>
               <BasicInformation>
-                <SmallHeader>Perustiedot</SmallHeader>
-                <Label htmlFor='courseName'>Kurssin nimi</Label>
+                <SmallHeader>Basic info</SmallHeader>
+                <Label htmlFor='courseName'>Course name</Label>
                 <TextField
                   className='form-control'
                   id='courseName'
                   type='text'
-                  placeholder='kurssin nimi'
+                  placeholder='course name'
                   value={this.state.courseName}
                   onChange={this.handleTextChange.bind(this, 'courseName')}
                 />
 
-                <Label htmlFor='courseCode'>Kurssikoodi</Label>
+                <Label htmlFor='courseCode'>Course code</Label>
                 <TextField
                   className='form-control'
                   id='courseCode'
                   type='text'
-                  placeholder='kurssikoodi'
+                  placeholder='course code'
                   value={this.state.courseCode}
                   onChange={this.handleTextChange.bind(this, 'courseCode')}
                 />
@@ -296,11 +296,11 @@ class addCourse extends Component {
               </BasicInformation>
 
               <Details>
-                <SmallHeader>Lisätiedot</SmallHeader>
+                <SmallHeader>Additional information</SmallHeader>
                 <FlexContainer>
 
                   <PassingMechanisms>
-                    <Label>Suoritusmuodot</Label>
+                    <Label>Course content</Label>
 
                     <CheckboxField>
                       <input
@@ -310,7 +310,7 @@ class addCourse extends Component {
                           () => this.handleCheckboxChange('hasExercises')
                         }
                       />
-                      <CheckboxText>viikkoharjoitukset</CheckboxText>
+                      <CheckboxText>exercises</CheckboxText>
                     </CheckboxField>
 
                     <CheckboxField>
@@ -321,7 +321,7 @@ class addCourse extends Component {
                           () => this.handleCheckboxChange('hasExam')
                         }
                       />
-                      <CheckboxText>tentti</CheckboxText>
+                      <CheckboxText>exam</CheckboxText>
                     </CheckboxField>
 
                     <CheckboxField>
@@ -332,7 +332,7 @@ class addCourse extends Component {
                           () => this.handleCheckboxChange('hasGroupwork')
                         }
                       />
-                      <CheckboxText>ryhmätyö</CheckboxText>
+                      <CheckboxText>groupwork</CheckboxText>
                     </CheckboxField>
 
                     <CheckboxField>
@@ -344,7 +344,7 @@ class addCourse extends Component {
                         }
                       />
                       <CheckboxText>
-                        luentopäiväkirja
+                        lecture diaries
                       </CheckboxText>
                     </CheckboxField>
 
@@ -356,7 +356,7 @@ class addCourse extends Component {
                           () => this.handleCheckboxChange('hasAssignment')
                         }
                       />
-                      <CheckboxText>harjoitustyö</CheckboxText>
+                      <CheckboxText>assignment</CheckboxText>
                     </CheckboxField>
 
                     <CheckboxField>
@@ -367,12 +367,12 @@ class addCourse extends Component {
                           () => this.handleCheckboxChange('hasGroupwork')
                         }
                       />
-                      <CheckboxText>laboratoriotyö</CheckboxText>
+                      <CheckboxText>lab assignment</CheckboxText>
                     </CheckboxField>
                   </PassingMechanisms>
 
                   <Periods>
-                    <Label>Periodi</Label>
+                    <Label>Periods</Label>
                     {['i', 'ii', 'iii', 'iv', 'v'].map(period =>
                       <CheckboxField key={period}>
                         <input
@@ -386,16 +386,16 @@ class addCourse extends Component {
                   </Periods>
 
                   <Misc>
-                    <Label>Opintopisteet</Label>
+                    <Label>Credits</Label>
                     <TextField
                       className='form-control input-sm'
                       id='credits'
                       type='number'
-                      placeholder='opintopisteet'
+                      placeholder='credits'
                       value={this.state.credits}
                       onChange={this.handleCreditsChange}
                     />
-                    <AttendanceLabel>Läsnäolopakko</AttendanceLabel>
+                    <AttendanceLabel>Mandatory attendance</AttendanceLabel>
                     <CheckboxField>
                       <input
                         type='checkbox'
@@ -404,7 +404,7 @@ class addCourse extends Component {
                           this.handleCheckboxChange('hasMandatoryAttendance')
                         }
                       />
-                      <CheckboxText>kyllä</CheckboxText>
+                      <CheckboxText>Yes</CheckboxText>
                     </CheckboxField>
                   </Misc>
                 </FlexContainer>
@@ -414,7 +414,7 @@ class addCourse extends Component {
               className='btn'
               onClick={this.handleSubmit}
             >
-              Lisää kurssi
+              Add course
             </AddCourseButton>
           </Content>
         </AddCourseContainer>

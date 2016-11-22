@@ -98,6 +98,8 @@ const ColStyled = styled(Col)`
 const RowStyled = styled(Row)`
   align-items: left;
   padding: 0;
+  margin-right: 5px;
+  border-bottom: 1px solid #D3D3D3;
 `;
 
 class Course extends Component {
@@ -194,8 +196,8 @@ class Course extends Component {
     if (!userID) {
       console.debug('You need to log in');
       this.props.addToast({
-        title: 'Arvostelun lisääminen epäonnistui',
-        message: 'Et ole kirjautunut sisään',
+        title: 'Adding review failed',
+        message: 'You are not logged in',
         level: 'warning',
       });
       return;
@@ -204,8 +206,8 @@ class Course extends Component {
     if (!this.state.course.code) {
       console.debug('No course chosen');
       this.props.addToast({
-        title: 'Arvostelun lisääminen epäonnistui',
-        message: 'Kurssia ei ole valittu',
+        title: 'Adding review failed',
+        message: 'Course not chosen',
         level: 'warning',
       });
       return;
@@ -214,8 +216,8 @@ class Course extends Component {
     if (!score || score < 1 || score > 5) {
       console.debug('Score not set');
       this.props.addToast({
-        title: 'Arvostelun lisääminen epäonnistui',
-        message: 'Yleisarvosana puuttuu',
+        title: 'Adding review failed',
+        message: 'Score not set',
         level: 'warning',
       });
       return;
@@ -224,8 +226,8 @@ class Course extends Component {
     if (!workload || workload < 1 || workload > 5) {
       console.debug('Workload not set');
       this.props.addToast({
-        title: 'Arvostelun lisääminen epäonnistui',
-        message: 'Kuormittavuus puuttuu',
+        title: 'Adding review failed',
+        message: 'Workload not set',
         level: 'warning',
       });
       return;
@@ -252,7 +254,7 @@ class Course extends Component {
     if (data.success) {
       console.debug('Review added successfully', data);
       this.props.addToast({
-        message: 'Arvostelu lisätty!',
+        message: 'Review added successfully!',
         level: 'success',
       });
 
@@ -270,8 +272,8 @@ class Course extends Component {
     } else {
       console.debug('Failed to add review', data);
       this.props.addToast({
-        title: 'Arvostelun lisääminen epäonnistui',
-        message: 'Olet jo arvostellut kurssin', // HACK placeholder for gala
+        title: 'Adding review failed',
+        message: 'You have already rated this course', // HACK placeholder for gala
         level: 'warning',
       });
     }
@@ -284,7 +286,7 @@ class Course extends Component {
           <Link href='/'>
             <Arrow
               src='/static/images/back-arrow.png'
-              alt='Takaisin hakuun'
+              alt='Back to search'
             />
           </Link>
           <Title>
@@ -301,7 +303,7 @@ class Course extends Component {
         <CourseContainer>
 
           <ButtonGroup>
-            <Button bsStyle='warning' onClick={this.open}>Arvostele</Button>
+            <Button bsStyle='warning' onClick={this.open}>Review</Button>
 
             <ModalStyled show={this.state.showModal} onHide={this.close}>
               <ReviewModal
@@ -311,38 +313,38 @@ class Course extends Component {
               />
             </ModalStyled>
 
-            <Button bsStyle='warning'>Muokkaa</Button>
+            <Button bsStyle='warning'>Edit</Button>
           </ButtonGroup>
         </CourseContainer>
         <CourseContainer>
           <InfoContainer>
 
             <RowStyled>
-              <ColStyled xs={6} sm={3.5} md={4}>Yleisarvosana</ColStyled>
+              <ColStyled xs={6} sm={3.5} md={4}>Score</ColStyled>
               <ColStyled xs={4} sm={3.5} md={5}>
                 {this.state.score || 'N/A'}
               </ColStyled>
             </RowStyled>
             <RowStyled>
-              <ColStyled xs={6} sm={3.5} md={4}>Kuormittavuus</ColStyled>
+              <ColStyled xs={6} sm={3.5} md={4}>Workload</ColStyled>
               <ColStyled xs={4} sm={3.5} md={5}>
                 {this.state.workload || 'N/A'}
               </ColStyled>
             </RowStyled>
             <RowStyled>
-              <ColStyled xs={6} sm={3.5} md={4}>Periodit </ColStyled>
+              <ColStyled xs={6} sm={3.5} md={4}>Periods</ColStyled>
               <ColStyled xs={4} sm={3.5} md={5}>
                 {this.state.course.periods}
               </ColStyled>
             </RowStyled>
             <RowStyled>
-              <ColStyled xs={6} sm={3.5} md={4}>Opintopisteet</ColStyled>
+              <ColStyled xs={6} sm={3.5} md={4}>Credits</ColStyled>
               <ColStyled xs={4} sm={3.5} md={5}>
                 {this.state.course.credits}
               </ColStyled>
             </RowStyled>
             <RowStyled>
-              <ColStyled xs={6} sm={3.5} md={4}>Suoritusmuodot</ColStyled>
+              <ColStyled xs={6} sm={3.5} md={4}>Content</ColStyled>
               <ColStyled xs={4} sm={3.5} md={5}>
                 <ulStyled>
                   {this.state.course.passingMechanisms ?
@@ -357,9 +359,9 @@ class Course extends Component {
               </ColStyled>
             </RowStyled>
             <RowStyled>
-              <ColStyled xs={6} sm={3.5} md={4}>Läsnäolopakko</ColStyled>
+              <ColStyled xs={6} sm={3.5} md={4}>Mandatory attendance</ColStyled>
               <ColStyled xs={4} sm={3.5} md={5}>
-                {this.state.course.mandatoryAttendance ? 'Kyllä' : 'Ei'}
+                {this.state.course.mandatoryAttendance ? 'Yes' : 'No'}
               </ColStyled>
             </RowStyled>
             <RowStyled>
@@ -370,17 +372,14 @@ class Course extends Component {
                   target='_blank'
                   rel='noreferrer noopener'
                 >
-                  Linkki
+                  Link
                 </a>
               </ColStyled>
             </RowStyled>
           </InfoContainer>
 
           <MSGContainer>
-            <p>
-              tämän pitäisi näkyä oikealla.
-              Tähän tulee kommentti boksi. Ja alla näkyy kurssin nimi <br />
-              {this.state.course.name}
+            <p> placeholder
             </p>
           </MSGContainer>
         </CourseContainer>
