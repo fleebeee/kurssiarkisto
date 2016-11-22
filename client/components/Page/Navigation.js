@@ -89,22 +89,22 @@ class Navigation extends Component {
               className='dropdown-menu pull-right'
               aria-labelledby='dropdownMenu1'
             >
-              <li><Link href='/'>Etusivu</Link></li>
+              <li><Link href='/'>Search</Link></li>
               <li role='separator' className='divider' />
-              <li><Link href='/login'>Kirjaudu sisään</Link></li>
-              <li><Link href='/signup'>Rekisteröidy</Link></li>
+              <li><Link href='/login'>Log in</Link></li>
+              <li><Link href='/signup'>Register</Link></li>
             </ul>
           :
             <ul
               className='dropdown-menu pull-right'
               aria-labelledby='dropdownMenu1'
             >
-              <li><Link href='/'>Etusivu</Link></li>
-              <li><Link href='/addcourse'>Lisää kurssi</Link></li>
-              <li><Link href='/favorites'>Suosikit</Link></li>
-              <li><Link href='/mypage'>Omat tiedot</Link></li>
+              <li><Link href='/'>Search</Link></li>
+              <li><Link href='/addcourse'>Add course</Link></li>
+              <li><Link href='/favorites'>Favorites</Link></li>
+              <li><Link href='/mypage'>My page</Link></li>
               <li role='separator' className='divider' />
-              <li><Link href='/logout'>Kirjaudu ulos</Link></li>
+              <li><Link href='/logout'>Log out</Link></li>
             </ul>
           }
         </div>

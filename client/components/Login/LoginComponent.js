@@ -98,8 +98,8 @@ class LoginComponent extends Component {
       this.props.url.pushTo('/');
     } else {
       this.props.addToast({
-        title: 'Kirjautuminen epäonnistui',
-        message: 'Väärä käyttäjätunnus tai salasana',
+        title: 'Login failed',
+        message: 'Invalid username or password',
         level: 'error',
       });
     }
@@ -108,8 +108,8 @@ class LoginComponent extends Component {
   render() {
     return (
       <LoginContainer>
-        <LoginText>Kirjaudu sisään</LoginText>
-        <SmallHeader>sähköpostiosoite</SmallHeader>
+        <LoginText>Log in</LoginText>
+        <SmallHeader>email</SmallHeader>
         <Field
           className='form-control'
           type='text'
@@ -117,7 +117,7 @@ class LoginComponent extends Component {
           value={this.state.email}
           onChange={this.handleEmailChange}
         />
-        <SmallHeader>salasana</SmallHeader>
+        <SmallHeader>password</SmallHeader>
         <Field
           className='form-control'
           type='password'
@@ -130,7 +130,7 @@ class LoginComponent extends Component {
             className='btn btn-default'
             onClick={this.handleSubmit}
           >
-            Kirjaudu sisään
+            Log in
           </LoginButton>
         </ButtonContainer>
       </LoginContainer>
