@@ -40,20 +40,20 @@ class ReviewModal extends Component {
     return (
       <ReviewModalContainer>
         <Modal.Header closeButton>
-          <Modal.Title>Arvostele kurssi</Modal.Title>
+          <Modal.Title>Review course</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {/* eslint-disable max-len */}
-          <h4>Yleisarvosana</h4>
-          <p>Anna kurssille yleisarvosana asteikolla 1-5 (1 = huono, 5 = erinomainen).</p>
+          <h4>Score</h4>
+          <p>Give the course an overall score on a scale from 1 to 5 (1 = bad, 5 = excellent). You can take into account things such as how fun, interesting or beneficial the course was.</p>
           <StarRating
             empty='ion-ios-star-outline'
             full='ion-ios-star'
             initialRate={this.state.score}
             onClick={rate => this.setState({ score: rate })}
           />
-          <h4>Kuormittavuus</h4>
-          <p>Arvioi kurssin kuormittavuus asteikolla 1-5 (1 = kevyt, 5 = todella raskas).</p>
+          <h4>Workload</h4>
+          <p>Rate the course workload on a scale from 1 to 5 (1 = very light, 5 = very heavy).</p>
           <StarRating
             empty='ion-ios-star-outline'
             full='ion-ios-star'
@@ -68,13 +68,13 @@ class ReviewModal extends Component {
               bsStyle='warning'
               onClick={() => this.props.submit(this.state)}
             >
-              Tallenna
+              Save
             </Button>
             <Button
               bsStyle='warning'
               onClick={this.props.close}
             >
-              Sulje
+              Close
             </Button>
           </ButtonGroup>
         </Modal.Footer>
