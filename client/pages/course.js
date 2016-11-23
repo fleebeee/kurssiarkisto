@@ -273,7 +273,7 @@ class Course extends Component {
       console.debug('Failed to add review', data);
       this.props.addToast({
         title: 'Adding review failed',
-        message: 'You have already rated this course', // HACK placeholder for gala
+        message: 'You have already rated this course', // HACK ph for gala
         level: 'warning',
       });
     }

@@ -191,7 +191,7 @@ class addCourse extends Component {
 
     const passingMechanisms = [];
 
-    if (this.state.hasExercises) passingMechanisms.push(`exercises`);
+    if (this.state.hasExercises) passingMechanisms.push('exercises');
 
 
     if (this.state.hasExam) passingMechanisms.push('exam');

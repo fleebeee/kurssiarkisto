@@ -4,6 +4,7 @@ import _ from 'lodash';
 import Link from 'next/link';
 import ls from 'local-storage';
 import styled from 'styled-components';
+import { Row, Col } from 'react-bootstrap';
 
 import withToast from '../utils/withToast.js';
 import Page from '../components/Page/Page.js';
@@ -29,7 +30,25 @@ const SearchInputContainer = styled.div`
   color: ${palette.white};
   font-size: 1.5em;
   font-family: 'Raleway', Helvetica, sans serif;
+`;
 
+const SmallHeader = styled.h3`
+  text-transform: uppercase;
+  color: white;
+  font-weight: 600;
+  font-family; 'Raleway'
+`;
+
+const FilterContainer = styled.div`
+`;
+
+const RowStyled = styled(Row)`
+`;
+
+const ColStyled = styled(Col)`
+  font-size: 0.7em;
+  text-transform: uppercase;
+  color: ${palette.headerGrey};
 `;
 
 const Results = styled.div`
@@ -156,6 +175,18 @@ class Search extends Component {
               value={this.state.keywords}
               onChange={this.handleChange}
             />
+            <SmallHeader>Filter results</SmallHeader>
+            <FilterContainer>
+              <RowStyled>
+                <ColStyled xs={6} sm={4} md={2}>Grade</ColStyled>
+                <ColStyled xs={6} sm={4} md={2}>Workload</ColStyled>
+                <ColStyled xs={6} sm={4} md={2}>Period</ColStyled>
+                <ColStyled xs={6} sm={4} md={2}>Credits</ColStyled>
+                <ColStyled xs={6} sm={4} md={2}>Presence</ColStyled>
+                <ColStyled xs={6} sm={4} md={2}>Passing Mechanisms</ColStyled>
+              </RowStyled>
+
+            </FilterContainer>
           </SearchInputContainer>
           <Results>
             <SearchTitle>
