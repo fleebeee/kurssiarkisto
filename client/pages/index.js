@@ -4,6 +4,8 @@ import _ from 'lodash';
 import Link from 'next/link';
 import ls from 'local-storage';
 import styled from 'styled-components';
+import Rating from 'react-rating';
+import InputRange from 'react-input-range';
 import { Row, Col } from 'react-bootstrap';
 
 import withToast from '../utils/withToast.js';
@@ -35,7 +37,7 @@ const SearchInputContainer = styled.div`
 const SmallHeader = styled.h3`
   text-transform: uppercase;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   font-family; 'Raleway'
 `;
 
@@ -43,12 +45,43 @@ const FilterContainer = styled.div`
 `;
 
 const RowStyled = styled(Row)`
+
 `;
 
 const ColStyled = styled(Col)`
+  padding-bottom: 2vh;
   font-size: 0.7em;
   text-transform: uppercase;
+  font-weight: 600;
   color: ${palette.headerGrey};
+`;
+
+const StarRating = styled(Rating)`
+  font-size: 1.2em;
+  color: ${palette.headerGrey};
+`;
+
+const InputRangeStyled = styled(InputRange)`
+  color: ${palette.headerGrey};
+`;
+
+const OptionText = styled.span`
+  color: ${palette.titleGrey}
+  font-size: 1em;
+  font-family: Helvetica;
+  padding: 7px;
+`;
+
+const DropdownBox = styled.div`
+  flex: 1 1 auto;
+  max-width: 10%;
+`;
+
+const TextField = styled.input`
+  max-width: 30%;
+  font-family: Helvetica;
+  font-size: 1em;
+  font-weight: 500;
 `;
 
 const Results = styled.div`
@@ -89,6 +122,14 @@ class Search extends Component {
     this.state = {
       keywords: '',
       options: [],
+      score: null,
+      workloadvalues: {
+        min: 1,
+        max: 4,
+      },
+      periodstart: '',
+      periodend: '',
+      credits: null,
     };
     this.setOptions = this.setOptions.bind(this);
     this.setOptionsThrottled = this.setOptionsThrottled.bind(this);
@@ -141,6 +182,24 @@ class Search extends Component {
     this.setOptionsThrottled(keywords);
   }
 
+  handleValuesChange(values) {
+    this.setState({
+      workloadvalues: values,
+    });
+  }
+
+  handlePeriodStartChange(value) {
+    this.setState({ periodstart: value });
+  }
+
+  handlePeriodEndChange(value) {
+    this.setState({ periodend: value });
+  }
+
+  handleTextChange(field, event) {
+    this.setState({ [field]: event.target.value });
+  }
+
   renderOption(option) {
     return (
       <Course key={option.code}>
@@ -178,14 +237,120 @@ class Search extends Component {
             <SmallHeader>Filter results</SmallHeader>
             <FilterContainer>
               <RowStyled>
-                <ColStyled xs={6} sm={4} md={2}>Grade</ColStyled>
-                <ColStyled xs={6} sm={4} md={2}>Workload</ColStyled>
-                <ColStyled xs={6} sm={4} md={2}>Period</ColStyled>
-                <ColStyled xs={6} sm={4} md={2}>Credits</ColStyled>
+                <ColStyled xs={6} sm={4} md={2}>Grade
+                  <br />
+                  <StarRating
+                    empty='ion-ios-star-outline'
+                    full='ion-ios-star'
+                    initialRate={this.state.score}
+                    onClick={rate => this.setState({ score: rate })}
+                  />
+                </ColStyled>
+
+                <ColStyled xs={6} sm={4} md={2}>Workload
+                  <br />
+                  <InputRangeStyled
+                    maxValue={5}
+                    minValue={0}
+                    step={1}
+                    value={this.state.workloadvalues}
+                    onChange={this.handleValuesChange.bind(this)}
+                  />
+                </ColStyled>
+
+                <ColStyled xs={6} sm={4} md={2}>Period
+                  <br />
+                  <DropdownBox className='dropdown'>
+                    <button
+                      className='btn btn-xs btn-default dropdown-toggle'
+                      type='button'
+                      id='dropdownMenu'
+                      data-toggle='dropdown'
+                      aria-haspopup='true'
+                      aria-expanded='true'
+                    >
+                      <OptionText>
+                        {this.state.periodstart || 'course starts'}&nbsp;
+                      </OptionText>
+                      <span className='caret' />
+                    </button>
+                    <ul
+                      className='dropdown-menu'
+                      aria-labelledby='periodDropdown'
+                    >
+                      {
+                        ['I', 'II', 'III', 'IV', 'V', 'summer'].map(
+                        option =>
+                          <li key={option}>
+                            <a
+                              tabIndex='0'
+                              onClick={() =>
+                                this.handlePeriodStartChange(option)
+                              }
+                            >
+                              {option}
+                            </a>
+                          </li>
+                        )
+                      }
+                    </ul>
+                  </DropdownBox>
+                  <DropdownBox className='dropdown'>
+                    <button
+                      className='btn btn-xs btn-default dropdown-toggle'
+                      type='button'
+                      id='dropdownMenu'
+                      data-toggle='dropdown'
+                      aria-haspopup='true'
+                      aria-expanded='true'
+                    >
+                      <OptionText>
+                        {this.state.periodend || 'course ends'}&nbsp;
+                      </OptionText>
+                      <span className='caret' />
+                    </button>
+                    <ul
+                      className='dropdown-menu'
+                      aria-labelledby='periodDropdown'
+                    >
+                      {
+                        ['I', 'II', 'III', 'IV', 'V', 'summer'].map(
+                        option =>
+                          <li key={option}>
+                            <a
+                              tabIndex='0'
+                              onClick={() =>
+                                this.handlePeriodEndChange(option)
+                              }
+                            >
+                              {option}
+                            </a>
+                          </li>
+                        )
+                      }
+                    </ul>
+                  </DropdownBox>
+                </ColStyled>
+
+                <ColStyled xs={6} sm={4} md={2}>Credits
+                  <br />
+                  <TextField
+                    className='form-control'
+                    id='startingYear'
+                    type='number'
+                    placeholder={this.state.credits ||
+                      'credits'}
+                    value={this.state.credits}
+                    onChange={
+                      this.handleTextChange.bind(this, 'startingYear')
+                    }
+                  />
+                </ColStyled>
+
                 <ColStyled xs={6} sm={4} md={2}>Presence</ColStyled>
                 <ColStyled xs={6} sm={4} md={2}>Passing Mechanisms</ColStyled>
-              </RowStyled>
 
+              </RowStyled>
             </FilterContainer>
           </SearchInputContainer>
           <Results>
