@@ -22,6 +22,7 @@
     "lodash": "^4.16.6",
     "next": "^1.0.2",
     "react-bootstrap": "^0.30.6",
+    "react-input-range": "^0.9.3",
     "react-notification-system": "^0.2.10",
     "react-rating": "^0.6.1",
     "styled-components": "^1.0.10"
