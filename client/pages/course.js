@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { ButtonGroup, Button, Modal,
+import { ButtonGroup, Button, Modal, Table,
 /* Grid, */ Row, Col /* , Clearfix */ } from 'react-bootstrap';
 import fetch from 'isomorphic-fetch';
 import ls from 'local-storage';
@@ -46,10 +46,11 @@ const liStyled = styled.li`
   list-item-style: none;
 `;
 
-const Arrow = styled.img`
-  width: 55px;
-  height: 55px;
-  margin-right: 15px;
+const Arrow = styled.h1`
+  color: ${palette.orange};
+  height: 100%;
+  width: 100%;
+  padding-right: 10px;
 `;
 
 const CourseContainer = styled.div`
@@ -65,10 +66,10 @@ const InfoContainer = styled.div`
   flex: 1 0;
   font-family: 'Raleway', Helvetica, sans serif;
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 1.3em;
   color: ${palette.headerGrey};
-  margin-bottom: 20px;
-  line-height: 175%;
+  padding-right: 5%;
+  line-height: 155%;
   min-width: 300px;
 `;
 
@@ -86,20 +87,6 @@ const ModalStyled = styled(Modal)`
   align-items: center;
   justify-content: center;
   padding: 10% 10% 10% 10%;
-`;
-
-const ColStyled = styled(Col)`
-  margin-left: 15px;
-  margin-right: 5px;
-  padding: 0;
-`;
-
-
-const RowStyled = styled(Row)`
-  align-items: left;
-  padding: 0;
-  margin-right: 5px;
-  border-bottom: 1px solid #D3D3D3;
 `;
 
 class Course extends Component {
@@ -284,10 +271,9 @@ class Course extends Component {
       <Page>
         <NameContainer>
           <Link href='/'>
-            <Arrow
-              src='/static/images/back-arrow.png'
-              alt='Back to search'
-            />
+            <Arrow>
+            <i className='ion-android-arrow-back'/>
+            </Arrow>
           </Link>
           <Title>
             {this.state.course.code} {this.state.course.name}
@@ -298,6 +284,8 @@ class Course extends Component {
                   addToast={this.props.addToast}
                 />
               </FavoriteIconContainer>}
+
+
           </Title>
         </NameContainer>
         <CourseContainer>
@@ -319,34 +307,27 @@ class Course extends Component {
         <CourseContainer>
           <InfoContainer>
 
-            <RowStyled>
-              <ColStyled xs={6} sm={3.5} md={4}>Score</ColStyled>
-              <ColStyled xs={4} sm={3.5} md={5}>
-                {this.state.score || 'N/A'}
-              </ColStyled>
-            </RowStyled>
-            <RowStyled>
-              <ColStyled xs={6} sm={3.5} md={4}>Workload</ColStyled>
-              <ColStyled xs={4} sm={3.5} md={5}>
-                {this.state.workload || 'N/A'}
-              </ColStyled>
-            </RowStyled>
-            <RowStyled>
-              <ColStyled xs={6} sm={3.5} md={4}>Periods</ColStyled>
-              <ColStyled xs={4} sm={3.5} md={5}>
-                {this.state.course.periods}
-              </ColStyled>
-            </RowStyled>
-            <RowStyled>
-              <ColStyled xs={6} sm={3.5} md={4}>Credits</ColStyled>
-              <ColStyled xs={4} sm={3.5} md={5}>
-                {this.state.course.credits}
-              </ColStyled>
-            </RowStyled>
-            <RowStyled>
-              <ColStyled xs={6} sm={3.5} md={4}>Content</ColStyled>
-              <ColStyled xs={4} sm={3.5} md={5}>
-                <ulStyled>
+          <Table striped bordered >
+            <tbody>
+              <tr>
+                <td>Score</td>
+                <td>{this.state.score || 'N/A'}</td>
+              </tr>
+              <tr>
+                <td>Workload</td>
+                <td>{this.state.workload || 'N/A'}</td>
+              </tr>
+              <tr>
+                <td>Periods</td>
+                <td>{this.state.course.periods}</td>
+              </tr>
+              <tr>
+                <td>Credits</td>
+                <td>{this.state.course.credits}</td>
+              </tr>
+              <tr>
+                <td>Content</td>
+                <td><ulStyled>
                   {this.state.course.passingMechanisms ?
                     this.state.course.passingMechanisms.map(
                     passingMechanism =>
@@ -355,27 +336,25 @@ class Course extends Component {
                         <br />
                       </liStyled>
                   ) : 'N/A'}
-                </ulStyled>
-              </ColStyled>
-            </RowStyled>
-            <RowStyled>
-              <ColStyled xs={6} sm={3.5} md={4}>Mandatory attendance</ColStyled>
-              <ColStyled xs={4} sm={3.5} md={5}>
-                {this.state.course.mandatoryAttendance ? 'Yes' : 'No'}
-              </ColStyled>
-            </RowStyled>
-            <RowStyled>
-              <ColStyled xs={6} sm={3.5} md={4}> MyCourses</ColStyled>
-              <ColStyled xs={4} sm={3.5} md={5}>
-                <a
-                  href={this.state.course.myCoursesLink}
-                  target='_blank'
-                  rel='noreferrer noopener'
-                >
-                  Link
-                </a>
-              </ColStyled>
-            </RowStyled>
+                </ulStyled></td>
+              </tr>
+              <tr>
+                <td> Mandatory <br/>attendance?</td>
+                <td>{this.state.course.mandatoryAttendance ? 'Yes' : 'No'}</td>
+              </tr>
+              <tr>
+                <td>Links</td>
+                <td>  <a
+                    href={this.state.course.myCoursesLink}
+                    target='_blank'
+                    rel='noreferrer noopener'
+                  >
+                    MyCourses
+                  </a></td>
+              </tr>
+            </tbody>
+          </Table>
+
           </InfoContainer>
 
           <MSGContainer>
