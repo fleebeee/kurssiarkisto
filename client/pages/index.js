@@ -129,6 +129,7 @@ class Search extends Component {
     // Bind class functions here: this.function = this.function.bind(this)
     this.state = {
       keywords: '',
+      loggedIn: false,
       options: [],
       score: null,
       workloadvalues: {
@@ -178,7 +179,6 @@ class Search extends Component {
     if (!keywords /* || keyword.length < 3 */) {
       this.setState({
         options: [],
-        loggedIn: null,
       });
       return false;
     }
