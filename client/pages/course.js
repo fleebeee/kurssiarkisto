@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { ButtonGroup, Button, Modal, Table,
-/* Grid, */ Row, Col /* , Clearfix */ } from 'react-bootstrap';
+/* Grid,  Row, Col, Clearfix */ } from 'react-bootstrap';
 import fetch from 'isomorphic-fetch';
-import ls from 'local-storage';
 import Link from 'next/link';
 import styled from 'styled-components';
 import _ from 'lodash';
@@ -10,6 +9,7 @@ import _ from 'lodash';
 import globals from '../utils/globals.js';
 import palette from '../utils/palette.js';
 import withToast from '../utils/withToast.js';
+import isLoggedIn from '../utils/isLoggedIn.js';
 import Page from '../components/Page/Page.js';
 import ReviewModal from '../components/Course/ReviewModal.js';
 import FavoriteIcon from '../components/FavoriteIcon.js';
@@ -108,7 +108,7 @@ class Course extends Component {
 
   async componentDidMount() {
     // Check if user is logged in
-    this.setState({ loggedIn: _.has(JSON.parse(ls.get('profile')), 'id') });
+    this.setState({ loggedIn: isLoggedIn() });
 
     // Fetch course data from server
     const query = this.props.url.query;
@@ -272,7 +272,7 @@ class Course extends Component {
         <NameContainer>
           <Link href='/'>
             <Arrow>
-            <i className='ion-android-arrow-back'/>
+              <i className='ion-android-arrow-back' />
             </Arrow>
           </Link>
           <Title>
@@ -307,53 +307,56 @@ class Course extends Component {
         <CourseContainer>
           <InfoContainer>
 
-          <Table striped bordered >
-            <tbody>
-              <tr>
-                <td>Score</td>
-                <td>{this.state.score || 'N/A'}</td>
-              </tr>
-              <tr>
-                <td>Workload</td>
-                <td>{this.state.workload || 'N/A'}</td>
-              </tr>
-              <tr>
-                <td>Periods</td>
-                <td>{this.state.course.periods}</td>
-              </tr>
-              <tr>
-                <td>Credits</td>
-                <td>{this.state.course.credits}</td>
-              </tr>
-              <tr>
-                <td>Content</td>
-                <td><ulStyled>
-                  {this.state.course.passingMechanisms ?
-                    this.state.course.passingMechanisms.map(
-                    passingMechanism =>
-                      <liStyled key={passingMechanism}>
-                        {passingMechanism}
-                        <br />
-                      </liStyled>
-                  ) : 'N/A'}
-                </ulStyled></td>
-              </tr>
-              <tr>
-                <td> Mandatory <br/>attendance?</td>
-                <td>{this.state.course.mandatoryAttendance ? 'Yes' : 'No'}</td>
-              </tr>
-              <tr>
-                <td>Links</td>
-                <td>  <a
-                    href={this.state.course.myCoursesLink}
-                    target='_blank'
-                    rel='noreferrer noopener'
-                  >
-                    MyCourses
-                  </a></td>
-              </tr>
-            </tbody>
-          </Table>
+            <Table striped bordered >
+              <tbody>
+                <tr>
+                  <td>Score</td>
+                  <td>{this.state.score || 'N/A'}</td>
+                </tr>
+                <tr>
+                  <td>Workload</td>
+                  <td>{this.state.workload || 'N/A'}</td>
+                </tr>
+                <tr>
+                  <td>Periods</td>
+                  <td>{this.state.course.periods}</td>
+                </tr>
+                <tr>
+                  <td>Credits</td>
+                  <td>{this.state.course.credits}</td>
+                </tr>
+                <tr>
+                  <td>Content</td>
+                  <td><ulStyled>
+                    {this.state.course.passingMechanisms ?
+                      this.state.course.passingMechanisms.map(
+                      passingMechanism =>
+                        <liStyled key={passingMechanism}>
+                          {passingMechanism}
+                          <br />
+                        </liStyled>
+                    ) : 'N/A'}
+                  </ulStyled></td>
+                </tr>
+                <tr>
+                  <td> Mandatory <br />attendance?</td>
+                  <td>
+                    {this.state.course.mandatoryAttendance ? 'Yes' : 'No'}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Links</td>
+                  <td>
+                    <a
+                      href={this.state.course.myCoursesLink}
+                      target='_blank'
+                      rel='noreferrer noopener'
+                    >
+                      MyCourses
+                    </a></td>
+                </tr>
+              </tbody>
+            </Table>
 
           </InfoContainer>
 

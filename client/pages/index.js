@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import fetch from 'isomorphic-fetch';
 import _ from 'lodash';
 import Link from 'next/link';
-import ls from 'local-storage';
 import styled from 'styled-components';
 import Rating from 'react-rating';
 import InputRange from 'react-input-range';
@@ -13,6 +12,7 @@ import Page from '../components/Page/Page.js';
 import FavoriteIcon from '../components/FavoriteIcon.js';
 import palette from '../utils/palette.js';
 import globals from '../utils/globals.js';
+import isLoggedIn from '../utils/isLoggedIn.js';
 
 const API_MIN_DELAY = 500; // milliseconds
 
@@ -122,14 +122,14 @@ class Search extends Component {
     this.state = {
       keywords: '',
       options: [],
-      score: null,
+      score: 0,
       workloadvalues: {
         min: 1,
         max: 4,
       },
       periodstart: '',
       periodend: '',
-      credits: null,
+      credits: '',
     };
     this.setOptions = this.setOptions.bind(this);
     this.setOptionsThrottled = this.setOptionsThrottled.bind(this);
@@ -139,7 +139,7 @@ class Search extends Component {
 
   componentDidMount() {
     // Check if user is logged in
-    this.setState({ loggedIn: _.has(JSON.parse(ls.get('profile')), 'id') });
+    this.setState({ loggedIn: isLoggedIn() });
 
     const query = this.props.url.query;
     if (_.has(query, 'toast')) {
