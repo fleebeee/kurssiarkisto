@@ -130,6 +130,7 @@ class Search extends Component {
       periodstart: '',
       periodend: '',
       credits: '',
+      loggedIn: false,
     };
     this.setOptions = this.setOptions.bind(this);
     this.setOptionsThrottled = this.setOptionsThrottled.bind(this);
@@ -157,7 +158,6 @@ class Search extends Component {
     if (!keywords /* || keyword.length < 3 */) {
       this.setState({
         options: [],
-        loggedIn: null,
       });
       return false;
     }
