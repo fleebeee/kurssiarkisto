@@ -4,8 +4,8 @@ import _ from 'lodash';
 import Link from 'next/link';
 import ls from 'local-storage';
 import styled from 'styled-components';
-import Rating from 'react-rating';
-import InputRange from 'react-input-range';
+// import Rating from 'react-rating';
+// import InputRange from 'react-input-range';
 import { Row, Col } from 'react-bootstrap';
 
 import withToast from '../utils/withToast.js';
@@ -45,7 +45,7 @@ const FilterContainer = styled.div`
 `;
 
 const RowStyled = styled(Row)`
-
+  align-items: left;
 `;
 
 const ColStyled = styled(Col)`
@@ -56,14 +56,6 @@ const ColStyled = styled(Col)`
   color: ${palette.headerGrey};
 `;
 
-const StarRating = styled(Rating)`
-  font-size: 1.2em;
-  color: ${palette.headerGrey};
-`;
-
-const InputRangeStyled = styled(InputRange)`
-  color: ${palette.headerGrey};
-`;
 
 const OptionText = styled.span`
   color: ${palette.titleGrey}
@@ -82,6 +74,22 @@ const TextField = styled.input`
   font-family: Helvetica;
   font-size: 1em;
   font-weight: 500;
+`;
+
+const CheckboxText = styled.span`
+  color: white;
+  font-weight: 500;
+  text-transform: lowercase;
+  font-family: Helvetica;
+  font-size: 0.9em;
+  margin-left: 5px;
+  line-height: 1;
+`;
+
+const YesnoText = styled.span`
+  color: ${palette.orange};
+  text-transform: lowercase;
+  font-size: 0.8em;
 `;
 
 const Results = styled.div`
@@ -130,6 +138,19 @@ class Search extends Component {
       periodstart: '',
       periodend: '',
       credits: null,
+      attendance: '',
+      examyes: false,
+      examno: false,
+      excerciseyes: false,
+      excerciseno: false,
+      groupyes: false,
+      groupno: false,
+      diaryyes: false,
+      diaryno: false,
+      assignmentyes: false,
+      assignmentno: false,
+      labyes: false,
+      labno: false,
     };
     this.setOptions = this.setOptions.bind(this);
     this.setOptionsThrottled = this.setOptionsThrottled.bind(this);
@@ -200,6 +221,10 @@ class Search extends Component {
     this.setState({ [field]: event.target.value });
   }
 
+  handleCheckboxChange(field) {
+    this.setState({ [field]: !this.state[field] });
+  }
+
   renderOption(option) {
     return (
       <Course key={option.code}>
@@ -226,39 +251,18 @@ class Search extends Component {
       <Page noPadding>
         <SearchContainer>
           <SearchInputContainer>
-            <p> Search courses! </p>
             <input
               className='form-control'
               type='text'
-              placeholder='search with course name or code'
+              placeholder='Search with course name or code'
               value={this.state.keywords}
               onChange={this.handleChange}
             />
             <SmallHeader>Filter results</SmallHeader>
             <FilterContainer>
               <RowStyled>
-                <ColStyled xs={6} sm={4} md={2}>Grade
-                  <br />
-                  <StarRating
-                    empty='ion-ios-star-outline'
-                    full='ion-ios-star'
-                    initialRate={this.state.score}
-                    onClick={rate => this.setState({ score: rate })}
-                  />
-                </ColStyled>
 
-                <ColStyled xs={6} sm={4} md={2}>Workload
-                  <br />
-                  <InputRangeStyled
-                    maxValue={5}
-                    minValue={0}
-                    step={1}
-                    value={this.state.workloadvalues}
-                    onChange={this.handleValuesChange.bind(this)}
-                  />
-                </ColStyled>
-
-                <ColStyled xs={6} sm={4} md={2}>Period
+                <ColStyled xs={6} sm={3} md={2}>Period
                   <br />
                   <DropdownBox className='dropdown'>
                     <button
@@ -332,23 +336,136 @@ class Search extends Component {
                   </DropdownBox>
                 </ColStyled>
 
-                <ColStyled xs={6} sm={4} md={2}>Credits
+                <ColStyled xs={6} sm={3} md={2}>Credits
                   <br />
                   <TextField
                     className='form-control'
-                    id='startingYear'
+                    id='credits'
                     type='number'
-                    placeholder={this.state.credits ||
-                      'credits'}
+                    placeholder={this.state.credits}
                     value={this.state.credits}
                     onChange={
-                      this.handleTextChange.bind(this, 'startingYear')
+                      this.handleTextChange.bind(this, 'credits')
                     }
                   />
                 </ColStyled>
+                <div className='clearfix visible-xs-block'></div>
+                <ColStyled xs={6} sm={3} md={2}>Presence
+                  <br />
+                  <input
+                    type='checkbox'
+                    value={this.state.attendance}
+                    onChange={
+                      () => this.handleCheckboxChange('attendance')
+                    }
+                  />
+                  <CheckboxText>not mandatory</CheckboxText>
+                </ColStyled>
 
-                <ColStyled xs={6} sm={4} md={2}>Presence</ColStyled>
-                <ColStyled xs={6} sm={4} md={2}>Passing Mechanisms</ColStyled>
+                <ColStyled xs={6} sm={3} md={2}>Passing Mechanisms
+                  <br />
+                  <YesnoText>yes/no</YesnoText>
+                  <br />
+                  <input
+                    type='checkbox'
+                    value={this.state.examyes}
+                    onChange={
+                      () => this.handleCheckboxChange('examyes')
+                    }
+                  />
+                  <input
+                    type='checkbox'
+                    value={this.state.examno}
+                    onChange={
+                      () => this.handleCheckboxChange('examno')
+                    }
+                  />
+                  <CheckboxText>exam</CheckboxText>
+                  <br />
+                  <input
+                    type='checkbox'
+                    value={this.state.excerciseyes}
+                    onChange={
+                      () => this.handleCheckboxChange('excerciseyes')
+                    }
+                  />
+                  <input
+                    type='checkbox'
+                    value={this.state.excerciseno}
+                    onChange={
+                      () => this.handleCheckboxChange('excerciseno')
+                    }
+                  />
+                  <CheckboxText>excercises</CheckboxText>
+
+                  <br />
+                  <input
+                    type='checkbox'
+                    value={this.state.groupyes}
+                    onChange={
+                      () => this.handleCheckboxChange('groupyes')
+                    }
+                  />
+                  <input
+                    type='checkbox'
+                    value={this.state.groupno}
+                    onChange={
+                      () => this.handleCheckboxChange('groupno')
+                    }
+                  />
+                  <CheckboxText>groupwork</CheckboxText>
+
+                  <br />
+                  <input
+                    type='checkbox'
+                    value={this.state.diaryyes}
+                    onChange={
+                      () => this.handleCheckboxChange('diaryyes')
+                    }
+                  />
+                  <input
+                    type='checkbox'
+                    value={this.state.diaryno}
+                    onChange={
+                      () => this.handleCheckboxChange('diaryno')
+                    }
+                  />
+                  <CheckboxText>lecture diaries</CheckboxText>
+
+                  <br />
+                  <input
+                    type='checkbox'
+                    value={this.state.assignmentyes}
+                    onChange={
+                      () => this.handleCheckboxChange('assignmentyes')
+                    }
+                  />
+                  <input
+                    type='checkbox'
+                    value={this.state.assignmentno}
+                    onChange={
+                      () => this.handleCheckboxChange('assignmentno')
+                    }
+                  />
+                  <CheckboxText>assignment</CheckboxText>
+
+                  <br />
+                  <input
+                    type='checkbox'
+                    value={this.state.labyes}
+                    onChange={
+                      () => this.handleCheckboxChange('labyes')
+                    }
+                  />
+                  <input
+                    type='checkbox'
+                    value={this.state.labno}
+                    onChange={
+                      () => this.handleCheckboxChange('labno')
+                    }
+                  />
+                  <CheckboxText>lab assignments</CheckboxText>
+                </ColStyled>
 
               </RowStyled>
             </FilterContainer>
