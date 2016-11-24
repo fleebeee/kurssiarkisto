@@ -87,10 +87,6 @@ const CheckboxField = styled.div`
   margin-bottom: 5px;
 `;
 
-const ExerciseText = styled.span`
-  font-size: 0.8em;
-`;
-
 const CheckboxText = styled.span`
   color: ${palette.white};
   font-size: 0.9em;

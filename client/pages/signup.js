@@ -94,13 +94,13 @@ class Signup extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        nickname: this.state.nickname,
         email: this.state.email,
         password: this.state.password,
         // Optional
         role: this.state.role,
         track: this.state.track !== 'n/a' ? this.state.track : null,
         startingYear: this.state.startingYear,
-        nickname: this.state.nickname,
       }),
     });
     const data = await res.json();
@@ -117,6 +117,33 @@ class Signup extends Component {
   }
 
   async handleSubmit() {
+    if (!this.state.username) {
+      this.props.addToast({
+        title: 'Register failed',
+        message: 'Username is required',
+        level: 'warning',
+      });
+      return;
+    }
+
+    if (!this.state.password) {
+      this.props.addToast({
+        title: 'Register failed',
+        message: 'Password is required',
+        level: 'warning',
+      });
+      return;
+    }
+
+    if (!this.state.nickname) {
+      this.props.addToast({
+        title: 'Register failed',
+        message: 'Nickname is required',
+        level: 'warning',
+      });
+      return;
+    }
+
     const res = await this.signUp();
 
     if (!res) {
@@ -129,20 +156,30 @@ class Signup extends Component {
       console.debug('Invalid sign up');
       this.props.addToast({
         title: 'Register failed',
-        message: 'email might be already in use',
+        message: 'Username or email could already be in use',
         level: 'error',
       });
     }
   }
 
   render() {
+    console.log(this.state);
     return (
       <Page>
         <Content>
           <div>
-
             <RegisterText>Register</RegisterText>
             <OptionalText>Mandatory fields</OptionalText>
+            <Label>nickname</Label>
+            <input
+              className='form-control'
+              id='nickname'
+              key='nickname'
+              type='text'
+              placeholder='nickname'
+              value={this.state.nickname}
+              onChange={this.handleTextChange.bind(this, 'nickname')}
+            />
             <Label>email</Label>
             <input
               className='form-control'
@@ -214,15 +251,6 @@ class Signup extends Component {
               placeholder='2010 / 2011 / 2012...'
               value={this.state.startingYear}
               onChange={this.handleTextChange.bind(this, 'startingYear')}
-            />
-            <Label>nickname</Label>
-            <input
-              className='form-control'
-              id='nickname'
-              type='text'
-              placeholder='nickname'
-              value={this.state.nickname}
-              onChange={this.handleTextChange.bind(this, 'nickname')}
             />
           </div>
           <br />

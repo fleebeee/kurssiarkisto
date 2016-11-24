@@ -12,6 +12,7 @@ global.jQuery = global.$ = require('jquery');
 
 const propTypes = {
   noPadding: PropTypes.bool,
+  withBackground: PropTypes.bool,
   children: PropTypes.node,
 };
 
@@ -21,13 +22,21 @@ const PageContainer = styled.div`
   height: 100vh;
 `;
 
-const HeaderContainer = styled.div`
-  flex: none;
+let Content = styled.div`
+  flex: 1 0 auto;
 `;
 
-const Content = styled.div`
-  flex: 1 0 auto;
+const ContentWithBg = styled(Content)`
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.2) 0%,
+    rgba(255,255,255,0.2) 100%
+  ), url(/static/images/lib.jpg);
   background-size: cover;
+`;
+
+const HeaderContainer = styled.div`
+  flex: none;
 `;
 
 const Padding = styled.div`
@@ -44,6 +53,10 @@ class Page extends Component {
   }
 
   render() {
+    if (this.props.withBackground) {
+      Content = ContentWithBg;
+    }
+
     return (
       <PageContainer>
         <Head>

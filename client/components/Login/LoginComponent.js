@@ -15,6 +15,7 @@ const propTypes = {
 const LoginContainer = styled.div`
   display: block;
   padding: 20px 40px 20px 40px;
+  min-width: 50%;
   color: white;
   background-color: ${palette.orange};
   border-radius: 10px;
