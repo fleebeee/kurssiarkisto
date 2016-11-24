@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { ButtonGroup, Button, Modal, Table,
+import { ButtonGroup, Button, Modal, Table, Panel,
 /* Grid,  Row, Col, Clearfix */ } from 'react-bootstrap';
 import fetch from 'isomorphic-fetch';
 import Link from 'next/link';
@@ -88,6 +88,8 @@ const ModalStyled = styled(Modal)`
   justify-content: center;
   padding: 10% 10% 10% 10%;
 `;
+
+
 
 class Course extends Component {
   constructor(props) {
@@ -306,7 +308,6 @@ class Course extends Component {
         </CourseContainer>
         <CourseContainer>
           <InfoContainer>
-
             <Table striped bordered >
               <tbody>
                 <tr>
@@ -357,9 +358,7 @@ class Course extends Component {
                 </tr>
               </tbody>
             </Table>
-
           </InfoContainer>
-
           <MSGContainer>
             <p> placeholder
             </p>
