@@ -89,6 +89,16 @@ const ModalStyled = styled(Modal)`
   padding: 10% 10% 10% 10%;
 `;
 
+const tr1 = styled.tr`
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+`;
+
+const tr2 = styled.tr`
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+`;
+
 
 
 class Course extends Component {
