@@ -29,7 +29,7 @@ const UserSchema = new Schema({
   },
   nickname: {
     type: String,
-    required: false,
+    required: true,
   },
   favorites: {
     type: [String], // Course codes
