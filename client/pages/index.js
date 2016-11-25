@@ -34,13 +34,20 @@ const SearchInputContainer = styled.div`
   font-family: 'Raleway', Helvetica, sans serif;
 `;
 
+const HeaderContainer = styled.div`
+`;
+
 const SmallHeader = styled.h3`
   text-transform: uppercase;
   color: white;
   font-weight: 500;
   font-family; 'Raleway'
 `;
-
+const Styledhr = styled.hr`
+  margin-top: 0.1em;
+  padding-top: 0px;
+  border-width: 3px;
+`;
 const FilterContainer = styled.div`
 `;
 
@@ -56,6 +63,19 @@ const ColStyled = styled(Col)`
   color: ${palette.headerGrey};
 `;
 
+const DropdownBoxOne = styled.div`
+  padding-top: 18px;
+  flex: 1 1 auto;
+  max-width: 10%;
+`;
+
+const OptionTextOne = styled.span`
+  color: white
+  font-size: 1.1em;
+  font-family: Raleway;
+  padding: 7px;
+  text-transform: uppercase;
+`;
 
 const OptionText = styled.span`
   color: ${palette.titleGrey}
@@ -67,6 +87,12 @@ const OptionText = styled.span`
 const DropdownBox = styled.div`
   flex: 1 1 auto;
   max-width: 10%;
+`;
+
+
+const Dbbutton = styled.button`
+  background-color: ${palette.orange}
+  border: white;
 `;
 
 const TextField = styled.input`
@@ -87,12 +113,6 @@ const CheckboxText = styled.span`
 `;
 
 const YesnoText = styled.span`
-  color: ${palette.orange};
-  text-transform: lowercase;
-  font-size: 0.8em;
-`;
-
-const RightText = styled.span`
   color: ${palette.orange};
   text-transform: lowercase;
   font-size: 0.8em;
@@ -158,11 +178,13 @@ class Search extends Component {
       labyes: false,
       labno: false,
       loggedIn: false,
+      arrange: '',
     };
     this.setOptions = this.setOptions.bind(this);
     this.setOptionsThrottled = this.setOptionsThrottled.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.renderOption = this.renderOption.bind(this);
+    this.handleArrangeChange = this.handleArrangeChange.bind(this);
     this.handlePeriodStartChange = this.handlePeriodStartChange.bind(this);
     this.handlePeriodEndChange = this.handlePeriodEndChange.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
@@ -219,6 +241,9 @@ class Search extends Component {
     });
   }
 
+  handleArrangeChange(value) {
+    this.setState({ arrange: value });
+  }
   handlePeriodStartChange(value) {
     this.setState({ periodstart: value });
   }
@@ -268,7 +293,51 @@ class Search extends Component {
               value={this.state.keywords}
               onChange={this.handleChange}
             />
-            <SmallHeader>Filter results</SmallHeader>
+            <HeaderContainer>
+              <RowStyled>
+                <ColStyled xs={6} sm={4} md={3}>
+                  <SmallHeader>Filter results</SmallHeader>
+                </ColStyled>
+                <ColStyled xs={6} sm={4} md={4}>
+                  <DropdownBoxOne className='dropdown'>
+                    <Dbbutton
+                      className='btn btn-sm btn-default dropdown-toggle'
+                      type='button'
+                      id='dropdownMenu'
+                      data-toggle='dropdown'
+                      aria-haspopup='true'
+                      aria-expanded='true'
+                    >
+                      <OptionTextOne>
+                        {this.state.arrange || 'sort' }&nbsp;
+                      </OptionTextOne>
+                      <span className='caret' />
+                    </Dbbutton>
+                    <ul
+                      className='dropdown-menu'
+                      aria-labelledby='periodDropdown'
+                    >
+                      {
+                        ['A-Z', 'user ratings', 'workload'].map(
+                        option =>
+                          <li key={option}>
+                            <a
+                              tabIndex='0'
+                              onClick={() =>
+                                this.handleArrangeChange(option)
+                              }
+                            >
+                              {option}
+                            </a>
+                          </li>
+                        )
+                      }
+                    </ul>
+                  </DropdownBoxOne>
+                </ColStyled>
+              </RowStyled>
+            </HeaderContainer>
+            <Styledhr className='hr' />
             <FilterContainer>
               <RowStyled>
 
