@@ -92,6 +92,12 @@ const YesnoText = styled.span`
   font-size: 0.8em;
 `;
 
+const RightText = styled.span`
+  color: ${palette.orange};
+  text-transform: lowercase;
+  font-size: 0.8em;
+`;
+
 const Results = styled.div`
   padding: 30px;
 `;
@@ -268,46 +274,13 @@ class Search extends Component {
 
                 <ColStyled xs={6} sm={3} md={2}>Period
                   <br />
-                  <div className='btn-group' role='group' aria-label='...'>
-                    <DropdownBox className='dropdown'>
-                      <button
-                        className='btn btn-xs btn-default dropdown-toggle'
-                        type='button'
-                        id='dropdownMenu'
-                        data-toggle='dropdown'
-                        aria-haspopup='true'
-                        aria-expanded='true'
-                      >
-                        <OptionText>
-                          {this.state.periodstart || 'starts'}&nbsp;
-                        </OptionText>
-                        <span className='caret' />
-                      </button>
-                      <ul
-                        className='dropdown-menu'
-                        aria-labelledby='periodDropdown'
-                      >
-                        {
-                          ['I', 'II', 'III', 'IV', 'V', 'summer'].map(
-                          option =>
-                            <li key={option}>
-                              <a
-                                tabIndex='0'
-                                onClick={() =>
-                                  this.handlePeriodStartChange(option)
-                                }
-                              >
-                                {option}
-                              </a>
-                            </li>
-                          )
-                        }
-                      </ul>
-                    </DropdownBox>
-                    <div className='btn-group' role='group'>
+                  <YesnoText>starts  |  ends</YesnoText>
+                  <br />
+                  <div className='btn-toolbar' role='toolbar'>
+                    <div className='btn-group' role='group' aria-label='...'>
                       <DropdownBox className='dropdown'>
                         <button
-                          className='btn btn-xs btn-default dropdown-toggle'
+                          className='btn btn-sm btn-default dropdown-toggle'
                           type='button'
                           id='dropdownMenu'
                           data-toggle='dropdown'
@@ -315,7 +288,44 @@ class Search extends Component {
                           aria-expanded='true'
                         >
                           <OptionText>
-                            {this.state.periodend || 'ends'}&nbsp;
+                            {this.state.periodstart }&nbsp;
+                          </OptionText>
+                          <span className='caret' />
+                        </button>
+                        <ul
+                          className='dropdown-menu'
+                          aria-labelledby='periodDropdown'
+                        >
+                          {
+                            ['I', 'II', 'III', 'IV', 'V', 'summer'].map(
+                            option =>
+                              <li key={option}>
+                                <a
+                                  tabIndex='0'
+                                  onClick={() =>
+                                    this.handlePeriodStartChange(option)
+                                  }
+                                >
+                                  {option}
+                                </a>
+                              </li>
+                            )
+                          }
+                        </ul>
+                      </DropdownBox>
+                    </div>
+                    <div className='btn-group ' role='group'>
+                      <DropdownBox className='dropdown'>
+                        <button
+                          className='btn btn-sm btn-default dropdown-toggle'
+                          type='button'
+                          id='dropdownMenu'
+                          data-toggle='dropdown'
+                          aria-haspopup='true'
+                          aria-expanded='true'
+                        >
+                          <OptionText>
+                            {this.state.periodend}&nbsp;
                           </OptionText>
                           <span className='caret' />
                         </button>
@@ -346,8 +356,10 @@ class Search extends Component {
 
                 <ColStyled xs={6} sm={3} md={2}>Credits
                   <br />
+                  <YesnoText>number</YesnoText>
+                  <br />
                   <TextField
-                    className='form-control'
+                    className='form-control input-sm'
                     id='credits'
                     type='number'
                     placeholder={this.state.credits}
