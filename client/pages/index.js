@@ -47,6 +47,7 @@ const Styledhr = styled.hr`
   margin-top: 0.1em;
   padding-top: 0px;
   border-width: 3px;
+  color: white;
 `;
 const FilterContainer = styled.div`
 `;
