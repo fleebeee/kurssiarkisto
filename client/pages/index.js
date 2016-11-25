@@ -157,6 +157,10 @@ class Search extends Component {
     this.setOptionsThrottled = this.setOptionsThrottled.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.renderOption = this.renderOption.bind(this);
+    this.handlePeriodStartChange = this.handlePeriodStartChange.bind(this);
+    this.handlePeriodEndChange = this.handlePeriodEndChange.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
   }
 
   componentDidMount() {
@@ -264,76 +268,80 @@ class Search extends Component {
 
                 <ColStyled xs={6} sm={3} md={2}>Period
                   <br />
-                  <DropdownBox className='dropdown'>
-                    <button
-                      className='btn btn-xs btn-default dropdown-toggle'
-                      type='button'
-                      id='dropdownMenu'
-                      data-toggle='dropdown'
-                      aria-haspopup='true'
-                      aria-expanded='true'
-                    >
-                      <OptionText>
-                        {this.state.periodstart || 'course starts'}&nbsp;
-                      </OptionText>
-                      <span className='caret' />
-                    </button>
-                    <ul
-                      className='dropdown-menu'
-                      aria-labelledby='periodDropdown'
-                    >
-                      {
-                        ['I', 'II', 'III', 'IV', 'V', 'summer'].map(
-                        option =>
-                          <li key={option}>
-                            <a
-                              tabIndex='0'
-                              onClick={() =>
-                                this.handlePeriodStartChange(option)
-                              }
-                            >
-                              {option}
-                            </a>
-                          </li>
-                        )
-                      }
-                    </ul>
-                  </DropdownBox>
-                  <DropdownBox className='dropdown'>
-                    <button
-                      className='btn btn-xs btn-default dropdown-toggle'
-                      type='button'
-                      id='dropdownMenu'
-                      data-toggle='dropdown'
-                      aria-haspopup='true'
-                      aria-expanded='true'
-                    >
-                      <OptionText>
-                        {this.state.periodend || 'course ends'}&nbsp;
-                      </OptionText>
-                      <span className='caret' />
-                    </button>
-                    <ul
-                      className='dropdown-menu'
-                      aria-labelledby='periodDropdown'
-                    >
-                      {
-                        ['I', 'II', 'III', 'IV', 'V', 'summer'].map(
-                        option =>
-                          <li key={option}>
-                            <a
-                              tabIndex='0'
-                              onClick={() =>
-                                this.handlePeriodEndChange(option)
-                              }
-                            >
-                              {option}
-                            </a>
-                          </li>
-                        )
-                      }
-                    </ul>
-                  </DropdownBox>
+                  <div className='btn-group' role='group' aria-label='...'>
+                    <DropdownBox className='dropdown'>
+                      <button
+                        className='btn btn-xs btn-default dropdown-toggle'
+                        type='button'
+                        id='dropdownMenu'
+                        data-toggle='dropdown'
+                        aria-haspopup='true'
+                        aria-expanded='true'
+                      >
+                        <OptionText>
+                          {this.state.periodstart || 'starts'}&nbsp;
+                        </OptionText>
+                        <span className='caret' />
+                      </button>
+                      <ul
+                        className='dropdown-menu'
+                        aria-labelledby='periodDropdown'
+                      >
+                        {
+                          ['I', 'II', 'III', 'IV', 'V', 'summer'].map(
+                          option =>
+                            <li key={option}>
+                              <a
+                                tabIndex='0'
+                                onClick={() =>
+                                  this.handlePeriodStartChange(option)
+                                }
+                              >
+                                {option}
+                              </a>
+                            </li>
+                          )
+                        }
+                      </ul>
+                    </DropdownBox>
+                    <div className='btn-group' role='group'>
+                      <DropdownBox className='dropdown'>
+                        <button
+                          className='btn btn-xs btn-default dropdown-toggle'
+                          type='button'
+                          id='dropdownMenu'
+                          data-toggle='dropdown'
+                          aria-haspopup='true'
+                          aria-expanded='true'
+                        >
+                          <OptionText>
+                            {this.state.periodend || 'ends'}&nbsp;
+                          </OptionText>
+                          <span className='caret' />
+                        </button>
+                        <ul
+                          className='dropdown-menu'
+                          aria-labelledby='periodDropdown'
+                        >
+                          {
+                            ['I', 'II', 'III', 'IV', 'V', 'summer'].map(
+                            option =>
+                              <li key={option}>
+                                <a
+                                  tabIndex='0'
+                                  onClick={() =>
+                                    this.handlePeriodEndChange(option)
+                                  }
+                                >
+                                  {option}
+                                </a>
+                              </li>
+                            )
+                          }
+                        </ul>
+                      </DropdownBox>
+                    </div>
+                  </div>
                 </ColStyled>
 
                 <ColStyled xs={6} sm={3} md={2}>Credits
