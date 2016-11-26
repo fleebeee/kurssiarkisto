@@ -146,6 +146,7 @@ const CourseList = styled.ul`
 const Course = styled.li`
   display: flex;
   margin-bottom: 20px;
+  border-bottom: solid 1px #D3D3D3;
 `;
 
 const CourseLink = styled.span`
