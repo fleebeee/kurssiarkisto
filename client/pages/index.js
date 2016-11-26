@@ -192,6 +192,7 @@ class Search extends Component {
     this.handlePeriodEndChange = this.handlePeriodEndChange.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+    this.handleCheckboxChange2 = this.handleCheckboxChange2.bind(this);
   }
 
   componentDidMount() {
@@ -261,6 +262,16 @@ class Search extends Component {
 
   handleCheckboxChange(field) {
     this.setState({ [field]: !this.state[field] });
+  }
+
+  handleCheckboxChange2(field, field2) {
+    if (!this.state[field] && this.state[field2]) {
+      this.setState({ [field]: !this.state[field] });
+      this.setState({ [field2]: !this.state[field2] });
+    }
+    if (!this.state[field2]) {
+      this.setState({ [field]: !this.state[field] });
+    }
   }
 
   renderOption(option) {
@@ -465,14 +476,14 @@ class Search extends Component {
                     type='checkbox'
                     value={this.state.examyes}
                     onChange={
-                      () => this.handleCheckboxChange('examyes')
+                      () => this.handleCheckboxChange2('examyes', 'examno')
                     }
                   />
                   <input
                     type='checkbox'
                     value={this.state.examno}
                     onChange={
-                      () => this.handleCheckboxChange('examno')
+                      () => this.handleCheckboxChange2('examno', 'examyes')
                     }
                   />
                   <CheckboxText>exam</CheckboxText>
@@ -481,14 +492,14 @@ class Search extends Component {
                     type='checkbox'
                     value={this.state.excerciseyes}
                     onChange={
-                      () => this.handleCheckboxChange('excerciseyes')
+                      () => this.handleCheckboxChange2('excerciseyes', 'excerciseno')
                     }
                   />
                   <input
                     type='checkbox'
                     value={this.state.excerciseno}
                     onChange={
-                      () => this.handleCheckboxChange('excerciseno')
+                      () => this.handleCheckboxChange2('excerciseno', 'excerciseyes')
                     }
                   />
                   <CheckboxText>excercises</CheckboxText>
@@ -498,14 +509,14 @@ class Search extends Component {
                     type='checkbox'
                     value={this.state.groupyes}
                     onChange={
-                      () => this.handleCheckboxChange('groupyes')
+                      () => this.handleCheckboxChange2('groupyes', 'groupno')
                     }
                   />
                   <input
                     type='checkbox'
                     value={this.state.groupno}
                     onChange={
-                      () => this.handleCheckboxChange('groupno')
+                      () => this.handleCheckboxChange2('groupno', 'groupyes')
                     }
                   />
                   <CheckboxText>groupwork</CheckboxText>
@@ -515,14 +526,14 @@ class Search extends Component {
                     type='checkbox'
                     value={this.state.diaryyes}
                     onChange={
-                      () => this.handleCheckboxChange('diaryyes')
+                      () => this.handleCheckboxChange2('diaryyes', 'diaryno')
                     }
                   />
                   <input
                     type='checkbox'
                     value={this.state.diaryno}
                     onChange={
-                      () => this.handleCheckboxChange('diaryno')
+                      () => this.handleCheckboxChange2('diaryno', 'diaryyes')
                     }
                   />
                   <CheckboxText>lecture diaries</CheckboxText>
@@ -532,14 +543,14 @@ class Search extends Component {
                     type='checkbox'
                     value={this.state.assignmentyes}
                     onChange={
-                      () => this.handleCheckboxChange('assignmentyes')
+                      () => this.handleCheckboxChange2('assignmentyes', 'assignmentno')
                     }
                   />
                   <input
                     type='checkbox'
                     value={this.state.assignmentno}
                     onChange={
-                      () => this.handleCheckboxChange('assignmentno')
+                      () => this.handleCheckboxChange2('assignmentno', 'assignmentyes')
                     }
                   />
                   <CheckboxText>assignment</CheckboxText>
@@ -549,14 +560,14 @@ class Search extends Component {
                     type='checkbox'
                     value={this.state.labyes}
                     onChange={
-                      () => this.handleCheckboxChange('labyes')
+                      () => this.handleCheckboxChange2('labyes', 'labno')
                     }
                   />
                   <input
                     type='checkbox'
                     value={this.state.labno}
                     onChange={
-                      () => this.handleCheckboxChange('labno')
+                      () => this.handleCheckboxChange2('labno', 'labyes')
                     }
                   />
                   <CheckboxText>lab assignments</CheckboxText>
