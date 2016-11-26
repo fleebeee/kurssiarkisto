@@ -67,6 +67,9 @@ const ColStyled = styled(Col)`
   color: ${palette.headerGrey};
 `;
 
+const ColStyl = styled(Col)`
+  padding-bottom: 10px;
+`;
 const DropdownBoxOne = styled.div`
   flex: 1 1 auto;
   max-width: 10%;
@@ -92,11 +95,16 @@ const DropdownBox = styled.div`
   max-width: 10%;
 `;
 
+const AddButton = styled.button`
+  background-color: ${palette.orange}
+  border: white;
+`;
 
 const Dbbutton = styled.button`
   background-color: ${palette.orange}
   border: white;
 `;
+
 
 const TextField = styled.input`
   max-width: 30%;
@@ -302,7 +310,7 @@ class Search extends Component {
           <SearchInputContainer>
             <SearchBoxContainer>
               <RowStyled>
-                <Col xs={8} sm={9} md={9}>
+                <ColStyl xs={12} sm={7} md={8}>
                   <input
                     className='form-control'
                     type='text'
@@ -310,8 +318,8 @@ class Search extends Component {
                     value={this.state.keywords}
                     onChange={this.handleChange}
                   />
-                </Col>
-                <Col xs={4} sm={3} md={3}>
+                </ColStyl>
+                <Col xs={3} sm={2} md={1}>
                   <DropdownBoxOne className='dropdown'>
                     <Dbbutton
                       className='btn btn-sm btn-default dropdown-toggle'
@@ -347,6 +355,16 @@ class Search extends Component {
                       }
                     </ul>
                   </DropdownBoxOne>
+                </Col>
+                <Col xs={6} sm={1} md={1}>
+                  <Link href='/addcourse'>
+                    <AddButton
+                      className='btn btn-sm'
+                      href='/addcourse'
+                      role='button'
+                    > <OptionTextOne>Add course</OptionTextOne>
+                    </AddButton>
+                  </Link>
                 </Col>
               </RowStyled>
             </SearchBoxContainer>
