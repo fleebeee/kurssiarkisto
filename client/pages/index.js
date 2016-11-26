@@ -37,6 +37,9 @@ const SearchInputContainer = styled.div`
 const HeaderContainer = styled.div`
 `;
 
+const SearchBoxContainer = styled.div`
+`;
+
 const SmallHeader = styled.h3`
   text-transform: uppercase;
   color: white;
@@ -65,7 +68,6 @@ const ColStyled = styled(Col)`
 `;
 
 const DropdownBoxOne = styled.div`
-  padding-top: 18px;
   flex: 1 1 auto;
   max-width: 10%;
 `;
@@ -287,19 +289,18 @@ class Search extends Component {
       <Page noPadding>
         <SearchContainer>
           <SearchInputContainer>
-            <input
-              className='form-control'
-              type='text'
-              placeholder='Search with course name or code'
-              value={this.state.keywords}
-              onChange={this.handleChange}
-            />
-            <HeaderContainer>
+            <SearchBoxContainer>
               <RowStyled>
-                <ColStyled xs={6} sm={4} md={3}>
-                  <SmallHeader>Filter results</SmallHeader>
-                </ColStyled>
-                <ColStyled xs={6} sm={4} md={4}>
+                <Col xs={8} sm={9} md={9}>
+                  <input
+                    className='form-control'
+                    type='text'
+                    placeholder='Search with course name or code'
+                    value={this.state.keywords}
+                    onChange={this.handleChange}
+                  />
+                </Col>
+                <Col xs={4} sm={3} md={3}>
                   <DropdownBoxOne className='dropdown'>
                     <Dbbutton
                       className='btn btn-sm btn-default dropdown-toggle'
@@ -335,8 +336,12 @@ class Search extends Component {
                       }
                     </ul>
                   </DropdownBoxOne>
-                </ColStyled>
+                </Col>
               </RowStyled>
+            </SearchBoxContainer>
+
+            <HeaderContainer>
+              <SmallHeader>Filter results</SmallHeader>
             </HeaderContainer>
             <Styledhr className='hr' />
             <FilterContainer>
