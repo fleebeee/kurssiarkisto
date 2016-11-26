@@ -25,6 +25,12 @@ const StarRating = styled(Rating)`
   color: ${palette.yellow};
 `;
 
+const BatteryRating = styled(Rating)`
+  font-size: 35px;
+  color: ${palette.orange};
+  padding-right: 10px;
+`;
+
 class ReviewModal extends Component {
   constructor(props) {
     super(props);
@@ -54,9 +60,9 @@ class ReviewModal extends Component {
           />
           <h4>Workload</h4>
           <p>Rate the course workload on a scale from 1 to 5 (1 = very light, 5 = very heavy).</p>
-          <StarRating
-            empty='ion-ios-star-outline'
-            full='ion-ios-star'
+          <BatteryRating
+            empty='ion-battery-empty'
+            full='ion-battery-full'
             initialRate={this.state.workload}
             onClick={rate => this.setState({ workload: rate })}
           />
