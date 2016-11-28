@@ -10,6 +10,7 @@ import AuthService from '../utils/AuthService.js';
 import withAuth from '../utils/withAuth.js';
 import Page from '../components/Page/Page.js';
 import withToast from '../utils/withToast.js';
+import FavoriteIcon from '../components/FavoriteIcon.js';
 
 // import globals from '../utils/globals.js';
 import palette from '../utils/palette.js';
@@ -33,6 +34,13 @@ const IconContainer = styled.div`
   color: ${palette.white};
   transform: scale(1.35);
   padding-bottom: 3px;
+`;
+
+const FavoriteIconContainer = styled.div`
+  display: inline-block;
+  margin-right: 10px;
+  min-width: 13px;
+  padding-top: 2px;
 `;
 
 
@@ -77,9 +85,12 @@ class Favorites extends Component {
             {this.state.favorites &&
             this.state.favorites.map(favorite =>
                 <liStyled>
-                  <IconContainer>
-                    <i className='ion-trash-b'/>
-                  </IconContainer>
+                  <FavoriteIconContainer>
+                    <FavoriteIcon
+                      code={favorite}
+                      addToast={this.props.addToast}
+                    />
+                  </FavoriteIconContainer>
                 <LinkStyled href={`/course?code=${favorite}`} key={favorite}>
                   {favorite} <br/>
                 </LinkStyled>
@@ -95,4 +106,4 @@ class Favorites extends Component {
 
 Favorites.propTypes = propTypes;
 
-export default withAuth(Favorites);
+export default withAuth(withToast(Favorites));
