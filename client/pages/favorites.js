@@ -55,7 +55,7 @@ const Content = styled.div`
   color: ${palette.white};
 `;
 
-const LinkStyled = styled.a`
+const LinkStyled = styled(Link)`
   color: ${palette.white};
   font-family: 'Raleway', Helvetica, sans serif;
   font-size: 1.3em;
@@ -92,8 +92,8 @@ class Favorites extends Component {
                     />
                   </FavoriteIconContainer>
                 <LinkStyled href={`/course?code=${favorite}`} key={favorite}>
-                  {favorite} <br/>
-                </LinkStyled>
+                    {favorite}
+                </LinkStyled> <br/>
               </liStyled>
             )}
           </ul>
