@@ -1,9 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-
-import fetch from 'isomorphic-fetch';
-import ls from 'local-storage';
 // import _ from 'lodash';
 
 import AuthService from '../utils/AuthService.js';
@@ -17,7 +14,7 @@ import palette from '../utils/palette.js';
 
 const propTypes = {
   auth: PropTypes.instanceOf(AuthService),
-  url: PropTypes.object,
+  // url: PropTypes.object,
   addToast: PropTypes.func.isRequired,
 };
 
@@ -26,14 +23,6 @@ const Title = styled.h1`
   color: ${palette.titleGrey};
   font-weight: bold;
   font-family: 'Raleway', Helvetica, sans serif;
-`;
-
-const IconContainer = styled.div`
-  display: inline-block;
-  margin-right: 10px;
-  color: ${palette.white};
-  transform: scale(1.35);
-  padding-bottom: 3px;
 `;
 
 const FavoriteIconContainer = styled.div`
@@ -55,13 +44,13 @@ const Content = styled.div`
   color: ${palette.white};
 `;
 
-const LinkStyled = styled(Link)`
+const LinkText = styled.span`
   color: ${palette.white};
   font-family: 'Raleway', Helvetica, sans serif;
   font-size: 1.3em;
 `;
 
-const liStyled = styled.li`
+const LiStyled = styled.li`
   list-style-type: none;
 `;
 
@@ -84,17 +73,17 @@ class Favorites extends Component {
           <ul>
             {this.state.favorites &&
             this.state.favorites.map(favorite =>
-                <liStyled>
-                  <FavoriteIconContainer>
-                    <FavoriteIcon
-                      code={favorite}
-                      addToast={this.props.addToast}
-                    />
-                  </FavoriteIconContainer>
-                <LinkStyled href={`/course?code=${favorite}`} key={favorite}>
-                    {favorite}
-                </LinkStyled> <br/>
-              </liStyled>
+              <LiStyled>
+                <FavoriteIconContainer>
+                  <FavoriteIcon
+                    code={favorite}
+                    addToast={this.props.addToast}
+                  />
+                </FavoriteIconContainer>
+                <Link href={`/course?code=${favorite}`} key={favorite}>
+                  <LinkText>{favorite}</LinkText>
+                </Link> <br />
+              </LiStyled>
             )}
           </ul>
 
