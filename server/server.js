@@ -32,11 +32,13 @@ const authRoutes = require('./app/routes/auth');
 const userRoutes = require('./app/routes/user');
 const courseRoutes = require('./app/routes/course');
 const reviewRoutes = require('./app/routes/review');
+const commentRoutes = require('./app/routes/comment');
 
 app.use('/auth', authRoutes);
 app.use('/', userRoutes);
 app.use('/', courseRoutes);
 app.use('/', reviewRoutes);
+app.use('/', commentRoutes);
 
 // Comment routes
 // TODO

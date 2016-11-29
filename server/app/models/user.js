@@ -35,7 +35,7 @@ const UserSchema = new Schema({
     type: [String], // Course codes
     required: false,
   },
-});
+}, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 
 UserSchema.pre('save', function s(next) {
   const user = this;

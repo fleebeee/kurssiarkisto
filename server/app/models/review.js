@@ -19,7 +19,7 @@ const ReviewSchema = new Schema({
     type: Schema.Types.ObjectId, // userID
     required: true,
   },
-});
+}, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 
 // One user can only have one review per course
 ReviewSchema.index({ courseCode: 1, userID: 1 }, { unique: true });

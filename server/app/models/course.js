@@ -48,6 +48,6 @@ const CourseSchema = new Schema({
     type: [String], // ['I', 'III-IV' ] for example
     required: false,
   },
-});
+}, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 
 module.exports = mongoose.model('Course', CourseSchema);
