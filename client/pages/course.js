@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { ButtonGroup, Button, Modal, Table, Panel,
+import { ButtonGroup, Button, Modal, Table, // Panel,
 /* Grid,  Row, Col, Clearfix */ } from 'react-bootstrap';
 import fetch from 'isomorphic-fetch';
 import Link from 'next/link';
@@ -91,7 +91,7 @@ const ModalStyled = styled(Modal)`
   padding: 10% 10% 10% 10%;
 `;
 
-const tr1 = styled.tr`
+/* const tr1 = styled.tr`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 `;
@@ -99,8 +99,7 @@ const tr1 = styled.tr`
 const tr2 = styled.tr`
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-`;
-
+`; */
 
 
 class Course extends Component {

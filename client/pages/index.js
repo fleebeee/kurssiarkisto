@@ -175,7 +175,7 @@ class Search extends Component {
       },
       periodstart: '',
       periodend: '',
-      credits: null,
+      credits: '',
       attendance: '',
       examyes: false,
       examno: false,
@@ -474,7 +474,7 @@ class Search extends Component {
                     }
                   />
                 </ColStyled>
-                <div className='clearfix visible-xs-block'></div>
+                <div className='clearfix visible-xs-block' />
                 <ColStyled xs={6} sm={3} md={2}>Presence
                   <br />
                   <input
@@ -510,16 +510,14 @@ class Search extends Component {
                   <input
                     type='checkbox'
                     value={this.state.excerciseyes}
-                    onChange={
-                      () => this.handleCheckboxChange2('excerciseyes', 'excerciseno')
-                    }
+                    onChange={() =>
+                      this.handleCheckboxChange2('excerciseyes', 'excerciseno')}
                   />
                   <input
                     type='checkbox'
                     value={this.state.excerciseno}
-                    onChange={
-                      () => this.handleCheckboxChange2('excerciseno', 'excerciseyes')
-                    }
+                    onChange={() => this.handleCheckboxChange2('excerciseno',
+                                                               'excerciseyes')}
                   />
                   <CheckboxText>excercises</CheckboxText>
 
@@ -561,16 +559,14 @@ class Search extends Component {
                   <input
                     type='checkbox'
                     value={this.state.assignmentyes}
-                    onChange={
-                      () => this.handleCheckboxChange2('assignmentyes', 'assignmentno')
-                    }
+                    onChange={() => this.handleCheckboxChange2('assignmentyes',
+                                                               'assignmentno')}
                   />
                   <input
                     type='checkbox'
                     value={this.state.assignmentno}
-                    onChange={
-                      () => this.handleCheckboxChange2('assignmentno', 'assignmentyes')
-                    }
+                    onChange={() => this.handleCheckboxChange2('assignmentno',
+                                                               'assignmentyes')}
                   />
                   <CheckboxText>assignment</CheckboxText>
 
