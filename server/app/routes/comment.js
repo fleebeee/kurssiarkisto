@@ -21,7 +21,6 @@ commentRoutes.post('/comment', (req, res) => {
       userID: mongoose.Types.ObjectId(req.body.userID),
       courseCode: req.body.code,
       content: req.body.content,
-      score: 0,
     });
     // save the comment
     newComment.save((err) => {
@@ -44,17 +43,24 @@ commentRoutes.post('/comment', (req, res) => {
   }
 });
 
+const clearVoterID = (comment, userID) => {
+  comment.upvoters.pull(userID);
+  comment.downvoters.pull(userID);
+};
+
 // Vote actions TODO verify etc
 commentRoutes.put('/comment', (req, res) => {
   if (!req.body.userID || !req.body.commentID) {
-    res.json({
+    return res.json({
       success: false,
       message: 'Please enter both userID and commentID',
     });
   }
 
-  if (!req.body.vote) {
-    res.json({
+  if (!(req.body.vote === '-1'
+     || req.body.vote === '0'
+     || req.body.vote === '1')) {
+    return res.json({
       success: false,
       message: 'Please enter vote',
     });
@@ -71,80 +77,37 @@ commentRoutes.put('/comment', (req, res) => {
       });
     }
 
-    // If comment is already upvoted by the user
-    if (_.findIndex(
-      comment.upvoters,
-      voter => voter.user.equals(req.body.userID)) !== -1) {
-      if (req.body.vote === 1) {
-        return res.json({
-          success: true,
-          message:
-            'You already upvoted this comment',
-        });
-      } else if (req.body.vote === -1) {
-        comment.upvoters.pull(req.body.userID);
-        comment.downvoters.push(req.body.userID);
-        return res.json({
-          success: true,
-          message:
-            'Upvote changed to downvote',
-        });
-      }
-      comment.upvoters.pull(req.body.userID);
-      return res.json({
-        success: true,
-        message:
-          'Upvote removed',
-      });
-    }
+    clearVoterID(comment, req.body.userID);
 
-    // If comment is downvoted
-    if (_.findIndex(
-      comment.downvoters,
-      voter => voter.user.equals(req.body.userID)) !== -1) {
-      if (req.body.vote === -1) {
-        return res.json({
-          success: true,
-          message:
-            'You already downvoted this comment',
-        });
-      } else if (req.body.vote === 1) {
-        comment.downvoters.pull(req.body.userID);
-        comment.upvoters.push(req.body.userID);
-        return res.json({
-          success: true,
-          message:
-            'Downvote changed to upvote',
-        });
-      }
-      comment.downvoters.pull(req.body.userID);
-      return res.json({
-        success: true,
-        message:
-          'Downvote removed',
-      });
-    }
-
-    if (req.body.vote === 1) {
+    if (req.body.vote === '1') {
       comment.upvoters.push(req.body.userID);
+      comment.save();
       return res.json({
         success: true,
         message:
           'Upvoted comment',
       });
-    } else if (req.body.vote === -1) {
+    } else if (req.body.vote === '-1') {
       comment.downvoters.push(req.body.userID);
+      comment.save();
       return res.json({
         success: true,
         message:
           'Downvoted comment',
       });
     }
+
+    comment.save();
     return res.json({
-      success: false,
+      success: true,
       message:
-        'Something went wrong',
+        'Removed vote',
     });
+  });
+  return res.json({
+    success: false,
+    message:
+      'Something went wrong',
   });
 });
 
@@ -190,9 +153,15 @@ commentRoutes.get('/comments/:code', (req, res) => {
           memoized[userIDstring] = nickname;
           comment.nickname = nickname;
         }
+
+        // Calculate score
+        comment.score = comment.upvoters.length - comment.downvoters.length;
+        // Up and downvoters are not public information, so delete them
+        delete comment.upvoters;
+        delete comment.downvoters;
       });
 
-      return res.json({ success: true, mutableComments });
+      return res.json({ success: true, comments: mutableComments });
     });
 
     return true;

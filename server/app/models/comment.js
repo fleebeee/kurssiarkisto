@@ -15,10 +15,6 @@ const CommentSchema = new Schema({
     type: String,
     required: true,
   },
-  score: {
-    type: Number,
-    required: true,
-  },
   upvoters: {
     type: [Schema.Types.ObjectId],
     required: false,

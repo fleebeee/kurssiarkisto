@@ -10,9 +10,11 @@ import globals from '../utils/globals.js';
 import palette from '../utils/palette.js';
 import withToast from '../utils/withToast.js';
 import isLoggedIn from '../utils/isLoggedIn.js';
+
 import Page from '../components/Page/Page.js';
 import ReviewModal from '../components/Course/ReviewModal.js';
 import FavoriteIcon from '../components/FavoriteIcon.js';
+import Comments from '../components/Course/Comments.js';
 
 const propTypes = {
   url: PropTypes.object,
@@ -370,8 +372,8 @@ class Course extends Component {
             </Table>
           </InfoContainer>
           <MSGContainer>
-            <p> placeholder
-            </p>
+            {this.state.course.code &&
+            <Comments courseCode={this.state.course.code} />}
           </MSGContainer>
         </CourseContainer>
       </Page>
