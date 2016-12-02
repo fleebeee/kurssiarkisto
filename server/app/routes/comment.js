@@ -57,9 +57,9 @@ commentRoutes.put('/comment', (req, res) => {
     });
   }
 
-  if (!(req.body.vote === '-1'
-     || req.body.vote === '0'
-     || req.body.vote === '1')) {
+  if (!(req.body.vote === -1
+     || req.body.vote === 0
+     || req.body.vote === 1)) {
     return res.json({
       success: false,
       message: 'Please enter vote',
@@ -79,7 +79,7 @@ commentRoutes.put('/comment', (req, res) => {
 
     clearVoterID(comment, req.body.userID);
 
-    if (req.body.vote === '1') {
+    if (req.body.vote === 1) {
       comment.upvoters.push(req.body.userID);
       comment.save();
       return res.json({
@@ -87,7 +87,7 @@ commentRoutes.put('/comment', (req, res) => {
         message:
           'Upvoted comment',
       });
-    } else if (req.body.vote === '-1') {
+    } else if (req.body.vote === -1) {
       comment.downvoters.push(req.body.userID);
       comment.save();
       return res.json({
@@ -104,11 +104,7 @@ commentRoutes.put('/comment', (req, res) => {
         'Removed vote',
     });
   });
-  return res.json({
-    success: false,
-    message:
-      'Something went wrong',
-  });
+  return true;
 });
 
 // Get comments for a course

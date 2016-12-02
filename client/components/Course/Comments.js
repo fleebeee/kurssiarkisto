@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
 import styled from 'styled-components';
-// import _ from 'lodash';
+import _ from 'lodash';
+import moment from 'moment';
 
 import globals from '../../utils/globals.js';
 import isLoggedIn from '../../utils/isLoggedIn.js';
@@ -10,6 +11,7 @@ import palette from '../../utils/palette.js';
 
 import LoadingIndicator from '../LoadingIndicator.js';
 import CommentForm from './CommentForm.js';
+import VoteControls from './VoteControls.js';
 
 const propTypes = {
   courseCode: PropTypes.string.isRequired,
@@ -26,10 +28,50 @@ const CommentList = styled.ul`
 
 const Comment = styled.li`
   list-style-type: none;
-  padding: 5px;
-  margin-bottom: 5px;
-  background-color: ${palette.headerGrey};
+  background-color: ${palette.white};
+
+  margin-bottom: 10px;
+
   border-radius: 5px;
+`;
+
+const Content = styled.div`
+  padding: 5px;
+`;
+
+const Header = styled.div`
+  display: flex;
+  background-color: ${palette.headerGrey};
+  flex-direction: row;
+  align-items: center;
+
+  color: white;
+
+  padding: 5px;
+
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+`;
+
+const CommentInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Nickname = styled.div`
+  display: block;
+`;
+
+const Timestamp = styled.div`
+  font-size: 1.1rem;
+`;
+
+const Vote = styled.div`
+  margin-left: auto;
+  flex: 0;
+
+  display: flex;
+  align-items: center;
 `;
 
 class Comments extends Component {
@@ -79,10 +121,33 @@ class Comments extends Component {
     return (
       <CommentsContainer>
         <CommentList>
-          {this.state.comments.map(comment =>
+          {_.sortBy(this.state.comments,
+                   [comment => -comment.score, 'created_at'])
+          .map(comment =>
             <Comment key={comment._id}>
-              {comment.created_at} {comment.nickname}: {comment.content}
-              Score: {comment.score}
+              <Header>
+                <CommentInfo>
+                  <Nickname>
+                    {comment.nickname}
+                  </Nickname>
+                  <Timestamp>
+                    {moment(comment.created_at).locale('en-gb').format('LLL')}
+                  </Timestamp>
+                </CommentInfo>
+                <Vote>
+                  <div>
+                    {comment.score}
+                  </div>
+                  {this.state.loggedIn &&
+                  <VoteControls
+                    commentID={comment._id}
+                    getComments={this.getComments}
+                  />}
+                </Vote>
+              </Header>
+              <Content>
+                {comment.content}
+              </Content>
             </Comment>
           )}
         </CommentList>
