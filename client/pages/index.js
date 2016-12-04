@@ -154,6 +154,10 @@ const CourseLink = styled.span`
   color: ${palette.orange};
 `;
 
+const CourseDetail = styled.span`
+  margin-right: 10px;
+`;
+
 const FavoriteIconContainer = styled.div`
   display: inline-block;
   margin-left: 10px;
@@ -290,7 +294,13 @@ class Search extends Component {
           <Link href={`/course?code=${option.code}`}>
             <CourseLink>{option.code} - {option.name}</CourseLink>
           </Link>
-          <div>opintopisteet {option.credits || 'n/a'}</div>
+          <div>
+            <CourseDetail>credits {option.credits || 'n/a'}</CourseDetail>
+            <CourseDetail>
+              score {option.reviewCount > 0 ? option.score.toFixed(2) : 'n/a'}
+            </CourseDetail>
+            <CourseDetail>reviews {option.reviewCount || 'n/a'}</CourseDetail>
+          </div>
         </div>
         {this.state.loggedIn &&
         <FavoriteIconContainer>
@@ -315,7 +325,10 @@ class Search extends Component {
                   <input
                     className='form-control'
                     type='text'
-                    placeholder='Search with course name or code'
+                    autoFocus
+                    /* eslint-disable max-len */
+                    placeholder='Search with course name or code, e.g. WWW Services'
+                    /* eslint-enable max-len */
                     value={this.state.keywords}
                     onChange={this.handleChange}
                   />
