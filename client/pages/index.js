@@ -10,6 +10,7 @@ import { Row, Col } from 'react-bootstrap';
 import withToast from '../utils/withToast.js';
 import Page from '../components/Page/Page.js';
 import FavoriteIcon from '../components/FavoriteIcon.js';
+import ReviewStars from '../components/ReviewStars.js';
 import palette from '../utils/palette.js';
 import globals from '../utils/globals.js';
 import isLoggedIn from '../utils/isLoggedIn.js';
@@ -297,7 +298,9 @@ class Search extends Component {
           <div>
             <CourseDetail>credits {option.credits || 'n/a'}</CourseDetail>
             <CourseDetail>
-              score {option.reviewCount > 0 ? option.score.toFixed(2) : 'n/a'}
+              score {option.reviewCount > 0
+                ? <ReviewStars value={option.score} />
+                : 'n/a'}
             </CourseDetail>
             <CourseDetail>reviews {option.reviewCount || 'n/a'}</CourseDetail>
           </div>
