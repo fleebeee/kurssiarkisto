@@ -25,6 +25,7 @@ const Star = styled.li`
 const roundHalf = num => Math.round(num * 2) / 2;
 const fullStar = <i className='ion-ios-star' />;
 const halfStar = <i className='ion-ios-star-half' />;
+const emptyStar = <i className='ion-ios-star-outline' />;
 
 
 class ReviewStars extends Component {
@@ -48,6 +49,10 @@ class ReviewStars extends Component {
 
     if (halfStarExists) {
       stars.push(<Star key={fullStarCount}>{halfStar}</Star>);
+    }
+
+    while (stars.length < 5) {
+      stars.push(<Star key={stars.length}>{emptyStar}</Star>);
     }
 
     return (
