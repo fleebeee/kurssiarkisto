@@ -22,11 +22,14 @@ const PageContainer = styled.div`
   height: 100vh;
 `;
 
-let Content = styled.div`
+let Content = null;
+
+const ContentWithoutBg = styled.div`
   flex: 1 0 auto;
+  background-color: white;
 `;
 
-const ContentWithBg = styled(Content)`
+const ContentWithBg = styled(ContentWithoutBg)`
   background-image: linear-gradient(
     to bottom,
     rgba(255,255,255,0.2) 0%,
@@ -55,6 +58,8 @@ class Page extends Component {
   render() {
     if (this.props.withBackground) {
       Content = ContentWithBg;
+    } else {
+      Content = ContentWithoutBg;
     }
 
     return (
