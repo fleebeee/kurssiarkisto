@@ -184,8 +184,8 @@ class Search extends Component {
       attendance: '',
       examyes: false,
       examno: false,
-      excerciseyes: false,
-      excerciseno: false,
+      exerciseyes: false,
+      exerciseno: false,
       groupyes: false,
       groupno: false,
       diaryyes: false,
@@ -525,17 +525,17 @@ class Search extends Component {
                   <br />
                   <input
                     type='checkbox'
-                    value={this.state.excerciseyes}
+                    value={this.state.exerciseyes}
                     onChange={() =>
-                      this.handleCheckboxChange2('excerciseyes', 'excerciseno')}
+                      this.handleCheckboxChange2('exerciseyes', 'exerciseno')}
                   />
                   <input
                     type='checkbox'
-                    value={this.state.excerciseno}
-                    onChange={() => this.handleCheckboxChange2('excerciseno',
-                                                               'excerciseyes')}
+                    value={this.state.exerciseno}
+                    onChange={() => this.handleCheckboxChange2('exerciseno',
+                                                               'exerciseyes')}
                   />
-                  <CheckboxText>excercises</CheckboxText>
+                  <CheckboxText>exercises</CheckboxText>
 
                   <br />
                   <input

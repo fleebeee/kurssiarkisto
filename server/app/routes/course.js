@@ -20,7 +20,7 @@ courseRoutes.post('/course', (req, res) => {
       code: req.body.code,
       // The attributes below aren't required, so they can be undefined
       myCoursesLink: req.body.myCoursesLink,
-      compulsoryAttendance: req.body.compulsoryAttendance,
+      mandatoryAttendance: req.body.mandatoryAttendance,
       passingMechanisms: req.body.passingMechanisms,
       credits: req.body.credits,
       periods: req.body.periods,
