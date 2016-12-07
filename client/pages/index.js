@@ -162,7 +162,7 @@ const CourseDetail = styled.span`
 const FavoriteIconContainer = styled.div`
   display: inline-block;
   margin-left: 10px;
-  min-width: 24px;
+  width: 24px;
   padding-top: 2px;
 `;
 
