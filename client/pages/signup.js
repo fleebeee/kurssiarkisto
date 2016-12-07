@@ -117,10 +117,10 @@ class Signup extends Component {
   }
 
   async handleSubmit() {
-    if (!this.state.username) {
+    if (!this.state.nickname) {
       this.props.addToast({
         title: 'Register failed',
-        message: 'Username is required',
+        message: 'Nickname is required',
         level: 'warning',
       });
       return;
@@ -163,7 +163,6 @@ class Signup extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <Page>
         <Content>

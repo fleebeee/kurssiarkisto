@@ -319,7 +319,7 @@ class Search extends Component {
 
   render() {
     return (
-      <Page noPadding>
+      <Page noPadding withBackground={false}>
         <SearchContainer>
           <SearchInputContainer>
             <SearchBoxContainer>
