@@ -148,6 +148,7 @@ const Course = styled.li`
   display: flex;
   margin-bottom: 20px;
   border-bottom: solid 1px #D3D3D3;
+  padding-bottom: 5px;
 `;
 
 const CourseLink = styled.span`
