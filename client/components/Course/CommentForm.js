@@ -3,6 +3,8 @@ import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
 import styled from 'styled-components';
 
+import palette from '../../utils/palette.js';
+
 import globals from '../../utils/globals.js';
 import withAuth from '../../utils/withAuth.js';
 import AuthService from '../../utils/AuthService.js';
@@ -17,6 +19,12 @@ const propTypes = {
 const CommentFormContainer = styled.div`
   display: block;
 `;
+
+const StyledButton = styled.button`
+  background-color: ${palette.orange};
+  color: white;
+`;
+
 
 class CommentForm extends Component {
   constructor(props) {
@@ -76,12 +84,12 @@ class CommentForm extends Component {
           value={this.state.comment}
           onChange={this.handleChange}
         />
-        <button
+        <StyledButton
           className='btn btn-default'
           onClick={this.handleSubmit}
         >
           Submit
-        </button>
+        </StyledButton>
       </CommentFormContainer>
     );
   }

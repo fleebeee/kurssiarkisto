@@ -20,6 +20,8 @@ const propTypes = {
 // Replace this with your own style
 const CommentsContainer = styled.div`
   display: block;
+  margin-left: 3px;
+  margin-right: 3px;
 `;
 
 const CommentList = styled.ul`
@@ -28,26 +30,31 @@ const CommentList = styled.ul`
 
 const Comment = styled.li`
   list-style-type: none;
-  background-color: ${palette.white};
 
-  margin-bottom: 10px;
+  background-color: ${palette.white};
+  margin-bottom: 12px;
 
   border-radius: 5px;
 `;
 
 const Content = styled.div`
-  padding: 5px;
+  padding: 8px;
+  border-bottom-left-radius: 5px;
 `;
 
 const Header = styled.div`
   display: flex;
-  background-color: ${palette.headerGrey};
   flex-direction: row;
   align-items: center;
 
-  color: white;
+  color: ${palette.titleGrey};
 
-  padding: 5px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 0px;
+
+  border-bottom: solid 1px #D3D3D3;
 
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
