@@ -44,8 +44,8 @@ const CourseSchema = new Schema({
     type: Number,
     required: false,
   },
-  periods: {
-    type: [String], // ['I', 'III-IV' ] for example
+  instances: {
+    type: [], // [{ startPeriod: 'I', endPeriod: 'III'}, { ... }] for example
     required: false,
   },
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });

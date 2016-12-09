@@ -23,7 +23,7 @@ courseRoutes.post('/course', (req, res) => {
       mandatoryAttendance: req.body.mandatoryAttendance,
       passingMechanisms: req.body.passingMechanisms,
       credits: req.body.credits,
-      periods: req.body.periods,
+      instances: req.body.instances,
       school: req.body.school,
     });
     // save the course

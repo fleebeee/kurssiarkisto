@@ -331,7 +331,14 @@ class Course extends Component {
                 </tr>
                 <tr>
                   <td>Periods</td>
-                  <td>{this.state.course.periods}</td>
+                  <td>
+                    {_.has(this.state, 'course.instances') &&
+                    this.state.course.instances.map((instance, key) =>
+                      <div key={key}>
+                        {instance.startPeriod} - {instance.endPeriod}
+                      </div>
+                    )}
+                  </td>
                 </tr>
                 <tr>
                   <td>Credits</td>

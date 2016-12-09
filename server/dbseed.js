@@ -7,7 +7,7 @@ db.courses.insert({
   mandatoryAttendance: false,
   passingMechanisms: ['Group work'],
   credits: 5,
-  periods: ['I-II'],
+  instances: [{ startPeriod: 'I', endPeriod: 'II' }],
   school: 'Department of Computer Science',
 });
 
@@ -18,7 +18,7 @@ db.courses.insert({
   mandatoryAttendance: false,
   passingMechanisms: ['Assignment'],
   credits: 4,
-  periods: ['I-II'],
+  instances: [{ startPeriod: 'I', endPeriod: 'II' }],
   school: 'Department of Computer Science',
 });
 
@@ -29,7 +29,7 @@ db.courses.insert({
   mandatoryAttendance: false,
   passingMechanisms: ['Group work', 'Exam'],
   credits: 5,
-  periods: ['I-II'],
+  instances: [{ startPeriod: 'I', endPeriod: 'II' }],
   school: 'Department of Computer Science',
 });
 
@@ -51,7 +51,7 @@ db.courses.insert({
   mandatoryAttendance: true,
   passingMechanisms: [],
   credits: 3, // NOTE Actually 3-5
-  periods: ['I-V'],
+  instances: [{ startPeriod: 'I', endPeriod: 'V' }],
   school: 'Department of Media',
 });
 
@@ -62,7 +62,7 @@ db.courses.insert({
   mandatoryAttendance: true,
   passingMechanisms: ['Group work', 'Exam', 'Assignment'],
   credits: 5,
-  periods: ['II'],
+  instances: [{ startPeriod: 'II', endPeriod: 'II' }],
   school: 'Department of Industrial Engineering and Management',
 });
 
@@ -73,7 +73,7 @@ db.courses.insert({
   mandatoryAttendance: false,
   passingMechanisms: ['Group work', 'Exam'],
   credits: 5,
-  periods: ['I-II'],
+  instances: [{ startPeriod: 'I', endPeriod: 'II' }],
   school: 'Department of Industrial Engineering and Management',
 });
 
@@ -84,7 +84,7 @@ db.courses.insert({
   mandatoryAttendance: false,
   passingMechanisms: ['Group work', 'Assignment', 'Exam'],
   credits: 5,
-  periods: ['I'],
+  instances: [{ startPeriod: 'I', endPeriod: 'I' }],
   school: 'Department of Industrial Engineering and Management',
 });
 
@@ -95,7 +95,7 @@ db.courses.insert({
   mandatoryAttendance: false,
   passingMechanisms: ['Group work', 'Exam'],
   credits: 5,
-  periods: ['IV-V'],
+  instances: [{ startPeriod: 'IV', endPeriod: 'V' }],
   school: 'Department of Industrial Engineering and Management',
 });
 
@@ -106,6 +106,20 @@ db.courses.insert({
   mandatoryAttendance: false,
   passingMechanisms: ['Group work'],
   credits: 5,
-  periods: ['IV-V'],
+  instances: [{ startPeriod: 'IV', endPeriod: 'V' }],
   school: 'Department of Computer Science',
+});
+
+db.courses.insert({
+  name: "SCI-projektikurssi",
+  code: "SCI-C1000",
+  myCoursesLink: 'https://mycourses.aalto.fi/course/view.php?id=15032',
+  mandatoryAttendance: false,
+  passingMechanisms: ['Group work'],
+  credits: 10,
+  instances: [
+    { startPeriod: 'I', endPeriod: 'II' },
+    { startPeriod: 'IV', endPeriod: 'V' },
+  ],
+  school: 'Aalto University School of Science',
 });

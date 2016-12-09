@@ -148,6 +148,15 @@ class addCourse extends Component {
         v: false,
       },
 
+      newPeriodId: 1,
+      instances: {
+        0: {
+          id: 0,
+          startPeriod: Object.keys(globals.PERIODS)[0],
+          endPeriod: Object.keys(globals.PERIODS)[0],
+        },
+      },
+
       credits: '',
       hasMandatoryAttendance: false,
     };
@@ -155,8 +164,11 @@ class addCourse extends Component {
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.handleHasExercisesChange = this.handleHasExercisesChange.bind(this);
-    this.handlePeriodChange = this.handlePeriodChange.bind(this);
     this.handleCreditsChange = this.handleCreditsChange.bind(this);
+
+    this.handlePeriodSelection = this.handlePeriodSelection.bind(this);
+    this.addInstance = this.addInstance.bind(this);
+    this.removeInstance = this.removeInstance.bind(this);
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -184,6 +196,16 @@ class addCourse extends Component {
       return;
     }
 
+    if (!Object.keys(this.state.instances).length) {
+      console.debug('At least one instance is required!');
+      this.props.addToast({
+        title: 'Adding course failed',
+        message: 'At least one instance is required',
+        level: 'warning',
+      });
+      return;
+    }
+
     // TODO maybe check if course code exists before server call
 
     const passingMechanisms = [];
@@ -197,10 +219,8 @@ class addCourse extends Component {
     if (this.state.hasAssignment) passingMechanisms.push('assignment');
     if (this.state.hasLabAssignment) passingMechanisms.push('lab assignment');
 
-    const periods = [];
-    _.each(this.state.periods, (value, key) => {
-      if (value) periods.push(key.toUpperCase());
-    });
+    const instances = Object.values(this.state.instances);
+    instances.forEach(instance => delete instance.id);
 
     const res = await fetch(`${globals.API_ADDRESS}/course`, {
       method: 'POST',
@@ -214,7 +234,7 @@ class addCourse extends Component {
         mandatoryAttendance: this.state.hasMandatoryAttendance,
         passingMechanisms,
         credits: this.state.credits,
-        periods,
+        instances,
       }),
     });
     const data = await res.json();
@@ -251,14 +271,52 @@ class addCourse extends Component {
     this.setState({ hasExercises: value });
   }
 
-  handlePeriodChange(period) {
+  handleCreditsChange(event) {
+    this.setState({ credits: event.target.value });
+  }
+
+  handlePeriodSelection(id, startPeriod, endPeriod) {
+    if (globals.PERIODS[startPeriod] > globals.PERIODS[endPeriod]) {
+      if (startPeriod === this.state.instances[id].startPeriod) {
+        startPeriod = endPeriod;
+      } else {
+        endPeriod = startPeriod;
+      }
+    }
+
     this.setState({
-      periods: { ...this.state.periods, [period]: !this.state.periods[period] },
+      instances: {
+        ...this.state.instances,
+        [id]: {
+          id,
+          startPeriod,
+          endPeriod,
+        },
+      },
     });
   }
 
-  handleCreditsChange(event) {
-    this.setState({ credits: event.target.value });
+  addInstance(event) {
+    event.preventDefault();
+
+    const newId = this.state.newPeriodId;
+    this.setState({
+      newPeriodId: this.state.newPeriodId + 1,
+      instances: {
+        ...this.state.instances,
+        [newId]: {
+          id: newId,
+          startPeriod: Object.keys(globals.PERIODS)[0],
+          endPeriod: Object.keys(globals.PERIODS)[0],
+        },
+      },
+    });
+  }
+
+  removeInstance(id) {
+    const newInstances = _.cloneDeep(this.state.instances);
+    delete newInstances[id];
+    this.setState({ instances: newInstances });
   }
 
   render() {
@@ -370,17 +428,12 @@ class addCourse extends Component {
 
                   <Periods>
                     <Label>Periods</Label>
-                    {['i', 'ii', 'iii', 'iv', 'v'].map(period =>
-                      <CheckboxField key={period}>
-                        <input
-                          type='checkbox'
-                          value={this.state.periods[period]}
-                          onChange={() => this.handlePeriodChange(period)}
-                        />
-                        <CheckboxText>{period.toUpperCase()}</CheckboxText>
-                      </CheckboxField>
-                    )}
-                    <PeriodSelector />
+                    <PeriodSelector
+                      instances={this.state.instances}
+                      addInstance={this.addInstance}
+                      removeInstance={this.removeInstance}
+                      handleSelection={this.handlePeriodSelection}
+                    />
                   </Periods>
 
                   <Misc>
@@ -402,7 +455,7 @@ class addCourse extends Component {
                           this.handleCheckboxChange('hasMandatoryAttendance')
                         }
                       />
-                      <CheckboxText>Yes</CheckboxText>
+                      <CheckboxText>yes</CheckboxText>
                     </CheckboxField>
                   </Misc>
                 </FlexContainer>
