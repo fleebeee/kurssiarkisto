@@ -182,7 +182,7 @@ class Search extends Component {
       periodstart: '',
       periodend: '',
       credits: '',
-      attendance: '',
+      attendance: false,
       examyes: false,
       examno: false,
       exerciseyes: false,
@@ -319,6 +319,7 @@ class Search extends Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <Page noPadding>
         <SearchContainer>
@@ -419,7 +420,7 @@ class Search extends Component {
                           aria-labelledby='periodDropdown'
                         >
                           {
-                            ['I', 'II', 'III', 'IV', 'V', 'summer'].map(
+                            Object.keys(globals.PERIODS).map(
                             option =>
                               <li key={option}>
                                 <a
@@ -456,7 +457,7 @@ class Search extends Component {
                           aria-labelledby='periodDropdown'
                         >
                           {
-                            ['I', 'II', 'III', 'IV', 'V', 'summer'].map(
+                            Object.keys(globals.PERIODS).map(
                             option =>
                               <li key={option}>
                                 <a
@@ -510,14 +511,14 @@ class Search extends Component {
                   <br />
                   <input
                     type='checkbox'
-                    value={this.state.examyes}
+                    checked={this.state.examyes}
                     onChange={
                       () => this.handleCheckboxChange2('examyes', 'examno')
                     }
                   />
                   <input
                     type='checkbox'
-                    value={this.state.examno}
+                    checked={this.state.examno}
                     onChange={
                       () => this.handleCheckboxChange2('examno', 'examyes')
                     }
@@ -526,13 +527,13 @@ class Search extends Component {
                   <br />
                   <input
                     type='checkbox'
-                    value={this.state.exerciseyes}
+                    checked={this.state.exerciseyes}
                     onChange={() =>
                       this.handleCheckboxChange2('exerciseyes', 'exerciseno')}
                   />
                   <input
                     type='checkbox'
-                    value={this.state.exerciseno}
+                    checked={this.state.exerciseno}
                     onChange={() => this.handleCheckboxChange2('exerciseno',
                                                                'exerciseyes')}
                   />
@@ -541,14 +542,14 @@ class Search extends Component {
                   <br />
                   <input
                     type='checkbox'
-                    value={this.state.groupyes}
+                    checked={this.state.groupyes}
                     onChange={
                       () => this.handleCheckboxChange2('groupyes', 'groupno')
                     }
                   />
                   <input
                     type='checkbox'
-                    value={this.state.groupno}
+                    checked={this.state.groupno}
                     onChange={
                       () => this.handleCheckboxChange2('groupno', 'groupyes')
                     }
@@ -558,14 +559,14 @@ class Search extends Component {
                   <br />
                   <input
                     type='checkbox'
-                    value={this.state.diaryyes}
+                    checked={this.state.diaryyes}
                     onChange={
                       () => this.handleCheckboxChange2('diaryyes', 'diaryno')
                     }
                   />
                   <input
                     type='checkbox'
-                    value={this.state.diaryno}
+                    checked={this.state.diaryno}
                     onChange={
                       () => this.handleCheckboxChange2('diaryno', 'diaryyes')
                     }
@@ -575,13 +576,13 @@ class Search extends Component {
                   <br />
                   <input
                     type='checkbox'
-                    value={this.state.assignmentyes}
+                    checked={this.state.assignmentyes}
                     onChange={() => this.handleCheckboxChange2('assignmentyes',
                                                                'assignmentno')}
                   />
                   <input
                     type='checkbox'
-                    value={this.state.assignmentno}
+                    checked={this.state.assignmentno}
                     onChange={() => this.handleCheckboxChange2('assignmentno',
                                                                'assignmentyes')}
                   />
@@ -590,14 +591,14 @@ class Search extends Component {
                   <br />
                   <input
                     type='checkbox'
-                    value={this.state.labyes}
+                    checked={this.state.labyes}
                     onChange={
                       () => this.handleCheckboxChange2('labyes', 'labno')
                     }
                   />
                   <input
                     type='checkbox'
-                    value={this.state.labno}
+                    checked={this.state.labno}
                     onChange={
                       () => this.handleCheckboxChange2('labno', 'labyes')
                     }
