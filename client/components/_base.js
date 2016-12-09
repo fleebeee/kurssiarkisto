@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 // import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
+// import _ from 'lodash';
 import styled from 'styled-components';
 
 const propTypes = {
-  url: PropTypes.object,
+  something: PropTypes.any,
 };
 
 // Replace this with your own style

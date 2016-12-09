@@ -8,6 +8,7 @@ import globals from '../utils/globals.js';
 
 import withToast from '../utils/withToast.js';
 import Page from '../components/Page/Page.js';
+import PeriodSelector from '../components/AddCourse/PeriodSelector.js';
 
 const propTypes = {
   url: PropTypes.object.isRequired,
@@ -379,6 +380,7 @@ class addCourse extends Component {
                         <CheckboxText>{period.toUpperCase()}</CheckboxText>
                       </CheckboxField>
                     )}
+                    <PeriodSelector />
                   </Periods>
 
                   <Misc>
