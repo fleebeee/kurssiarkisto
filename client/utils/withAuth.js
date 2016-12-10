@@ -52,10 +52,10 @@ export default (AuthComponent) => {
     logInComponent() {
       return (
         <AuthContainer>
-          <p>Et ole kirjautunut.</p>
-          <Link href='/login'>Kirjaudu sisään</Link>
-          <Split>tai</Split>
-          <Link href='/signup'>Rekisteröidy</Link>
+          <p>You are not logged in.</p>
+          <Link href='/login'>Log in</Link>
+          <Split>or</Split>
+          <Link href='/signup'>Register</Link>
         </AuthContainer>
       );
     }
