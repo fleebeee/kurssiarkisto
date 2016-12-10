@@ -119,7 +119,7 @@ db.courses.insert({
   credits: 10,
   instances: [
     { startPeriod: 'I', endPeriod: 'II' },
-    { startPeriod: 'IV', endPeriod: 'V' },
+    { startPeriod: 'III', endPeriod: 'V' },
   ],
   school: 'Aalto University School of Science',
 });

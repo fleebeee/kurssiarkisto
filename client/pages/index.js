@@ -245,13 +245,19 @@ class Search extends Component {
     }
 
     // Periods
-    if (this.state.periodstart !== 'None') {
+    if (this.state.periodstart !== 'None'
+     && this.state.periodend !== 'None') {
+      filters.push({
+        instances: { $elemMatch: {
+          startPeriod: this.state.periodstart,
+          endPeriod: this.state.periodend,
+        } },
+      });
+    } else if (this.state.periodstart !== 'None') {
       filters.push({
         instances: { $elemMatch: { startPeriod: this.state.periodstart } },
       });
-    }
-
-    if (this.state.periodend !== 'None') {
+    } else if (this.state.periodend !== 'None') {
       filters.push({
         instances: { $elemMatch: { endPeriod: this.state.periodend } },
       });
@@ -369,11 +375,23 @@ class Search extends Component {
 
   async handlePeriodStartChange(value) {
     await this.setState({ periodstart: value });
+    if (
+      value !== 'None' &&
+      this.state.periodend !== 'None' &&
+      this.state.periodend < value) {
+      await this.setState({ periodend: value });
+    }
     this.setOptions(this.state.keywords);
   }
 
   async handlePeriodEndChange(value) {
     await this.setState({ periodend: value });
+    if (
+      value !== 'None' &&
+      this.state.periodstart !== 'None' &&
+      this.state.periodstart > value) {
+      await this.setState({ periodstart: value });
+    }
     this.setOptions(this.state.keywords);
   }
 
@@ -571,7 +589,7 @@ class Search extends Component {
                           aria-labelledby='periodDropdown'
                         >
                           {
-                            Object.keys(globals.PERIODS).map(
+                            ['None', ...Object.keys(globals.PERIODS)].map(
                             option =>
                               <li key={option}>
                                 <a
