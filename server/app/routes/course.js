@@ -68,23 +68,25 @@ courseRoutes.get('/course/:code', (req, res) => {
 courseRoutes.get('/search/:keyword', async (req, res) => {
   const keyword = req.params.keyword;
   const regexp = new RegExp(keyword, 'i');
+  const filters = JSON.parse(req.headers['ka-filters']);
   // TODO what if user writes "CS-E4400 Web Services"? This will return []
 
-  let courses = [];
-
-  await Course.find({
+  const find = Course.find({
     $or: [
       { name: regexp },
       { code: regexp },
     ],
-  })
-  .limit(10)
+  });
+
+  if (filters.length) {
+    find.and(filters);
+  }
+
+  const courses = await find.limit(10)
   .select('code name credits reviews')
   .lean()
-  .exec((err, courses2) => {
+  .exec((err) => {
     if (err) throw err;
-
-    courses = courses2;
     return true;
   });
 
@@ -109,13 +111,11 @@ courseRoutes.get('/search/:keyword', async (req, res) => {
   );
   reviewIDs = _.uniq(reviewIDs);
 
-  let reviews = [];
-
   // Fetch reviews
-  await Review.find({
+  const reviews = await Review.find({
     _id: { $in: reviewIDs },
-  }, (err, reviews2) => {
-    reviews = reviews2;
+  }, (err) => {
+    if (err) throw err;
   });
 
   const reviewsObject = {};

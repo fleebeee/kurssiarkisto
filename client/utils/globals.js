@@ -14,6 +14,14 @@ const globals = {
     V: 4,
     summer: 5,
   },
+  PASSING_MECHANISMS: {
+    EXERCISES: 'Exercises',
+    EXAM: 'Exam',
+    GROUP_WORK: 'Group work',
+    LECTURE_DIARIES: 'Lecture diaries',
+    ASSIGNMENT: 'Assignment',
+    LAB_ASSIGNMENT: 'Lab assignment',
+  },
 };
 
 export default globals;

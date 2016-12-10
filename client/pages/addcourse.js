@@ -210,14 +210,24 @@ class addCourse extends Component {
 
     const passingMechanisms = [];
 
-    if (this.state.hasExercises) passingMechanisms.push('exercises');
-
-
-    if (this.state.hasExam) passingMechanisms.push('exam');
-    if (this.state.hasGroupwork) passingMechanisms.push('groupwork');
-    if (this.state.hasDiary) passingMechanisms.push('lecture diaries');
-    if (this.state.hasAssignment) passingMechanisms.push('assignment');
-    if (this.state.hasLabAssignment) passingMechanisms.push('lab assignment');
+    if (this.state.hasExercises) {
+      passingMechanisms.push(globals.PASSING_MECHANISMS.EXERCISES);
+    }
+    if (this.state.hasExam) {
+      passingMechanisms.push(globals.PASSING_MECHANISMS.EXAM);
+    }
+    if (this.state.hasGroupwork) {
+      passingMechanisms.push(globals.PASSING_MECHANISMS.GROUP_WORK);
+    }
+    if (this.state.hasDiary) {
+      passingMechanisms.push(globals.PASSING_MECHANISMS.LECTURE_DIARIES);
+    }
+    if (this.state.hasAssignment) {
+      passingMechanisms.push(globals.PASSING_MECHANISMS.ASSIGNMENT);
+    }
+    if (this.state.hasLabAssignment) {
+      passingMechanisms.push(globals.PASSING_MECHANISMS.LAB_ASSIGNMENT);
+    }
 
     const instances = Object.values(this.state.instances);
     instances.forEach(instance => delete instance.id);

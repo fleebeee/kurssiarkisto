@@ -179,10 +179,10 @@ class Search extends Component {
         min: 1,
         max: 4,
       },
-      periodstart: '',
-      periodend: '',
+      periodstart: 'None',
+      periodend: 'None',
       credits: '',
-      attendance: false,
+      noMandatoryAttendance: false,
       examyes: false,
       examno: false,
       exerciseyes: false,
@@ -234,9 +234,112 @@ class Search extends Component {
       return false;
     }
 
+    const filters = [];
+
+    if (this.state.noMandatoryAttendance) {
+      filters.push({ mandatoryAttendance: false });
+    }
+
+    if (this.state.credits && this.state.credits > 0) {
+      filters.push({ credits: { $eq: this.state.credits } });
+    }
+
+    // Periods
+    if (this.state.periodstart !== 'None') {
+      filters.push({
+        instances: { $elemMatch: { startPeriod: this.state.periodstart } },
+      });
+    }
+
+    if (this.state.periodend !== 'None') {
+      filters.push({
+        instances: { $elemMatch: { endPeriod: this.state.periodend } },
+      });
+    }
+
+    // Checkboxes... Ideally this should be a loop, not 5000 lines
+    if (this.state.examyes) {
+      filters.push({
+        passingMechanisms: { $in: [globals.PASSING_MECHANISMS.EXAM] },
+      });
+    } else if (this.state.examno) {
+      filters.push({
+        passingMechanisms: { $nin: [globals.PASSING_MECHANISMS.EXAM] },
+      });
+    }
+
+    if (this.state.exerciseyes) {
+      filters.push({
+        passingMechanisms: { $in: [globals.PASSING_MECHANISMS.EXERCISES] },
+      });
+    } else if (this.state.exerciseno) {
+      filters.push({
+        passingMechanisms: { $nin: [globals.PASSING_MECHANISMS.EXERCISES] },
+      });
+    }
+
+    if (this.state.groupyes) {
+      filters.push({
+        passingMechanisms: { $in: [globals.PASSING_MECHANISMS.GROUP_WORK] },
+      });
+    } else if (this.state.groupno) {
+      filters.push({
+        passingMechanisms: { $nin: [globals.PASSING_MECHANISMS.GROUP_WORK] },
+      });
+    }
+
+    if (this.state.diaryyes) {
+      filters.push({
+        passingMechanisms: {
+          $in: [globals.PASSING_MECHANISMS.LECTURE_DIARIES],
+        },
+      });
+    } else if (this.state.diaryno) {
+      filters.push({
+        passingMechanisms: {
+          $nin: [globals.PASSING_MECHANISMS.LECTURE_DIARIES],
+        },
+      });
+    }
+
+    if (this.state.assignmentyes) {
+      filters.push({
+        passingMechanisms: {
+          $in: [globals.PASSING_MECHANISMS.ASSIGNMENT],
+        },
+      });
+    } else if (this.state.assignmentno) {
+      filters.push({
+        passingMechanisms: {
+          $nin: [globals.PASSING_MECHANISMS.ASSIGNMENT],
+        },
+      });
+    }
+
+    if (this.state.labyes) {
+      filters.push({
+        passingMechanisms: {
+          $in: [globals.PASSING_MECHANISMS.LAB_ASSIGNMENT],
+        },
+      });
+    } else if (this.state.labno) {
+      filters.push({
+        passingMechanisms: {
+          $nin: [globals.PASSING_MECHANISMS.LAB_ASSIGNMENT],
+        },
+      });
+    }
+
     // TODO Cache
 
-    const res = await fetch(`${globals.API_ADDRESS}/search/${keywords}`);
+    const res = await fetch(`${globals.API_ADDRESS}/search/${keywords}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'ka-filters': JSON.stringify(filters),
+      },
+    });
     const data = await res.json();
     if (data.success) {
       this.setState({ options: data.courses });
@@ -263,30 +366,42 @@ class Search extends Component {
   handleArrangeChange(value) {
     this.setState({ arrange: value });
   }
-  handlePeriodStartChange(value) {
-    this.setState({ periodstart: value });
+
+  async handlePeriodStartChange(value) {
+    await this.setState({ periodstart: value });
+    this.setOptions(this.state.keywords);
   }
 
-  handlePeriodEndChange(value) {
-    this.setState({ periodend: value });
+  async handlePeriodEndChange(value) {
+    await this.setState({ periodend: value });
+    this.setOptions(this.state.keywords);
   }
 
-  handleTextChange(field, event) {
-    this.setState({ [field]: event.target.value });
+  async handleTextChange(field, event) {
+    await this.setState({ [field]: event.target.value });
+    this.setOptions(this.state.keywords);
   }
 
-  handleCheckboxChange(field) {
-    this.setState({ [field]: !this.state[field] });
+  async handleCheckboxChange(field) {
+    await this.setState({ [field]: !this.state[field] });
+    this.setOptions(this.state.keywords);
   }
 
-  handleCheckboxChange2(field, field2) {
-    if (!this.state[field] && this.state[field2]) {
-      this.setState({ [field]: !this.state[field] });
-      this.setState({ [field2]: !this.state[field2] });
+  async handleCheckboxChange2(field, field2) {
+    const oldField = this.state[field];
+    const oldField2 = this.state[field2];
+
+    if (!oldField && oldField2) {
+      await Promise.all([
+        this.setState({ [field]: !oldField }),
+        this.setState({ [field2]: !oldField2 }),
+      ]);
     }
-    if (!this.state[field2]) {
-      this.setState({ [field]: !this.state[field] });
+    if (!oldField2) {
+      await this.setState({ [field]: !oldField });
     }
+
+    this.setOptions(this.state.keywords);
   }
 
   renderOption(option) {
@@ -319,7 +434,6 @@ class Search extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <Page noPadding>
         <SearchContainer>
@@ -420,7 +534,7 @@ class Search extends Component {
                           aria-labelledby='periodDropdown'
                         >
                           {
-                            Object.keys(globals.PERIODS).map(
+                            ['None', ...Object.keys(globals.PERIODS)].map(
                             option =>
                               <li key={option}>
                                 <a
@@ -497,9 +611,9 @@ class Search extends Component {
                   <br />
                   <input
                     type='checkbox'
-                    value={this.state.attendance}
+                    checked={this.state.noMandatoryAttendance}
                     onChange={
-                      () => this.handleCheckboxChange('attendance')
+                      () => this.handleCheckboxChange('noMandatoryAttendance')
                     }
                   />
                   <CheckboxText>not mandatory</CheckboxText>
