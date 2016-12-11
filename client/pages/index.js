@@ -508,6 +508,7 @@ class Search extends Component {
                   </DropdownBoxOne>
                 </Col>
                 <Col xs={6} sm={1} md={1}>
+                  {this.state.loggedIn &&
                   <Link href='/addcourse'>
                     <AddButton
                       className='btn btn-sm'
@@ -516,6 +517,7 @@ class Search extends Component {
                     > <OptionTextOne>Add course</OptionTextOne>
                     </AddButton>
                   </Link>
+                  }
                 </Col>
               </RowStyled>
             </SearchBoxContainer>

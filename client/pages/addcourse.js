@@ -1,16 +1,18 @@
 import React, { Component, PropTypes } from 'react';
-import fetch from 'isomorphic-fetch';
-// import ls from 'local-storage';
+
 import _ from 'lodash';
 import styled from 'styled-components';
 import palette from '../utils/palette.js';
 import globals from '../utils/globals.js';
 
+import AuthService from '../utils/AuthService.js';
 import withToast from '../utils/withToast.js';
+import withAuth from '../utils/withAuth.js';
 import Page from '../components/Page/Page.js';
 import PeriodSelector from '../components/AddCourse/PeriodSelector.js';
 
 const propTypes = {
+  auth: PropTypes.instanceOf(AuthService),
   url: PropTypes.object.isRequired,
   addToast: PropTypes.func.isRequired,
 };
@@ -232,25 +234,22 @@ class addCourse extends Component {
     const instances = Object.values(this.state.instances);
     instances.forEach(instance => delete instance.id);
 
-    const res = await fetch(`${globals.API_ADDRESS}/course`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: this.state.courseName,
-        code: this.state.courseCode,
-        mandatoryAttendance: this.state.hasMandatoryAttendance,
-        passingMechanisms,
-        credits: this.state.credits,
-        instances,
-      }),
-    });
-    const data = await res.json();
-    console.debug('ADD COURSE response', data);
+    const res = await this.props.auth.authFetch(
+      `${globals.API_ADDRESS}/course`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          name: this.state.courseName,
+          code: this.state.courseCode,
+          mandatoryAttendance: this.state.hasMandatoryAttendance,
+          passingMechanisms,
+          credits: this.state.credits,
+          instances,
+        }),
+      }
+   );
 
-    if (data.success) {
+    if (res.success) {
       console.debug('Add course successful!');
       this.props.url.pushTo(
       /* eslint-disable prefer-template */
@@ -486,4 +485,4 @@ class addCourse extends Component {
 
 addCourse.propTypes = propTypes;
 
-export default withToast(addCourse);
+export default withAuth(withToast(addCourse));

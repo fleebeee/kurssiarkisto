@@ -1,6 +1,8 @@
 import express from 'express';
 import _ from 'lodash';
 import errorParser from '../utils/errorParser';
+import getToken from '../utils/getToken';
+import getUser from '../utils/getUser';
 // import getToken from '../utils/getToken';
 
 import Course from '../models/course';
@@ -8,43 +10,53 @@ import Review from '../models/review';
 
 const courseRoutes = express.Router();
 
-courseRoutes.post('/course', (req, res) => {
+courseRoutes.post('/course', async (req, res) => {
   if (!req.body.name || !req.body.code) {
-    res.json({
+    return res.json({
       success: false,
       message: 'Please enter course name and code.',
     });
-  } else {
-    const newCourse = new Course({
-      name: req.body.name,
-      code: req.body.code,
-      // The attributes below aren't required, so they can be undefined
-      myCoursesLink: req.body.myCoursesLink,
-      mandatoryAttendance: req.body.mandatoryAttendance,
-      passingMechanisms: req.body.passingMechanisms,
-      credits: req.body.credits,
-      instances: req.body.instances,
-      school: req.body.school,
-    });
-    // save the course
-    newCourse.save((err) => {
-      if (err) {
-        console.log(err);
-        const errors = errorParser(err);
+  }
 
-        return res.json({
-          success: false,
-          message:
-            `Something went wrong. Hopefully helpful description:\n${errors}`,
-        });
-      }
-      return res.json({
-        success: true,
-        message:
-          `Successfully added new course ${req.body.code} - ${req.body.name}`,
-      });
+  const token = getToken(req.headers);
+  const user = await getUser(token);
+  if (!user) {
+    return res.status(403).json({
+      success: false,
+      message: 'You need to log in to add courses',
     });
   }
+
+  console.log(user);
+
+  const newCourse = new Course({
+    name: req.body.name,
+    code: req.body.code,
+    // The attributes below aren't required, so they can be undefined
+    myCoursesLink: req.body.myCoursesLink,
+    mandatoryAttendance: req.body.mandatoryAttendance,
+    passingMechanisms: req.body.passingMechanisms,
+    credits: req.body.credits,
+    instances: req.body.instances,
+    school: req.body.school,
+  });
+  // save the course
+  try {
+    await newCourse.save();
+  } catch (err) {
+    const errors = errorParser(err);
+    return res.json({
+      success: false,
+      message:
+        `Something went wrong. Hopefully helpful description:\n${errors}`,
+    });
+  }
+
+  return res.json({
+    success: true,
+    message:
+      `Successfully added new course ${req.body.code} - ${req.body.name}`,
+  });
 });
 
 // Get a single course
