@@ -145,10 +145,14 @@ const CourseList = styled.ul`
 `;
 
 const Course = styled.li`
-  display: flex;
+  display: inline-flex;
   margin-bottom: 20px;
   border-bottom: solid 1px #D3D3D3;
   padding-bottom: 5px;
+`;
+
+const Details = styled.div`
+  display: inline-block;
 `;
 
 const CourseLink = styled.span`
@@ -425,7 +429,7 @@ class Search extends Component {
   renderOption(option) {
     return (
       <Course key={option.code}>
-        <div>
+        <Details>
           <Link href={`/course?code=${option.code}`}>
             <CourseLink>{option.code} - {option.name}</CourseLink>
           </Link>
@@ -438,7 +442,7 @@ class Search extends Component {
             </CourseDetail>
             <CourseDetail>reviews {option.reviewCount || 'n/a'}</CourseDetail>
           </div>
-        </div>
+        </Details>
         {this.state.loggedIn &&
         <FavoriteIconContainer>
           <FavoriteIcon
