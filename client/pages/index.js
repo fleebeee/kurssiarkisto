@@ -146,6 +146,7 @@ const CourseList = styled.ul`
 
 const Course = styled.li`
   display: inline-flex;
+  width: 100%;
   margin-bottom: 20px;
   border-bottom: solid 1px #D3D3D3;
   padding-bottom: 5px;
