@@ -45,7 +45,7 @@ You can run the client with `npm run dev`. The client i.e. the public interface 
 
 ## Deployment
 
-When deploying, instead of running `npm run dev` both on `client` and `server` folders, first run `npm run build` and then `npm run start`. This way the project will run on the production environment and be more efficient.
+When deploying, instead of running `npm run dev` both on `client` and `server` folders, first run `npm run build` and then `npm run start`. This way the project will run on the production environment and be more efficient. When running the server in production, the `API_ADDRESS` global in `client/utils/globals.js` has to be changed to point to the server's IP address.
 
 ### DigitalOcean
 
