@@ -177,7 +177,6 @@ class Course extends Component {
       console.debug(
         `Review data fetched, ${data.reviews.length} review(s)`
       );
-      console.log(data.reviews);
       this.setState({
         reviews: data.reviews,
         ownReview: data.ownReview,

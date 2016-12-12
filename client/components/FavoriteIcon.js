@@ -147,7 +147,9 @@ class FavoriteIcon extends Component {
       if (data.success) {
         if (data.success) {
           this.props.addToast({
-            message: `Lisäsit kurssin ${this.props.code} suosikkeihisi!`,
+            /* eslint-disable max-len */
+            message: `You added the course ${this.props.code} to your favorites!`,
+            /* eslint-enable max-len */
             level: 'success',
           });
         }
@@ -176,7 +178,9 @@ class FavoriteIcon extends Component {
       console.debug('FAVORITE response', data);
       if (data.success) {
         this.props.addToast({
-          message: `Poistit kurssin ${this.props.code} suosikeistasi`,
+          /* eslint-disable max-len */
+          message: `You removed the course ${this.props.code} from your favorites`,
+          /* eslint-enable max-len */
           level: 'info',
         });
       }
