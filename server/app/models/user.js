@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const Schema = mongoose.Schema;
-require('mongoose-type-email'); // TODO BROKEN
+require('mongoose-type-email');
 
 const UserSchema = new Schema({
   email: {

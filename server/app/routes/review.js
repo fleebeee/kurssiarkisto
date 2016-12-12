@@ -1,7 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import errorParser from '../utils/errorParser';
-// import getToken from '../utils/getToken';
+import getToken from '../utils/getToken';
+import getUser from '../utils/getUser';
 
 import Review from '../models/review';
 import Course from '../models/course';
@@ -82,36 +83,61 @@ reviewRoutes.post('/review', (req, res) => {
 });
 
 // Get Reviews for a course by course code
-reviewRoutes.get('/review/:code', (req, res) => {
+reviewRoutes.get('/review/:code', async (req, res) => {
   const code = req.params.code;
-  Course.findOne({
-    code,
-  }, (err, course) => {
-    if (err) throw err;
-    if (!course) {
-      return res.status(404).send({
-        success: false,
-        message: 'Course not found when getting reviews',
-      });
-    }
+  const token = getToken(req.headers);
+  const user = await getUser(token);
 
-    Review.find({
-      _id: { $in: course.reviews },
-    }, (err2, reviews) => {
-      if (err2) throw err2;
-
-      if (!reviews) {
-        return res.status(404).send({
-          success: false,
-          message: 'Reviews not found for course',
-        });
-      }
-
-      return res.status(200).json({ success: true, reviews });
+  let course = null;
+  try {
+    course = await Course.findOne({
+      code,
     });
+  } catch (err) {
+    throw err;
+  }
 
-    return true;
+  if (!course) {
+    return res.status(404).send({
+      success: false,
+      message: 'Course not found when getting reviews',
+    });
+  }
+
+  let reviews = null;
+  try {
+    reviews = await Review.find({
+      _id: { $in: course.reviews },
+    });
+  } catch (err) {
+    throw err;
+  }
+
+  if (!reviews) {
+    return res.status(404).send({
+      success: false,
+      message: 'Reviews not found for course',
+    });
+  }
+
+  // If user is logged in, show them their own review
+  if (user) {
+    let ownReview = null;
+
+    reviews.forEach((review) => {
+      if (review.userID.equals(user._id)) {
+        ownReview = review;
+      }
+      review.userID = undefined;
+    });
+    return res.status(200).json({ success: true, reviews, ownReview });
+  }
+
+  reviews.forEach((review) => {
+    review.userID = undefined;
   });
+
+  return res.status(200).json({ success: true, reviews });
 });
 
 module.exports = reviewRoutes;

@@ -5,6 +5,7 @@ import fetch from 'isomorphic-fetch';
 import Link from 'next/link';
 import styled from 'styled-components';
 import _ from 'lodash';
+import ls from 'local-storage';
 
 import globals from '../utils/globals.js';
 import palette from '../utils/palette.js';
@@ -112,6 +113,7 @@ class Course extends Component {
       score: null,
       workload: null,
       loggedIn: null,
+      ownReview: null,
     };
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
@@ -121,7 +123,8 @@ class Course extends Component {
 
   async componentDidMount() {
     // Check if user is logged in
-    this.setState({ loggedIn: isLoggedIn() });
+    const loggedIn = isLoggedIn();
+    this.setState({ loggedIn });
 
     // Fetch course data from server
     const query = this.props.url.query;
@@ -142,15 +145,21 @@ class Course extends Component {
         console.debug('Course data:', data.course);
         this.setState({ course: data.course });
 
+        const headers = {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        };
+
+        if (loggedIn) {
+          headers.Authorization = ls.get('jwt');
+        }
+
         // Fetch review data
         res = await fetch(
           `${globals.API_ADDRESS}/review/${query.code}`,
           {
             method: 'GET',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
+            headers,
           });
         data = await res.json();
         if (data.success) {
@@ -159,6 +168,7 @@ class Course extends Component {
           );
           this.setState({
             reviews: data.reviews,
+            ownReview: data.ownReview,
             score: this.calcAverage(data.reviews, 'score'),
             workload: this.calcAverage(data.reviews, 'workload'),
           });
@@ -309,6 +319,7 @@ class Course extends Component {
             <ModalStyled show={this.state.showModal} onHide={this.close}>
               <ReviewModal
                 isNotPage
+                ownReview={this.state.ownReview}
                 close={this.close}
                 submit={this.submitReview}
               />

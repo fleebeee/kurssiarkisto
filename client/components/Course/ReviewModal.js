@@ -11,6 +11,7 @@ import withAuth from '../../utils/withAuth.js';
 
 const propTypes = {
   // url: PropTypes.object.isRequired,
+  ownReview: PropTypes.object,
   submit: PropTypes.func.isRequired,
   auth: PropTypes.instanceOf(AuthService),
   close: PropTypes.func.isRequired,
@@ -37,8 +38,9 @@ class ReviewModal extends Component {
 
     this.state = {
       userID: this.props.auth.getProfile().id,
-      score: null,
-      workload: null,
+      score: this.props.ownReview ? this.props.ownReview.score : null,
+      workload: this.props.ownReview ? this.props.ownReview.workload : null,
+      alreadyReviewed: !!this.props.ownReview,
     };
   }
 
@@ -74,7 +76,7 @@ class ReviewModal extends Component {
               bsStyle='warning'
               onClick={() => this.props.submit(this.state)}
             >
-              Save
+              {this.state.alreadyReviewed ? 'Update' : 'Save'}
             </Button>
             <Button
               bsStyle='warning'

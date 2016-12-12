@@ -15,9 +15,7 @@ const getUser = async (token) => {
       return false;
     }
 
-    const user = await User.findOne({
-      name: decoded.name,
-    });
+    const user = await User.findById(decoded._id);
     return user;
   }
   return false;
