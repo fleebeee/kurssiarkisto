@@ -1,12 +1,10 @@
 import express from 'express';
-import _ from 'lodash';
 import errorParser from '../utils/errorParser';
 import getToken from '../utils/getToken';
 import getUser from '../utils/getUser';
 // import getToken from '../utils/getToken';
 
 import Course from '../models/course';
-import Review from '../models/review';
 
 const courseRoutes = express.Router();
 
@@ -81,6 +79,7 @@ courseRoutes.get('/search/:keyword', async (req, res) => {
   const keyword = req.params.keyword;
   const regexp = new RegExp(keyword, 'i');
   const filters = JSON.parse(req.headers['ka-filters']);
+  const sort = JSON.parse(req.headers['ka-sort']);
   // TODO what if user writes "CS-E4400 Web Services"? This will return []
 
   const find = Course.find({
@@ -94,8 +93,10 @@ courseRoutes.get('/search/:keyword', async (req, res) => {
     find.and(filters);
   }
 
-  const courses = await find.limit(10)
-  .select('code name credits reviews')
+  const courses = await find
+  .sort(sort)
+  .limit(10)
+  .select('code name credits reviews score workload')
   .lean()
   .exec((err) => {
     if (err) throw err;
@@ -110,69 +111,12 @@ courseRoutes.get('/search/:keyword', async (req, res) => {
     });
   }
 
-  // Gather all review IDs needed
-  let reviewIDs = [];
-  courses.forEach(
-    (course) => {
-      if (_.has(course, 'reviews')) {
-        course.reviews.forEach(
-          reviewID => reviewIDs.push(reviewID),
-        );
-      }
-    },
-  );
-  reviewIDs = _.uniq(reviewIDs);
-
-  // Fetch reviews
-  const reviews = await Review.find({
-    _id: { $in: reviewIDs },
-  }, (err) => {
-    if (err) throw err;
-  });
-
-  const reviewsObject = {};
-
-  // Make reviews an object for efficiency
-  reviews.forEach(
-    (review) => {
-      reviewsObject[review._id] = {
-        score: review.score,
-        workload: review.workload,
-      };
-    },
-  );
-
-  // Compute and attach review data to courses
-  courses.forEach(
-    (course) => {
-      let scoreSum = 0;
-      let workloadSum = 0;
-      let reviewCount = 0;
-
-      let score = 0;
-      let workload = 0;
-
-      if (_.has(course, 'reviews') && course.reviews.length > 0) {
-        reviewCount = course.reviews.length;
-
-        course.reviews.forEach(
-          (review) => {
-            scoreSum += reviewsObject[review].score;
-            workloadSum += reviewsObject[review].workload;
-          },
-        );
-
-        score = scoreSum / reviewCount;
-        workload = workloadSum / reviewCount;
-      }
-
-      course.score = score;
-      course.workload = workload;
-      course.reviewCount = reviewCount;
-
+  courses.forEach((course) => {
+    course.reviewCount = course.reviews ? course.reviews.length : 0;
+    if (course.reviews) {
       delete course.reviews;
-    },
-  );
+    }
+  });
 
   return res.json({ success: true, courses });
 });

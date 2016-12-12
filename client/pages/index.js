@@ -201,7 +201,7 @@ class Search extends Component {
       labyes: false,
       labno: false,
       loggedIn: false,
-      arrange: '',
+      arrange: globals.SORT_OPTIONS.COURSENAME_ASC,
     };
     this.setOptions = this.setOptions.bind(this);
     this.setOptionsThrottled = this.setOptionsThrottled.bind(this);
@@ -239,6 +239,32 @@ class Search extends Component {
       return false;
     }
 
+    // sort
+    const sort = {};
+    switch (this.state.arrange) {
+    case globals.SORT_OPTIONS.COURSENAME_ASC:
+      sort.name = 'asc';
+      break;
+    case globals.SORT_OPTIONS.COURSENAME_DESC:
+      sort.name = 'desc';
+      break;
+    case globals.SORT_OPTIONS.RATINGS_ASC:
+      sort.score = 'asc';
+      break;
+    case globals.SORT_OPTIONS.RATINGS_DESC:
+      sort.score = 'desc';
+      break;
+    case globals.SORT_OPTIONS.WORKLOAD_ASC:
+      sort.workload = 'asc';
+      break;
+    case globals.SORT_OPTIONS.WORKLOAD_DESC:
+      sort.workload = 'desc';
+      break;
+    default:
+      sort.name = 'asc';
+    }
+
+    // filters
     const filters = [];
 
     if (this.state.noMandatoryAttendance) {
@@ -349,6 +375,7 @@ class Search extends Component {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         'ka-filters': JSON.stringify(filters),
+        'ka-sort': JSON.stringify(sort),
       },
     });
     const data = await res.json();
@@ -374,8 +401,9 @@ class Search extends Component {
     });
   }
 
-  handleArrangeChange(value) {
-    this.setState({ arrange: value });
+  async handleArrangeChange(value) {
+    await this.setState({ arrange: value });
+    this.setOptions(this.state.keywords);
   }
 
   async handlePeriodStartChange(value) {
@@ -441,6 +469,11 @@ class Search extends Component {
                 ? <ReviewStars value={option.score} />
                 : 'n/a'}
             </CourseDetail>
+            <CourseDetail>
+              workload {option.reviewCount > 0
+                ? <ReviewStars value={option.workload} />
+                : 'n/a'}
+            </CourseDetail>
             <CourseDetail>reviews {option.reviewCount || 'n/a'}</CourseDetail>
           </div>
         </Details>
@@ -486,7 +519,7 @@ class Search extends Component {
                       aria-expanded='true'
                     >
                       <OptionTextOne>
-                        {this.state.arrange || 'sort' }&nbsp;
+                        {this.state.arrange}&nbsp;
                       </OptionTextOne>
                       <span className='caret' />
                     </Dbbutton>
@@ -495,7 +528,7 @@ class Search extends Component {
                       aria-labelledby='periodDropdown'
                     >
                       {
-                        ['A-Z', 'user ratings', 'workload'].map(
+                        Object.values(globals.SORT_OPTIONS).map(
                         option =>
                           <li key={option}>
                             <a

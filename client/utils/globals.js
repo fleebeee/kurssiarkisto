@@ -22,6 +22,14 @@ const globals = {
     ASSIGNMENT: 'Assignment',
     LAB_ASSIGNMENT: 'Lab assignment',
   },
+  SORT_OPTIONS: {
+    COURSENAME_ASC: 'course name A→Z',
+    COURSENAME_DESC: 'course name Z→A',
+    RATINGS_ASC: 'user ratings 1→5',
+    RATINGS_DESC: 'user ratings 5→1',
+    WORKLOAD_ASC: 'workload 1→5',
+    WORKLOAD_DESC: 'workload 5→1',
+  },
 };
 
 export default globals;

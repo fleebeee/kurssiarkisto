@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Review from './review';
 
 const Schema = mongoose.Schema;
 
@@ -48,6 +49,50 @@ const CourseSchema = new Schema({
     type: [], // [{ startPeriod: 'I', endPeriod: 'III'}, { ... }] for example
     required: false,
   },
+  // Approximate values for sorting
+  score: {
+    type: Number,
+    required: false,
+  },
+  workload: {
+    type: Number,
+    required: false,
+  },
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
+
+CourseSchema.pre('save', async function s(next) {
+  const course = this;
+  if (this.isNew) {
+    course.score = 0;
+    course.workload = 0;
+  } else if (this.isModified('reviews')) {
+    let reviews = [];
+    try {
+      reviews = await Review.find({
+        _id: { $in: course.reviews },
+      });
+      reviews = reviews.map(r => r.toObject());
+    } catch (err) {
+      throw err;
+    }
+
+    let scoreSum = 0;
+    let workloadSum = 0;
+
+    reviews.forEach((review) => {
+      scoreSum += review.score;
+      workloadSum += review.workload;
+    });
+
+    if (reviews.length > 0) {
+      scoreSum /= reviews.length;
+      workloadSum /= reviews.length;
+    }
+
+    course.score = scoreSum;
+    course.workload = workloadSum;
+  }
+  return next();
+});
 
 module.exports = mongoose.model('Course', CourseSchema);
