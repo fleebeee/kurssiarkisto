@@ -25,8 +25,6 @@ courseRoutes.post('/course', async (req, res) => {
     });
   }
 
-  console.log(user);
-
   const newCourse = new Course({
     name: req.body.name,
     code: req.body.code,

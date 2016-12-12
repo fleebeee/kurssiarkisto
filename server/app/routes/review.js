@@ -10,28 +10,36 @@ import Course from '../models/course';
 const reviewRoutes = express.Router();
 
 // Add a new FIRST review
-reviewRoutes.post('/review', (req, res) => {
+reviewRoutes.post('/review', async (req, res) => {
   const score = req.body.score;
   const workload = req.body.workload;
   const courseCode = req.body.courseCode;
-  const userID = req.body.userID;
+
+  const user = await getUser(getToken(req.headers));
+
 
   if (!req.body.score || !req.body.workload) {
     return res.json({
       success: false,
       message: 'Please enter both workload and score',
     });
-  } else if (!courseCode || !userID) {
+  } else if (!courseCode) {
     return res.json({
       success: false,
-      message: 'Course code or User ID not given',
+      message: 'Course code',
+    });
+  } else if (!user) {
+    return res.json({
+      success: false,
+      message: 'You need to be logged in',
     });
   }
+
   const newReview = new Review({
     score,
     workload,
     courseCode,
-    userID: mongoose.Types.ObjectId(userID),
+    userID: mongoose.Types.ObjectId(user._id),
   });
 
   newReview.save((err) => {
@@ -71,6 +79,7 @@ reviewRoutes.post('/review', (req, res) => {
         return res.json({
           success: true,
           message: 'Successfully added new review',
+          review: newReview,
         });
       });
       return true;
@@ -80,6 +89,59 @@ reviewRoutes.post('/review', (req, res) => {
   });
 
   return true;
+});
+
+// Update review
+reviewRoutes.put('/review', async (req, res) => {
+  const courseCode = req.body.courseCode;
+  const score = req.body.score;
+  const workload = req.body.workload;
+  const token = getToken(req.headers);
+  const user = await getUser(token);
+
+  if (!courseCode) {
+    return res.status(404).send({
+      success: false,
+      message: 'Course code is required',
+    });
+  }
+  if (!user) {
+    return res.status(404).send({
+      success: false,
+      message: 'You need to be logged in',
+    });
+  }
+
+  // Find the review of this user
+  let review = null;
+  try {
+    review = await Review.findOne({
+      userID: user._id,
+      courseCode,
+    });
+  } catch (err) {
+    throw err;
+  }
+
+  if (!review) {
+    return res.status(404).send({
+      success: false,
+      message: 'Reviews not found for user for this course',
+    });
+  }
+
+  review.score = score;
+  review.workload = workload;
+  try {
+    await review.save();
+    return res.status(200).json({ success: true, review });
+  } catch (err) {
+    res.status(404).send({
+      success: false,
+      message: 'Something went wrong :(',
+    });
+    throw err;
+  }
 });
 
 // Get Reviews for a course by course code

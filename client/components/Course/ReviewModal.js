@@ -37,7 +37,7 @@ class ReviewModal extends Component {
     super(props);
 
     this.state = {
-      userID: this.props.auth.getProfile().id,
+      userToken: this.props.auth.getToken(),
       score: this.props.ownReview ? this.props.ownReview.score : null,
       workload: this.props.ownReview ? this.props.ownReview.workload : null,
       alreadyReviewed: !!this.props.ownReview,

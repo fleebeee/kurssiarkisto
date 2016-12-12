@@ -119,6 +119,7 @@ class Course extends Component {
     this.open = this.open.bind(this);
     this.submitReview = this.submitReview.bind(this);
     this.calcAverage = this.calcAverage.bind(this);
+    this.getReviews = this.getReviews.bind(this);
   }
 
   async componentDidMount() {
@@ -130,7 +131,7 @@ class Course extends Component {
     const query = this.props.url.query;
     if (_.has(query, 'code')) {
       // TODO Probably move API calls elsewhere to reduce clutter
-      let res = await fetch(
+      const res = await fetch(
         `${globals.API_ADDRESS}/course/${query.code}`,
         {
           method: 'GET',
@@ -140,44 +141,51 @@ class Course extends Component {
           },
         });
 
-      let data = await res.json();
+      const data = await res.json();
       if (data.success) {
         console.debug('Course data:', data.course);
         this.setState({ course: data.course });
 
-        const headers = {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        };
-
-        if (loggedIn) {
-          headers.Authorization = ls.get('jwt');
-        }
-
-        // Fetch review data
-        res = await fetch(
-          `${globals.API_ADDRESS}/review/${query.code}`,
-          {
-            method: 'GET',
-            headers,
-          });
-        data = await res.json();
-        if (data.success) {
-          console.debug(
-            `Review data fetched, ${data.reviews.length} review(s)`
-          );
-          this.setState({
-            reviews: data.reviews,
-            ownReview: data.ownReview,
-            score: this.calcAverage(data.reviews, 'score'),
-            workload: this.calcAverage(data.reviews, 'workload'),
-          });
-        } else {
-          console.debug('Review data couldn\'t be fetched:', data);
-        }
+        this.getReviews();
       } else {
         console.debug('Course data couldn\'t be fetched:', data);
       }
+    }
+  }
+
+  async getReviews() {
+    const loggedIn = isLoggedIn();
+    const query = this.props.url.query;
+    const headers = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+
+    if (loggedIn) {
+      headers.Authorization = ls.get('jwt');
+    }
+
+    // Fetch review data
+    const res = await fetch(
+      `${globals.API_ADDRESS}/review/${query.code}`,
+      {
+        method: 'GET',
+        headers,
+      });
+    const data = await res.json();
+    if (data.success) {
+      console.debug(
+        `Review data fetched, ${data.reviews.length} review(s)`
+      );
+      console.log(data.reviews);
+      this.setState({
+        reviews: data.reviews,
+        ownReview: data.ownReview,
+        score: this.calcAverage(data.reviews, 'score'),
+        workload: this.calcAverage(data.reviews, 'workload'),
+      });
+    } else {
+      console.debug('Review data couldn\'t be fetched:', data);
     }
   }
 
@@ -201,9 +209,9 @@ class Course extends Component {
   }
 
   async submitReview(options) {
-    const { score, workload, userID } = options;
+    const { score, workload, userToken } = options;
 
-    if (!userID) {
+    if (!userToken) {
       console.debug('You need to log in');
       this.props.addToast({
         title: 'Adding review failed',
@@ -243,18 +251,20 @@ class Course extends Component {
       return;
     }
 
+    const method = this.state.ownReview ? 'PUT' : 'POST';
+
     console.debug('Submitting review',
       { ...options, courseCode: this.state.course.code });
     const res = await fetch(`${globals.API_ADDRESS}/review`, {
-      method: 'POST',
+      method,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: userToken,
       },
       body: JSON.stringify({
         score,
         workload,
-        userID,
         courseCode: this.state.course.code,
       }),
     });
@@ -262,28 +272,21 @@ class Course extends Component {
 
     // If successful, close modal and show toast
     if (data.success) {
-      console.debug('Review added successfully', data);
+      console.debug('Review added/updated successfully', data);
       this.props.addToast({
-        message: 'Review added successfully!',
+        /* eslint-disable max-len */
+        message: `Review ${this.state.ownReview ? 'updated' : 'added'} successfully!`,
+        /* eslint-enable max-len */
         level: 'success',
       });
 
-      const newReviews = [
-        ...this.state.reviews,
-        { ...options, courseCode: this.state.course.code },
-      ];
-      this.setState({
-        reviews: newReviews,
-        score: this.calcAverage(newReviews, 'score'),
-        workload: this.calcAverage(newReviews, 'workload'),
-      });
-
+      this.getReviews();
       this.close();
     } else {
-      console.debug('Failed to add review', data);
+      console.debug('Failed to add/update review', data);
       this.props.addToast({
-        title: 'Adding review failed',
-        message: 'You have already rated this course', // HACK ph for gala
+        title: 'Adding/updating review failed',
+        message: 'Something went wrong',
         level: 'warning',
       });
     }
