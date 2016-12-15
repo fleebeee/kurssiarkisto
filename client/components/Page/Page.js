@@ -73,7 +73,6 @@ class Page extends Component {
           <link rel='stylesheet' href='/static/css/ionicons.min.css' />
           <link rel='stylesheet' href='/static/css/loadingindicator.css' />
           <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway:300,300i,400,500,600,700,800' />
-          <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' />
           <script src='/static/js/jquery-3.1.1.min.js' />
           <script src='/static/js/bootstrap.min.js' />
           {/* react-select dependencies */}
