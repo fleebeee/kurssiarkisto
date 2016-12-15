@@ -518,7 +518,7 @@ class Search extends Component {
                     onChange={this.handleChange}
                   />
                 </ColStyl>
-                <Col xs={3} sm={3} md={2}>
+                <Col xs={7} sm={3} md={2}>
                   <DropdownBoxOne className='dropdown'>
                     <Dbbutton
                       className='btn btn-sm btn-default dropdown-toggle'
@@ -555,7 +555,7 @@ class Search extends Component {
                     </ul>
                   </DropdownBoxOne>
                 </Col>
-                <Col xs={6} sm={1} md={1}>
+                <Col xs={3} sm={1} md={1}>
                   {this.state.loggedIn &&
                   <Link href='/addcourse'>
                     <AddButton
@@ -579,11 +579,10 @@ class Search extends Component {
 
                 <ColStyled xs={6} sm={3} md={2}>Period
                   <br />
-                  <YesnoText>starts  |  ends</YesnoText>
-                  <br />
                   <div className='btn-toolbar' role='toolbar'>
                     <div className='btn-group' role='group' aria-label='...'>
                       <DropdownBox className='dropdown'>
+                        <YesnoText> starts </YesnoText>
                         <button
                           className='btn btn-sm btn-default dropdown-toggle'
                           type='button'
@@ -621,6 +620,7 @@ class Search extends Component {
                     </div>
                     <div className='btn-group ' role='group'>
                       <DropdownBox className='dropdown'>
+                        <YesnoText> ends </YesnoText>
                         <button
                           className='btn btn-sm btn-default dropdown-toggle'
                           type='button'
