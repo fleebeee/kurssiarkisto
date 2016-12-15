@@ -33,6 +33,18 @@ const CourseSchema = new Schema({
     },
     required: false,
   },
+  tenttiarkistoLink: {
+    type: String,
+    /*
+    validate: {
+      validator: (v) => {
+        /* eslint-disable max-len
+        return /^$|^www\.tenttiarkisto\.fi\/courses\+$/g.test(v);
+      },
+      message: '\'{VALUE}\' is not a valid TenttiArkisto link. It should satisfy this RegExp: /^$|^https:\\/\\/mycourses\\.aalto\\.fi\\/course\\/view\\.php\\?id=[0-9]+$/g',
+    }, */
+    required: false,
+  },
   mandatoryAttendance: {
     type: Boolean,
     required: false,
