@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import passport from 'passport';
+import helmet from 'helmet';
 // import _ from 'lodash';
 
 const port = process.env.PORT || 3003;
@@ -12,6 +13,7 @@ const app = express();
 
 // Middlewares
 app.use(cors());
+app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
