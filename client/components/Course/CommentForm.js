@@ -20,6 +20,10 @@ const CommentFormContainer = styled.div`
   display: block;
 `;
 
+const StyledTextarea = styled.textarea`
+  resize: vertical;
+`;
+
 const StyledButton = styled.button`
   background-color: ${palette.orange};
   color: white;
@@ -79,7 +83,7 @@ class CommentForm extends Component {
   render() {
     return (
       <CommentFormContainer>
-        <textarea
+        <StyledTextarea
           className='form-control'
           value={this.state.comment}
           onChange={this.handleChange}
