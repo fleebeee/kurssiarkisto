@@ -25,8 +25,9 @@ const StyledTextarea = styled.textarea`
 `;
 
 const StyledButton = styled.button`
-  background-color: ${palette.orange};
-  color: white;
+  background-color: ${palette.white};
+  color: ${palette.orange};
+  font-weight: bold;
   margin-top: 5px;
 `;
 

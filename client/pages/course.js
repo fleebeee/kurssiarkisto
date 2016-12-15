@@ -77,7 +77,7 @@ const InfoContainer = styled.div`
 `;
 
 const MSGContainer = styled.div`
-  background-color: #E0CAA5;
+  background-color: #eea236;
   border-radius: 10px;
   padding: 15px;
   flex: 1 1 0;
