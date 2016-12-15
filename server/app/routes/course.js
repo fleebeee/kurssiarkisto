@@ -73,8 +73,8 @@ courseRoutes.get('/course/:code', (req, res) => {
 });
 
 // Search courses
-courseRoutes.get('/search/:keyword', async (req, res) => {
-  const keyword = req.params.keyword;
+courseRoutes.get('/search', async (req, res) => {
+  const keyword = req.headers['ka-keyword'];
   const regexp = new RegExp(keyword, 'i');
   const filters = JSON.parse(req.headers['ka-filters']);
   const sort = JSON.parse(req.headers['ka-sort']);

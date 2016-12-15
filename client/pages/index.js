@@ -225,6 +225,9 @@ class Search extends Component {
   componentDidMount() {
     // Check if user is logged in
     this.setState({ loggedIn: isLoggedIn() });
+    // TODO if we navigate back from some page, use keyword (and filters) from
+    // memory here?
+    this.setOptions('');
 
     const query = this.props.url.query;
     if (_.has(query, 'toast')) {
@@ -239,12 +242,13 @@ class Search extends Component {
   }
 
   async setOptions(keywords) {
-    if (!keywords /* || keyword.length < 3 */) {
+    // Uncomment if we don't want a search when the field is empty
+    /* if (!keywords) {
       this.setState({
         options: [],
       });
       return false;
-    }
+    } */
 
     // sort
     const sort = {};
@@ -376,11 +380,12 @@ class Search extends Component {
 
     // TODO Cache
 
-    const res = await fetch(`${globals.API_ADDRESS}/search/${keywords}`, {
+    const res = await fetch(`${globals.API_ADDRESS}/search`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        'ka-keyword': keywords,
         'ka-filters': JSON.stringify(filters),
         'ka-sort': JSON.stringify(sort),
       },
