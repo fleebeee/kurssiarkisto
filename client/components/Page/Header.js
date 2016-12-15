@@ -22,7 +22,7 @@ const HeaderContainer = styled.div`
 
 const PageTitle = styled.div`
   font-family: 'Raleway', Helvetica, sans serif;
-  font-weight: bold;
+  font-weight: 600;
   color: ${palette.white};
   font-size: 1.5em;
   text-transform: uppercase;
