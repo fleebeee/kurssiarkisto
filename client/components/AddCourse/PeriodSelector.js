@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 // import ls from 'local-storage';
 // import _ from 'lodash';
 import styled from 'styled-components';
-
+import palette from '../../utils/palette.js';
 import globals from '../../utils/globals.js';
 
 const propTypes = {
@@ -20,11 +20,22 @@ const PeriodSelectorContainer = styled.div`
 
 const PeriodDropdown = styled.div`
   display: inline-block;
+  padding-top: 0px;
 `;
 
 const To = styled.span`
   margin-left: 5px;
   margin-right: 5px;
+`;
+
+const Icon = styled.span`
+  font-size: 25px;
+  padding-left: 5px;
+  color: ${palette.orange};
+`;
+
+const ButtonContainer = styled.div`
+  padding-top: 5px;
 `;
 
 class PeriodSelector extends Component {
@@ -103,7 +114,7 @@ class PeriodSelector extends Component {
           tabIndex={instance.id}
           onClick={() => this.props.removeInstance(instance.id)}
         >
-          <i
+          <Icon
             className='ion-ios-trash'
           />
         </a>
@@ -115,12 +126,14 @@ class PeriodSelector extends Component {
     return (
       <PeriodSelectorContainer>
         {Object.values(this.props.instances).map(this.renderInstance)}
-        <button
-          className='btn btn-default'
-          onClick={this.props.addInstance}
-        >
-          Add another instance
-        </button>
+        <ButtonContainer>
+          <button
+            className='btn btn-default'
+            onClick={this.props.addInstance}
+          >
+            Add another instance
+          </button>
+        </ButtonContainer>
       </PeriodSelectorContainer>
     );
   }
