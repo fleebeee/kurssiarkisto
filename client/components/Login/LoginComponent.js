@@ -74,8 +74,8 @@ class LoginComponent extends Component {
 
   componentDidMount() {
     if (auth.loggedIn()) {
-      console.debug('You are already logged in');
-      // this.props.url.replaceTo('/');
+      // User is already logged in
+      this.props.url.replaceTo('/');
     }
   }
 
@@ -90,7 +90,7 @@ class LoginComponent extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     const res = await auth.login(this.state.email, this.state.password);
-    console.debug('LOGIN:', res);
+
     if (res.success) {
       // Don't toast here because the user won't have time to read it
       // Toasts should be in 'App' but Next doesn't offer one

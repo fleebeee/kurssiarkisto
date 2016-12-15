@@ -176,10 +176,7 @@ class addCourse extends Component {
   }
 
   async handleSubmit() {
-    console.log('Submitting', this.state);
-
     if (!this.state.courseName) {
-      console.debug('Course name is required!');
       this.props.addToast({
         title: 'Adding course failed',
         message: 'Course name missing',
@@ -189,7 +186,6 @@ class addCourse extends Component {
     }
 
     if (!this.state.courseCode) {
-      console.debug('Course code is required!');
       this.props.addToast({
         title: 'Adding course failed',
         message: 'Course code missing',
@@ -199,7 +195,6 @@ class addCourse extends Component {
     }
 
     if (!Object.keys(this.state.instances).length) {
-      console.debug('At least one instance is required!');
       this.props.addToast({
         title: 'Adding course failed',
         message: 'At least one instance is required',
@@ -250,7 +245,6 @@ class addCourse extends Component {
    );
 
     if (res.success) {
-      console.debug('Add course successful!');
       this.props.url.pushTo(
       /* eslint-disable prefer-template */
         '/?toast=addcourse' +
@@ -259,7 +253,6 @@ class addCourse extends Component {
       );
       /* eslint-enable prefer-template */
     } else {
-      console.debug('Add course failed');
       this.props.addToast({
         title: 'Adding course failed',
         message: 'Something went wrong :(',

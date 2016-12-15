@@ -1,17 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
+import _ from 'lodash';
 import styled from 'styled-components';
 
 import palette from '../../utils/palette.js';
 
 import globals from '../../utils/globals.js';
 import withAuth from '../../utils/withAuth.js';
+import withToast from '../../utils/withToast.js';
 import AuthService from '../../utils/AuthService.js';
 
 const propTypes = {
   courseCode: PropTypes.string.isRequired,
   auth: PropTypes.instanceOf(AuthService),
+  addToast: PropTypes.func.isRequired,
   getComments: PropTypes.func.isRequired,
 };
 
@@ -49,9 +52,12 @@ class CommentForm extends Component {
   }
 
   async handleSubmit() {
-    // TODO trim comment and display toasts
-    if (!this.state.comment) {
-      console.log('Please enter a comment');
+    if (!_.trim(this.state.comment)) {
+      this.props.addToast({
+        title: 'Adding comment failed',
+        message: 'Please enter a comment',
+        level: 'warning',
+      });
       return;
     }
 
@@ -72,13 +78,19 @@ class CommentForm extends Component {
 
     const data = await res.json();
     if (data.success) {
-      // TODO toast
-      console.debug('Comment post data:', data);
+      this.props.addToast({
+        title: 'Comment added!',
+        level: 'success',
+      });
       // Update comments on parent component
       this.props.getComments();
       this.setState({ comment: '' });
     } else {
-      console.debug('Post comment failed', data);
+      this.props.addToast({
+        title: 'Adding comment failed',
+        message: 'Something went wrong on our end',
+        level: 'error',
+      });
     }
   }
 
@@ -103,4 +115,4 @@ class CommentForm extends Component {
 
 CommentForm.propTypes = propTypes;
 
-export default withAuth(CommentForm);
+export default withAuth(withToast(CommentForm));

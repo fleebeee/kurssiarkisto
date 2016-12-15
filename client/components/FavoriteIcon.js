@@ -143,7 +143,7 @@ class FavoriteIcon extends Component {
         }),
       });
       const data = await res.json();
-      console.debug('FAVORITE response', data);
+
       if (data.success) {
         if (data.success) {
           this.props.addToast({
@@ -175,7 +175,7 @@ class FavoriteIcon extends Component {
         }),
       });
       const data = await res.json();
-      console.debug('FAVORITE response', data);
+
       if (data.success) {
         this.props.addToast({
           /* eslint-disable max-len */

@@ -113,10 +113,7 @@ class Comments extends Component {
 
     const data = await res.json();
     if (data.success) {
-      console.debug('Comment data:', data.comments);
       this.setState({ comments: data.comments });
-    } else {
-      console.debug('Comments couldn\'t be fetched:', data);
     }
   }
 

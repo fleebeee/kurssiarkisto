@@ -76,7 +76,6 @@ export default class AuthService {
     error.response = response;
     throw error;
     */
-    console.log(response.statusText);
     return response;
   }
 

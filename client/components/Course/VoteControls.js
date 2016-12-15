@@ -58,12 +58,9 @@ class VoteControls extends Component {
 
     const data = await res.json();
     if (data.success) {
-      console.debug('Vote data:', data);
       // TODO Update view on parent component
       // Preferably not like this!!
       this.props.getComments();
-    } else {
-      console.debug('Vote failed', data);
     }
   }
 

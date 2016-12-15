@@ -104,7 +104,7 @@ class Signup extends Component {
       }),
     });
     const data = await res.json();
-    console.debug('signUp() response', data);
+
     return data;
   }
 
@@ -147,13 +147,12 @@ class Signup extends Component {
     const res = await this.signUp();
 
     if (!res) {
-      console.debug('No answer from server');
+      // No response from server
+      return;
     } else if (res.success) {
-      console.debug('Successful sign up');
       // Redirect to front page
       this.props.url.pushTo('/login.js');
     } else {
-      console.debug('Invalid sign up');
       this.props.addToast({
         title: 'Register failed',
         message: 'Username or email could already be in use',

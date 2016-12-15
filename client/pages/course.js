@@ -152,12 +152,9 @@ class Course extends Component {
 
       const data = await res.json();
       if (data.success) {
-        console.debug('Course data:', data.course);
         this.setState({ course: data.course });
 
         this.getReviews();
-      } else {
-        console.debug('Course data couldn\'t be fetched:', data);
       }
     }
   }
@@ -183,17 +180,12 @@ class Course extends Component {
       });
     const data = await res.json();
     if (data.success) {
-      console.debug(
-        `Review data fetched, ${data.reviews.length} review(s)`
-      );
       this.setState({
         reviews: data.reviews,
         ownReview: data.ownReview,
         score: this.calcAverage(data.reviews, 'score'),
         workload: this.calcAverage(data.reviews, 'workload'),
       });
-    } else {
-      console.debug('Review data couldn\'t be fetched:', data);
     }
   }
 
@@ -220,7 +212,6 @@ class Course extends Component {
     const { score, workload, userToken } = options;
 
     if (!userToken) {
-      console.debug('You need to log in');
       this.props.addToast({
         title: 'Adding review failed',
         message: 'You are not logged in',
@@ -230,7 +221,6 @@ class Course extends Component {
     }
 
     if (!this.state.course.code) {
-      console.debug('No course chosen');
       this.props.addToast({
         title: 'Adding review failed',
         message: 'Course not chosen',
@@ -240,7 +230,6 @@ class Course extends Component {
     }
 
     if (!score || score < 1 || score > 5) {
-      console.debug('Score not set');
       this.props.addToast({
         title: 'Adding review failed',
         message: 'Score not set',
@@ -250,7 +239,6 @@ class Course extends Component {
     }
 
     if (!workload || workload < 1 || workload > 5) {
-      console.debug('Workload not set');
       this.props.addToast({
         title: 'Adding review failed',
         message: 'Workload not set',
@@ -261,8 +249,6 @@ class Course extends Component {
 
     const method = this.state.ownReview ? 'PUT' : 'POST';
 
-    console.debug('Submitting review',
-      { ...options, courseCode: this.state.course.code });
     const res = await fetch(`${globals.API_ADDRESS}/review`, {
       method,
       headers: {
@@ -280,7 +266,6 @@ class Course extends Component {
 
     // If successful, close modal and show toast
     if (data.success) {
-      console.debug('Review added/updated successfully', data);
       this.props.addToast({
         /* eslint-disable max-len */
         message: `Review ${this.state.ownReview ? 'updated' : 'added'} successfully!`,
@@ -291,7 +276,6 @@ class Course extends Component {
       this.getReviews();
       this.close();
     } else {
-      console.debug('Failed to add/update review', data);
       this.props.addToast({
         title: 'Adding/updating review failed',
         message: 'Something went wrong',
@@ -392,23 +376,23 @@ class Course extends Component {
                   <td>Links</td>
                   <td>
                     {this.state.course.myCoursesLink ?
-                    <a
-                      href={this.state.course.myCoursesLink}
-                      target='_blank'
-                      rel='noreferrer noopener'
-                    >
-                      MyCourses <br/>
-                    </a> : 'N/A'
-                    }
+                      <a
+                        href={this.state.course.myCoursesLink}
+                        target='_blank'
+                        rel='noreferrer noopener'
+                      >
+                        MyCourses <br />
+                      </a> : 'N/A'
+                      }
                     {this.state.course.tenttiarkistoLink ?
-                    <a
-                      href={this.state.course.tenttiarkistoLink}
-                      target='_blank'
-                      rel='noreferrer noopener'
-                    >
-                      Tenttiarkisto
-                    </a> : ''
-                  }
+                      <a
+                        href={this.state.course.tenttiarkistoLink}
+                        target='_blank'
+                        rel='noreferrer noopener'
+                      >
+                        Tenttiarkisto
+                      </a> : ''
+                    }
 
 
                   </td>

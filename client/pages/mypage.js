@@ -137,8 +137,6 @@ class Mypage extends Component {
 
 
   async handleSubmit() {
-    console.log('Submitting', this.state);
-
     const errorTitle = 'Käyttäjätietojen päivitys epäonnistui';
     const successTitle = 'Tiedot tallennettu';
     const missingField = (message) => {
@@ -151,20 +149,17 @@ class Mypage extends Component {
 
 
     if (this.state.newPassword !== this.state.newPasswordAgain) {
-      console.debug('Passwords dont match!');
       missingField('Tarkista, että toistit salasanan samalla lailla');
       return;
     }
 
     if (this.state.newPassword && !this.state.oldPassword) {
-      console.debug('Old Password not filled!');
       missingField('Et voi vaihtaa salasanaa kirjoittamatta vanhaa.');
       return;
     }
 
     if (this.state.oldPassword && (this.state.oldPassword !==
       this.state.user.password)) {
-      console.debug('OldPassword does not match!');
       missingField('Vanha salasana on väärin.');
       return;
     }
@@ -186,10 +181,8 @@ class Mypage extends Component {
       }),
     });
     const data = await res.json();
-    console.debug('MY PAGE response', data);
 
     if (data.success) {
-      console.debug('Save my page successful!');
       this.props.auth.setProfile({
         nickname: this.state.nickname,
         email: this.state.email,
@@ -201,9 +194,7 @@ class Mypage extends Component {
         message: successTitle,
         level: 'success',
       });
-      // TODO toast and redirect here
     } else {
-      console.debug('Save my page failed');
       this.props.addToast({
         message: errorTitle,
         level: 'error',
@@ -220,7 +211,6 @@ class Mypage extends Component {
   }
 
   render() {
-    console.log(this.state.user);
     return (
       <Page>
         <myPageContainer>
