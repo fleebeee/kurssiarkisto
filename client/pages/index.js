@@ -11,6 +11,7 @@ import withToast from '../utils/withToast.js';
 import Page from '../components/Page/Page.js';
 import FavoriteIcon from '../components/FavoriteIcon.js';
 import ReviewStars from '../components/ReviewStars.js';
+import WorkloadBattery from '../components/WorkloadBattery.js';
 import palette from '../utils/palette.js';
 import globals from '../utils/globals.js';
 import isLoggedIn from '../utils/isLoggedIn.js';
@@ -170,6 +171,12 @@ const FavoriteIconContainer = styled.div`
   margin-left: 10px;
   width: 24px;
   padding-top: 2px;
+`;
+
+const Line = styled.span`
+  color: ${palette.titleGrey}
+  font-weight: 600;
+  padding-right: 5px;
 `;
 
 class Search extends Component {
@@ -464,16 +471,19 @@ class Search extends Component {
           </Link>
           <div>
             <CourseDetail>credits {option.credits || 'n/a'}</CourseDetail>
+            <Line>|</Line>
             <CourseDetail>
               score {option.reviewCount > 0
                 ? <ReviewStars value={option.score} />
                 : 'n/a'}
             </CourseDetail>
+            <Line>|</Line>
             <CourseDetail>
               workload {option.reviewCount > 0
-                ? <ReviewStars value={option.workload} />
+                ? <WorkloadBattery value={option.workload} />
                 : 'n/a'}
             </CourseDetail>
+            <Line>|</Line>
             <CourseDetail>reviews {option.reviewCount || 'n/a'}</CourseDetail>
           </div>
         </Details>
@@ -508,7 +518,7 @@ class Search extends Component {
                     onChange={this.handleChange}
                   />
                 </ColStyl>
-                <Col xs={3} sm={2} md={1}>
+                <Col xs={3} sm={3} md={2}>
                   <DropdownBoxOne className='dropdown'>
                     <Dbbutton
                       className='btn btn-sm btn-default dropdown-toggle'

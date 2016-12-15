@@ -8,6 +8,7 @@ import _ from 'lodash';
 import AuthService from '../../utils/AuthService';
 import palette from '../../utils/palette.js';
 import globals from '../../utils/globals.js';
+import isLoggedIn from '../../utils/isLoggedIn.js';
 
 const auth = new AuthService(`${globals.API_ADDRESS}`);
 
@@ -25,6 +26,10 @@ const Nickname = styled.div`
   color: ${palette.white};
   font-size: 13px;
   margin-right: 10px;
+`;
+
+const Text = styled.div`
+  color: white;
 `;
 
 const Icon = styled.i`
@@ -58,17 +63,24 @@ const Icon = styled.i`
 class Navigation extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: {} };
+    this.state = {
+      user: {},
+      loggedIn: false,
+    };
   }
 
   componentDidMount() {
     this.setState({ user: auth.getProfile() });
+    this.setState({ loggedIn: isLoggedIn() });
   }
 
   render() {
     return (
       <NavigationContainer>
-
+        {!this.state.loggedIn &&
+          <Link href='../../login'><Text>Log in</Text>
+          </Link>
+        }
         <Nickname>
           {this.state.user.nickname}
         </Nickname>

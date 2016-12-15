@@ -7,6 +7,7 @@ import Link from 'next/link';
 import globals from '../../utils/globals.js';
 import palette from '../../utils/palette.js';
 import Navigation from './Navigation.js';
+import isLoggedIn from '../../utils/isLoggedIn.js';
 
 const propTypes = {
   children: PropTypes.node,
@@ -29,7 +30,7 @@ const PageTitle = styled.div`
   left: 50%;
   vertical-align: center;
   transform: translate(-50%);
-  @media (max-width: ${globals.XS_BREAKPOINT}) { 
+  @media (max-width: ${globals.XS_BREAKPOINT}) {
     display: none;
   }
 `;
@@ -42,7 +43,14 @@ const Logo = styled.img`
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      loggedIn: false,
+    };
+  }
+
+  componentDidMount() {
+    // Check if user is logged in
+    this.setState({ loggedIn: isLoggedIn() });
   }
 
   render() {
