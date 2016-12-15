@@ -379,13 +379,27 @@ class Course extends Component {
                 <tr>
                   <td>Links</td>
                   <td>
+                    {this.state.course.myCoursesLink ?
                     <a
                       href={this.state.course.myCoursesLink}
                       target='_blank'
                       rel='noreferrer noopener'
                     >
-                      MyCourses
-                    </a></td>
+                      MyCourses <br/>
+                    </a> : 'N/A'
+                    }
+                    {this.state.course.tenttiarkistoLink ?
+                    <a
+                      href={this.state.course.tenttiarkistoLink}
+                      target='_blank'
+                      rel='noreferrer noopener'
+                    >
+                      Tenttiarkisto
+                    </a> : ''
+                  }
+
+
+                  </td>
                 </tr>
               </tbody>
             </Table>
