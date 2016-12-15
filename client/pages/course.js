@@ -29,6 +29,15 @@ const Title = styled.h1`
   font-family: 'Raleway', Helvetica, sans serif;
 `;
 
+const ReviewDisplay = styled.p`
+  text-transform: uppercase;
+  color: ${palette.titleGrey};
+  font-weight: semi-bold;
+  font-family: 'Raleway', Helvetica, sans serif;
+  padding-left: 10px;
+  padding-top: 7px;
+`;
+
 const FavoriteIconContainer = styled.div`
   display: inline-block;
   margin-left: 10px;
@@ -329,6 +338,9 @@ class Course extends Component {
 
             <Button bsStyle='warning'>Edit</Button>
           </ButtonGroup>
+          <ReviewDisplay> {this.state.reviews.length} reviews </ReviewDisplay>
+
+
         </CourseContainer>
         <CourseContainer>
           <InfoContainer>
