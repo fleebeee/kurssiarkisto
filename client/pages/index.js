@@ -579,11 +579,10 @@ class Search extends Component {
 
                 <ColStyled xs={6} sm={3} md={2}>Period
                   <br />
-                  <YesnoText>starts  |  ends</YesnoText>
-                  <br />
                   <div className='btn-toolbar' role='toolbar'>
                     <div className='btn-group' role='group' aria-label='...'>
                       <DropdownBox className='dropdown'>
+                        <YesnoText> starts </YesnoText>
                         <button
                           className='btn btn-sm btn-default dropdown-toggle'
                           type='button'
@@ -621,6 +620,7 @@ class Search extends Component {
                     </div>
                     <div className='btn-group ' role='group'>
                       <DropdownBox className='dropdown'>
+                        <YesnoText> ends </YesnoText>
                         <button
                           className='btn btn-sm btn-default dropdown-toggle'
                           type='button'
