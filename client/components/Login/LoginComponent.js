@@ -92,11 +92,7 @@ class LoginComponent extends Component {
     const res = await auth.login(this.state.email, this.state.password);
 
     if (res.success) {
-      // Don't toast here because the user won't have time to read it
-      // Toasts should be in 'App' but Next doesn't offer one
-      // TODO You can trigger a toast with a query parameter
-      // e.g. /?loginSuccess=true
-      this.props.url.pushTo('/');
+      this.props.url.pushTo(`/?toast=login&name=${res.profile.nickname}`);
     } else {
       this.props.addToast({
         title: 'Login failed',

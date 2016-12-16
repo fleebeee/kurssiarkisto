@@ -231,10 +231,16 @@ class Search extends Component {
 
     const query = this.props.url.query;
     if (_.has(query, 'toast')) {
-      if (query.toast) {
+      if (query.toast === 'addcourse') {
         this.props.addToast({
           title: 'Adding course successful!',
           message: `You added course ${query.code || ''} - ${query.name || ''}`,
+          level: 'success',
+        });
+      } else if (query.toast === 'login') {
+        this.props.addToast({
+          title: 'Login successful!',
+          message: `Successfully logged in as ${query.name}`,
           level: 'success',
         });
       }
