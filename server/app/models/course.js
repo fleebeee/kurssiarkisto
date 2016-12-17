@@ -33,7 +33,7 @@ const CourseSchema = new Schema({
     },
     required: false,
   },
-  tenttiarkistoLink: {
+  tenttiArkistoLink: {
     type: String,
     /*
     validate: {
