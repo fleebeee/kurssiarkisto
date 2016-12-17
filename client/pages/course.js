@@ -384,9 +384,9 @@ class Course extends Component {
                         MyCourses <br />
                       </a> : 'N/A'
                       }
-                    {this.state.course.tenttiarkistoLink ?
+                    {this.state.course.tenttiArkistoLink ?
                       <a
-                        href={this.state.course.tenttiarkistoLink}
+                        href={this.state.course.tenttiArkistoLink}
                         target='_blank'
                         rel='noreferrer noopener'
                       >

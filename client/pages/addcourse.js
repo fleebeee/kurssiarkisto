@@ -135,6 +135,9 @@ class addCourse extends Component {
       courseName: '',
       courseCode: '',
 
+      tenttiArkistoLink: '',
+      myCoursesLink: '',
+
       hasExam: false,
       hasExercises: false,
       hasGroupwork: false,
@@ -236,6 +239,8 @@ class addCourse extends Component {
         body: JSON.stringify({
           name: this.state.courseName,
           code: this.state.courseCode,
+          myCoursesLink: this.state.myCoursesLink,
+          tenttiArkistoLink: this.state.tenttiArkistoLink,
           mandatoryAttendance: this.state.hasMandatoryAttendance,
           passingMechanisms,
           credits: this.state.credits,
@@ -349,6 +354,28 @@ class addCourse extends Component {
                   value={this.state.courseCode}
                   onChange={this.handleTextChange.bind(this, 'courseCode')}
                 />
+                <br/>
+                <SmallHeader>Links</SmallHeader>
+                <Label htmlFor='myCoursesLink'>MyCourses</Label>
+                <TextField
+                  className='form-control'
+                  id='myCoursesLink'
+                  type='text'
+                  placeholder='link to mycourses page'
+                  value={this.state.myCoursesLink}
+                  onChange={this.handleTextChange.bind(this, 'myCoursesLink')}
+                />
+
+                <Label htmlFor='tenttiArkistoLink'>Tenttiarkisto</Label>
+                <TextField
+                  className='form-control'
+                  id='tenttiArkistoLink'
+                  type='text'
+                  placeholder='link to tenttiarkisto page'
+                  value={this.state.tenttiArkistoLink}
+                  onChange={this.handleTextChange.bind(this, 'tenttiArkistoLink')}
+                />
+                <br/>
 
               </BasicInformation>
 
