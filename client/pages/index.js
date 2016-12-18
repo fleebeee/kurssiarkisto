@@ -129,6 +129,16 @@ const YesnoText = styled.span`
   font-size: 0.8em;
 `;
 
+const IconContainer = styled.a`
+  display: flex;
+  align-items: center;
+`;
+
+const Chevron = styled.i`
+  margin: auto;
+  font-size: 2.6rem;
+`;
+
 const Results = styled.div`
   padding: 30px;
 `;
@@ -207,17 +217,22 @@ class Search extends Component {
       labno: false,
       loggedIn: false,
       arrange: globals.SORT_OPTIONS.COURSENAME_ASC,
+
+      filtersOpen: false,
     };
+
     this.setOptions = this.setOptions.bind(this);
     this.setOptionsThrottled = this.setOptionsThrottled.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.renderOption = this.renderOption.bind(this);
+    this.renderFilters = this.renderFilters.bind(this);
     this.handleArrangeChange = this.handleArrangeChange.bind(this);
     this.handlePeriodStartChange = this.handlePeriodStartChange.bind(this);
     this.handlePeriodEndChange = this.handlePeriodEndChange.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.handleCheckboxChange2 = this.handleCheckboxChange2.bind(this);
+    this.toggleFilters = this.toggleFilters.bind(this);
   }
 
   componentDidMount() {
@@ -471,6 +486,10 @@ class Search extends Component {
     this.setOptions(this.state.keywords);
   }
 
+  toggleFilters() {
+    this.setState({ filtersOpen: !this.state.filtersOpen });
+  }
+
   renderOption(option) {
     return (
       <Course key={option.code}>
@@ -505,6 +524,231 @@ class Search extends Component {
         </FavoriteIconContainer>
         }
       </Course>
+    );
+  }
+
+  renderFilters() {
+    return (
+      <div>
+        <HeaderContainer>
+          <SmallHeader>Filter results</SmallHeader>
+        </HeaderContainer>
+        <Styledhr className='hr' />
+        <FilterContainer>
+          <RowStyled>
+
+            <ColStyled xs={6} sm={3} md={2}>Period
+              <br />
+              <div className='btn-toolbar' role='toolbar'>
+                <div className='btn-group' role='group' aria-label='...'>
+                  <DropdownBox className='dropdown'>
+                    <YesnoText> starts </YesnoText>
+                    <button
+                      className='btn btn-sm btn-default dropdown-toggle'
+                      type='button'
+                      id='dropdownMenu'
+                      data-toggle='dropdown'
+                      aria-haspopup='true'
+                      aria-expanded='true'
+                    >
+                      <OptionText>
+                        {this.state.periodstart }&nbsp;
+                      </OptionText>
+                      <span className='caret' />
+                    </button>
+                    <ul
+                      className='dropdown-menu'
+                      aria-labelledby='periodDropdown'
+                    >
+                      {
+                        ['None', ...Object.keys(globals.PERIODS)].map(
+                        option =>
+                          <li key={option}>
+                            <a
+                              tabIndex='0'
+                              onClick={() =>
+                                this.handlePeriodStartChange(option)
+                              }
+                            >
+                              {option}
+                            </a>
+                          </li>)
+                      }
+                    </ul>
+                  </DropdownBox>
+                </div>
+                <div className='btn-group ' role='group'>
+                  <DropdownBox className='dropdown'>
+                    <YesnoText> ends </YesnoText>
+                    <button
+                      className='btn btn-sm btn-default dropdown-toggle'
+                      type='button'
+                      id='dropdownMenu'
+                      data-toggle='dropdown'
+                      aria-haspopup='true'
+                      aria-expanded='true'
+                    >
+                      <OptionText>
+                        {this.state.periodend}&nbsp;
+                      </OptionText>
+                      <span className='caret' />
+                    </button>
+                    <ul
+                      className='dropdown-menu'
+                      aria-labelledby='periodDropdown'
+                    >
+                      {
+                        ['None', ...Object.keys(globals.PERIODS)].map(
+                        option =>
+                          <li key={option}>
+                            <a
+                              tabIndex='0'
+                              onClick={() =>
+                                this.handlePeriodEndChange(option)
+                              }
+                            >
+                              {option}
+                            </a>
+                          </li>)
+                      }
+                    </ul>
+                  </DropdownBox>
+                </div>
+              </div>
+            </ColStyled>
+
+            <ColStyled xs={6} sm={3} md={2}>Credits
+              <br />
+              <YesnoText>number</YesnoText>
+              <br />
+              <TextField
+                className='form-control input-sm'
+                id='credits'
+                type='number'
+                placeholder={this.state.credits}
+                value={this.state.credits}
+                onChange={
+                  this.handleTextChange.bind(this, 'credits')
+                }
+              />
+            </ColStyled>
+            <div className='clearfix visible-xs-block' />
+            <ColStyled xs={6} sm={3} md={2}>Presence
+              <br />
+              <input
+                type='checkbox'
+                checked={this.state.noMandatoryAttendance}
+                onChange={
+                  () => this.handleCheckboxChange('noMandatoryAttendance')
+                }
+              />
+              <CheckboxText>not mandatory</CheckboxText>
+            </ColStyled>
+
+            <ColStyled xs={6} sm={3} md={2}>Passing Mechanisms
+              <br />
+              <YesnoText>yes/no</YesnoText>
+              <br />
+              <input
+                type='checkbox'
+                checked={this.state.examyes}
+                onChange={
+                  () => this.handleCheckboxChange2('examyes', 'examno')
+                }
+              />
+              <input
+                type='checkbox'
+                checked={this.state.examno}
+                onChange={
+                  () => this.handleCheckboxChange2('examno', 'examyes')
+                }
+              />
+              <CheckboxText>exam</CheckboxText>
+              <br />
+              <input
+                type='checkbox'
+                checked={this.state.exerciseyes}
+                onChange={() =>
+                  this.handleCheckboxChange2('exerciseyes', 'exerciseno')}
+              />
+              <input
+                type='checkbox'
+                checked={this.state.exerciseno}
+                onChange={() => this.handleCheckboxChange2('exerciseno',
+                                                           'exerciseyes')}
+              />
+              <CheckboxText>exercises</CheckboxText>
+
+              <br />
+              <input
+                type='checkbox'
+                checked={this.state.groupyes}
+                onChange={
+                  () => this.handleCheckboxChange2('groupyes', 'groupno')
+                }
+              />
+              <input
+                type='checkbox'
+                checked={this.state.groupno}
+                onChange={
+                  () => this.handleCheckboxChange2('groupno', 'groupyes')
+                }
+              />
+              <CheckboxText>groupwork</CheckboxText>
+
+              <br />
+              <input
+                type='checkbox'
+                checked={this.state.diaryyes}
+                onChange={
+                  () => this.handleCheckboxChange2('diaryyes', 'diaryno')
+                }
+              />
+              <input
+                type='checkbox'
+                checked={this.state.diaryno}
+                onChange={
+                  () => this.handleCheckboxChange2('diaryno', 'diaryyes')
+                }
+              />
+              <CheckboxText>lecture diaries</CheckboxText>
+
+              <br />
+              <input
+                type='checkbox'
+                checked={this.state.assignmentyes}
+                onChange={() => this.handleCheckboxChange2('assignmentyes',
+                                                           'assignmentno')}
+              />
+              <input
+                type='checkbox'
+                checked={this.state.assignmentno}
+                onChange={() => this.handleCheckboxChange2('assignmentno',
+                                                           'assignmentyes')}
+              />
+              <CheckboxText>assignment</CheckboxText>
+
+              <br />
+              <input
+                type='checkbox'
+                checked={this.state.labyes}
+                onChange={
+                  () => this.handleCheckboxChange2('labyes', 'labno')
+                }
+              />
+              <input
+                type='checkbox'
+                checked={this.state.labno}
+                onChange={
+                  () => this.handleCheckboxChange2('labno', 'labyes')
+                }
+              />
+              <CheckboxText>lab assignments</CheckboxText>
+            </ColStyled>
+
+          </RowStyled>
+        </FilterContainer>
+      </div>
     );
   }
 
@@ -576,225 +820,21 @@ class Search extends Component {
                 </Col>
               </RowStyled>
             </SearchBoxContainer>
-
-            <HeaderContainer>
-              <SmallHeader>Filter results</SmallHeader>
-            </HeaderContainer>
-            <Styledhr className='hr' />
-            <FilterContainer>
-              <RowStyled>
-
-                <ColStyled xs={6} sm={3} md={2}>Period
-                  <br />
-                  <div className='btn-toolbar' role='toolbar'>
-                    <div className='btn-group' role='group' aria-label='...'>
-                      <DropdownBox className='dropdown'>
-                        <YesnoText> starts </YesnoText>
-                        <button
-                          className='btn btn-sm btn-default dropdown-toggle'
-                          type='button'
-                          id='dropdownMenu'
-                          data-toggle='dropdown'
-                          aria-haspopup='true'
-                          aria-expanded='true'
-                        >
-                          <OptionText>
-                            {this.state.periodstart }&nbsp;
-                          </OptionText>
-                          <span className='caret' />
-                        </button>
-                        <ul
-                          className='dropdown-menu'
-                          aria-labelledby='periodDropdown'
-                        >
-                          {
-                            ['None', ...Object.keys(globals.PERIODS)].map(
-                            option =>
-                              <li key={option}>
-                                <a
-                                  tabIndex='0'
-                                  onClick={() =>
-                                    this.handlePeriodStartChange(option)
-                                  }
-                                >
-                                  {option}
-                                </a>
-                              </li>)
-                          }
-                        </ul>
-                      </DropdownBox>
-                    </div>
-                    <div className='btn-group ' role='group'>
-                      <DropdownBox className='dropdown'>
-                        <YesnoText> ends </YesnoText>
-                        <button
-                          className='btn btn-sm btn-default dropdown-toggle'
-                          type='button'
-                          id='dropdownMenu'
-                          data-toggle='dropdown'
-                          aria-haspopup='true'
-                          aria-expanded='true'
-                        >
-                          <OptionText>
-                            {this.state.periodend}&nbsp;
-                          </OptionText>
-                          <span className='caret' />
-                        </button>
-                        <ul
-                          className='dropdown-menu'
-                          aria-labelledby='periodDropdown'
-                        >
-                          {
-                            ['None', ...Object.keys(globals.PERIODS)].map(
-                            option =>
-                              <li key={option}>
-                                <a
-                                  tabIndex='0'
-                                  onClick={() =>
-                                    this.handlePeriodEndChange(option)
-                                  }
-                                >
-                                  {option}
-                                </a>
-                              </li>)
-                          }
-                        </ul>
-                      </DropdownBox>
-                    </div>
-                  </div>
-                </ColStyled>
-
-                <ColStyled xs={6} sm={3} md={2}>Credits
-                  <br />
-                  <YesnoText>number</YesnoText>
-                  <br />
-                  <TextField
-                    className='form-control input-sm'
-                    id='credits'
-                    type='number'
-                    placeholder={this.state.credits}
-                    value={this.state.credits}
-                    onChange={
-                      this.handleTextChange.bind(this, 'credits')
-                    }
-                  />
-                </ColStyled>
-                <div className='clearfix visible-xs-block' />
-                <ColStyled xs={6} sm={3} md={2}>Presence
-                  <br />
-                  <input
-                    type='checkbox'
-                    checked={this.state.noMandatoryAttendance}
-                    onChange={
-                      () => this.handleCheckboxChange('noMandatoryAttendance')
-                    }
-                  />
-                  <CheckboxText>not mandatory</CheckboxText>
-                </ColStyled>
-
-                <ColStyled xs={6} sm={3} md={2}>Passing Mechanisms
-                  <br />
-                  <YesnoText>yes/no</YesnoText>
-                  <br />
-                  <input
-                    type='checkbox'
-                    checked={this.state.examyes}
-                    onChange={
-                      () => this.handleCheckboxChange2('examyes', 'examno')
-                    }
-                  />
-                  <input
-                    type='checkbox'
-                    checked={this.state.examno}
-                    onChange={
-                      () => this.handleCheckboxChange2('examno', 'examyes')
-                    }
-                  />
-                  <CheckboxText>exam</CheckboxText>
-                  <br />
-                  <input
-                    type='checkbox'
-                    checked={this.state.exerciseyes}
-                    onChange={() =>
-                      this.handleCheckboxChange2('exerciseyes', 'exerciseno')}
-                  />
-                  <input
-                    type='checkbox'
-                    checked={this.state.exerciseno}
-                    onChange={() => this.handleCheckboxChange2('exerciseno',
-                                                               'exerciseyes')}
-                  />
-                  <CheckboxText>exercises</CheckboxText>
-
-                  <br />
-                  <input
-                    type='checkbox'
-                    checked={this.state.groupyes}
-                    onChange={
-                      () => this.handleCheckboxChange2('groupyes', 'groupno')
-                    }
-                  />
-                  <input
-                    type='checkbox'
-                    checked={this.state.groupno}
-                    onChange={
-                      () => this.handleCheckboxChange2('groupno', 'groupyes')
-                    }
-                  />
-                  <CheckboxText>groupwork</CheckboxText>
-
-                  <br />
-                  <input
-                    type='checkbox'
-                    checked={this.state.diaryyes}
-                    onChange={
-                      () => this.handleCheckboxChange2('diaryyes', 'diaryno')
-                    }
-                  />
-                  <input
-                    type='checkbox'
-                    checked={this.state.diaryno}
-                    onChange={
-                      () => this.handleCheckboxChange2('diaryno', 'diaryyes')
-                    }
-                  />
-                  <CheckboxText>lecture diaries</CheckboxText>
-
-                  <br />
-                  <input
-                    type='checkbox'
-                    checked={this.state.assignmentyes}
-                    onChange={() => this.handleCheckboxChange2('assignmentyes',
-                                                               'assignmentno')}
-                  />
-                  <input
-                    type='checkbox'
-                    checked={this.state.assignmentno}
-                    onChange={() => this.handleCheckboxChange2('assignmentno',
-                                                               'assignmentyes')}
-                  />
-                  <CheckboxText>assignment</CheckboxText>
-
-                  <br />
-                  <input
-                    type='checkbox'
-                    checked={this.state.labyes}
-                    onChange={
-                      () => this.handleCheckboxChange2('labyes', 'labno')
-                    }
-                  />
-                  <input
-                    type='checkbox'
-                    checked={this.state.labno}
-                    onChange={
-                      () => this.handleCheckboxChange2('labno', 'labyes')
-                    }
-                  />
-                  <CheckboxText>lab assignments</CheckboxText>
-                </ColStyled>
-
-              </RowStyled>
-            </FilterContainer>
+            {this.state.filtersOpen
+              ?
+                <div>
+                  {this.renderFilters()}
+                  <IconContainer tabIndex='0' onClick={this.toggleFilters}>
+                    <Chevron className='ion-chevron-up' />
+                  </IconContainer>
+                </div>
+              :
+                <div>
+                  <IconContainer tabIndex='0' onClick={this.toggleFilters}>
+                    <Chevron className='ion-chevron-down' />
+                  </IconContainer>
+                </div>
+             }
           </SearchInputContainer>
           <Results>
             <SearchTitle>
