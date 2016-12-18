@@ -39,7 +39,7 @@ const CourseSchema = new Schema({
     validate: {
       validator: (v) => {
         /* eslint-disable max-len */
-        return /^$|\btenttiarkisto\.fi/;
+        return /^$|^.*tenttiarkisto\.fi.*$/g.test(v);
       },
       message: '\'{VALUE}\' is not a valid TenttiArkisto link. It should satisfy this RegExp: ',
     },
