@@ -30,6 +30,7 @@ courseRoutes.post('/course', async (req, res) => {
     code: req.body.code,
     // The attributes below aren't required, so they can be undefined
     myCoursesLink: req.body.myCoursesLink,
+    tenttiArkistoLink: req.body.tenttiArkistoLink,
     mandatoryAttendance: req.body.mandatoryAttendance,
     passingMechanisms: req.body.passingMechanisms,
     credits: req.body.credits,
