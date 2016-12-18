@@ -345,7 +345,7 @@ class Course extends Component {
                     this.state.course.instances.map((instance, key) =>
                       <div key={key}>
                         {instance.startPeriod} - {instance.endPeriod}
-                      </div>
+                      </div>,
                     )}
                   </td>
                 </tr>
@@ -362,7 +362,7 @@ class Course extends Component {
                         <liStyled key={passingMechanism}>
                           {passingMechanism}
                           <br />
-                        </liStyled>
+                        </liStyled>,
                     ) : 'N/A'}
                   </ulStyled></td>
                 </tr>

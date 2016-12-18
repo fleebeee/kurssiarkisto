@@ -237,16 +237,16 @@ class addCourse extends Component {
       {
         method: 'POST',
         body: JSON.stringify({
-          name: this.state.courseName,
-          code: this.state.courseCode,
-          myCoursesLink: this.state.myCoursesLink,
-          tenttiArkistoLink: this.state.tenttiArkistoLink,
-          mandatoryAttendance: this.state.hasMandatoryAttendance,
+          name: _.capitalize(_.trim(this.state.courseName)),
+          code: _.trim(this.state.courseCode),
+          myCoursesLink: _.trim(this.state.myCoursesLink),
+          tenttiArkistoLink: _.trim(this.state.tenttiArkistoLink),
+          mandatoryAttendance: _.trim(this.state.hasMandatoryAttendance),
           passingMechanisms,
           credits: this.state.credits,
           instances,
         }),
-      }
+      },
    );
 
     if (res.success) {
@@ -254,7 +254,7 @@ class addCourse extends Component {
       /* eslint-disable prefer-template */
         '/?toast=addcourse' +
         '&code=' + this.state.courseCode +
-        '&name=' + this.state.courseName
+        '&name=' + this.state.courseName,
       );
       /* eslint-enable prefer-template */
     } else {
@@ -354,7 +354,7 @@ class addCourse extends Component {
                   value={this.state.courseCode}
                   onChange={this.handleTextChange.bind(this, 'courseCode')}
                 />
-                <br/>
+                <br />
                 <SmallHeader>Links</SmallHeader>
                 <Label htmlFor='myCoursesLink'>MyCourses</Label>
                 <TextField
@@ -363,7 +363,8 @@ class addCourse extends Component {
                   type='text'
                   placeholder='link to mycourses page'
                   value={this.state.myCoursesLink}
-                  onChange={this.handleTextChange.bind(this, 'myCoursesLink')}
+                  onChange={this.handleTextChange.bind(this,
+                    'myCoursesLink')}
                 />
 
                 <Label htmlFor='tenttiArkistoLink'>Tenttiarkisto</Label>
@@ -373,9 +374,10 @@ class addCourse extends Component {
                   type='text'
                   placeholder='link to tenttiarkisto page'
                   value={this.state.tenttiArkistoLink}
-                  onChange={this.handleTextChange.bind(this, 'tenttiArkistoLink')}
+                  onChange={this.handleTextChange.bind(this,
+                    'tenttiArkistoLink')}
                 />
-                <br/>
+                <br />
 
               </BasicInformation>
 
