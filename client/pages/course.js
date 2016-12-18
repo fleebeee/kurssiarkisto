@@ -382,7 +382,7 @@ class Course extends Component {
                         rel='noreferrer noopener'
                       >
                         MyCourses <br />
-                      </a> : 'N/A'
+                      </a> : ''
                       }
                     {this.state.course.tenttiArkistoLink ?
                       <a
@@ -390,7 +390,7 @@ class Course extends Component {
                         target='_blank'
                         rel='noreferrer noopener'
                       >
-                        Tenttiarkisto
+                         Tenttiarkisto
                       </a> : ''
                     }
 
