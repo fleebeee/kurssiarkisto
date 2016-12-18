@@ -3,8 +3,6 @@ import fetch from 'isomorphic-fetch';
 import _ from 'lodash';
 import Link from 'next/link';
 import styled from 'styled-components';
-// import Rating from 'react-rating';
-// import InputRange from 'react-input-range';
 import { Row, Col } from 'react-bootstrap';
 
 import withToast from '../utils/withToast.js';
@@ -549,8 +547,7 @@ class Search extends Component {
                       aria-labelledby='periodDropdown'
                     >
                       {
-                        Object.values(globals.SORT_OPTIONS).map(
-                        option =>
+                        Object.values(globals.SORT_OPTIONS).map(option =>
                           <li key={option}>
                             <a
                               tabIndex='0'
@@ -560,8 +557,7 @@ class Search extends Component {
                             >
                               {option}
                             </a>
-                          </li>
-                        )
+                          </li>)
                       }
                     </ul>
                   </DropdownBoxOne>
@@ -623,8 +619,7 @@ class Search extends Component {
                                 >
                                   {option}
                                 </a>
-                              </li>
-                            )
+                              </li>)
                           }
                         </ul>
                       </DropdownBox>
@@ -661,8 +656,7 @@ class Search extends Component {
                                 >
                                   {option}
                                 </a>
-                              </li>
-                            )
+                              </li>)
                           }
                         </ul>
                       </DropdownBox>
