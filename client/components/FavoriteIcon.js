@@ -96,7 +96,7 @@ class FavoriteIcon extends Component {
   componentDidMount() {
     if (_.find(
         this.props.auth.getProfile().favorites,
-        f => f === this.props.code
+        f => f === this.props.code,
       )) {
       this.setState({ favorited: true });
     } else {
@@ -128,7 +128,7 @@ class FavoriteIcon extends Component {
       });
       const moreFavorites = [...favorites, this.props.code];
       this.props.auth.setProfile(
-        { ...profile, favorites: moreFavorites }
+        { ...profile, favorites: moreFavorites },
       );
 
       const res = await fetch(`${globals.API_ADDRESS}/user`, {
@@ -161,7 +161,7 @@ class FavoriteIcon extends Component {
       });
       const lessFavorites = _.without(favorites, this.props.code);
       this.props.auth.setProfile(
-        { ...profile, favorites: lessFavorites }
+        { ...profile, favorites: lessFavorites },
       );
       const res = await fetch(`${globals.API_ADDRESS}/user`, {
         method: 'PUT',

@@ -18,6 +18,8 @@
     "react/no-did-mount-set-state": 0,
     # NOTE Needed for AuthService
     "class-methods-use-this": 0,
+    # TODO Doesn't work after updating packages, try later
+    "react/no-unused-prop-types": 0,
     "no-param-reassign": 0,
     "linebreak-style": 0,
     # single quotes

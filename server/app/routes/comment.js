@@ -2,45 +2,55 @@ import express from 'express';
 import mongoose from 'mongoose';
 import _ from 'lodash';
 import errorParser from '../utils/errorParser';
-// import getToken from '../utils/getToken';
+import getToken from '../utils/getToken';
+import getUser from '../utils/getUser';
 
 import Comment from '../models/comment';
 import User from '../models/user';
 
 const commentRoutes = express.Router();
 
-// TODO require authentication AND verify userID
-commentRoutes.post('/comment', (req, res) => {
-  if (!req.body.content) {
+commentRoutes.post('/comment', async (req, res) => {
+  if (!req.body.content || !req.body.code) {
     res.json({
       success: false,
-      message: 'Please enter comment content!',
-    });
-  } else {
-    const newComment = new Comment({
-      userID: mongoose.Types.ObjectId(req.body.userID),
-      courseCode: req.body.code,
-      content: req.body.content,
-    });
-    // save the comment
-    newComment.save((err) => {
-      if (err) {
-        console.log(err);
-        const errors = errorParser(err);
-
-        return res.json({
-          success: false,
-          message:
-            `Something went wrong. Hopefully helpful description:\n${errors}`,
-        });
-      }
-      return res.json({
-        success: true,
-        message:
-          `Successfully added new comment for course ${req.body.code}`,
-      });
+      message: 'Please enter comment content and code!',
     });
   }
+
+  const token = getToken(req.headers);
+  const user = await getUser(token);
+  if (!user) {
+    return res.status(403).json({
+      success: false,
+      message: 'You need to log in to add comments',
+    });
+  }
+
+  const newComment = new Comment({
+    userID: user._id,
+    courseCode: req.body.code,
+    content: req.body.content,
+  });
+  // save the comment
+  try {
+    await newComment.save();
+  } catch (err) {
+    console.log(err);
+    const errors = errorParser(err);
+
+    return res.json({
+      success: false,
+      message:
+        `Something went wrong. Hopefully helpful description:\n${errors}`,
+    });
+  }
+
+  return res.json({
+    success: true,
+    message:
+      `Successfully added new comment for course ${req.body.code}`,
+  });
 });
 
 const clearVoterID = (comment, userID) => {
@@ -49,11 +59,20 @@ const clearVoterID = (comment, userID) => {
 };
 
 // Vote actions TODO verify etc
-commentRoutes.put('/comment', (req, res) => {
-  if (!req.body.userID || !req.body.commentID) {
+commentRoutes.put('/comment', async (req, res) => {
+  if (!req.body.commentID) {
     return res.json({
       success: false,
-      message: 'Please enter both userID and commentID',
+      message: 'Please enter commentID',
+    });
+  }
+
+  const token = getToken(req.headers);
+  const user = await getUser(token);
+  if (!user) {
+    return res.status(403).json({
+      success: false,
+      message: 'You need to log in to add comments',
     });
   }
 
@@ -77,10 +96,10 @@ commentRoutes.put('/comment', (req, res) => {
       });
     }
 
-    clearVoterID(comment, req.body.userID);
+    clearVoterID(comment, user._id);
 
     if (req.body.vote === 1) {
-      comment.upvoters.push(req.body.userID);
+      comment.upvoters.push(user._id);
       comment.save();
       return res.json({
         success: true,
@@ -88,7 +107,7 @@ commentRoutes.put('/comment', (req, res) => {
           'Upvoted comment',
       });
     } else if (req.body.vote === -1) {
-      comment.downvoters.push(req.body.userID);
+      comment.downvoters.push(user._id);
       comment.save();
       return res.json({
         success: true,

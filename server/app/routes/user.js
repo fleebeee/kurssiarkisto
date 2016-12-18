@@ -1,5 +1,4 @@
 import express from 'express';
-import passport from 'passport';
 import jwt from 'jwt-simple';
 import _ from 'lodash';
 import errorParser from '../utils/errorParser';
@@ -10,16 +9,15 @@ import config from '../../config/database';
 
 const userRoutes = express.Router();
 
+// TODO Auth stuff here is outdated, refactor
+
 userRoutes.get(
   '/user',
-  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const token = getToken(req.headers);
     if (token) {
       const decoded = jwt.decode(token, config.secret);
-      User.findOne({
-        email: decoded.email,
-      }, (err, user) => {
+      User.findById(decoded._id, (err, user) => {
         if (err) throw err;
 
         if (!user) {
@@ -47,14 +45,11 @@ userRoutes.get(
 
 userRoutes.put(
   '/user',
-  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const token = getToken(req.headers);
     if (token) {
       const decoded = jwt.decode(token, config.secret);
-      User.findOne({
-        email: decoded.email,
-      }, (err, user) => {
+      User.findById(decoded._id, (err, user) => {
         if (err) throw err;
 
         if (!user) {

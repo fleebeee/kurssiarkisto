@@ -48,9 +48,9 @@ class VoteControls extends Component {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: this.props.auth.getToken(),
         },
         body: JSON.stringify({
-          userID: this.props.auth.getProfile().id,
           commentID,
           vote,
         }),
