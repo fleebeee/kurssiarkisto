@@ -81,6 +81,11 @@ const Vote = styled.div`
   align-items: center;
 `;
 
+const NoComments = styled.p`
+  margin-bottom: 10px;
+  color: white;
+`;
+
 class Comments extends Component {
   constructor(props) {
     super(props);
@@ -122,6 +127,19 @@ class Comments extends Component {
       return <LoadingIndicator />;
     }
 
+    if (_.isEmpty(this.state.comments)) {
+      return (
+        <CommentsContainer>
+          <NoComments>This course has no comments yet.</NoComments>
+          {this.state.loggedIn &&
+          <CommentForm
+            courseCode={this.props.courseCode}
+            getComments={this.getComments}
+          />}
+        </CommentsContainer>
+      );
+    }
+
     return (
       <CommentsContainer>
         <CommentList>
@@ -152,7 +170,7 @@ class Comments extends Component {
               <Content>
                 {comment.content}
               </Content>
-            </Comment>
+            </Comment>,
           )}
         </CommentList>
         {this.state.loggedIn &&
