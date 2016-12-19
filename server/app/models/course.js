@@ -30,18 +30,19 @@ const CourseSchema = new Schema({
         return /^$|^https:\/\/mycourses\.aalto\.fi\/course\/view\.php\?id=[0-9]+$/g.test(v);
       },
       message: '\'{VALUE}\' is not a valid MyCoursesLink. It should satisfy this RegExp: /^$|^https:\\/\\/mycourses\\.aalto\\.fi\\/course\\/view\\.php\\?id=[0-9]+$/g',
+      /* eslint-enable max-len */
     },
     required: false,
   },
   tenttiArkistoLink: {
     type: String,
-
     validate: {
       validator: (v) => {
         /* eslint-disable max-len */
-        return /^$|^.*tenttiarkisto\.fi.*$/g.test(v);
+        return /^$|^http:\/\/tenttiarkisto\.fi.*$/g.test(v);
       },
       message: '\'{VALUE}\' is not a valid TenttiArkisto link. It should satisfy this RegExp: ',
+      /* eslint-enable max-len */
     },
     required: false,
   },
