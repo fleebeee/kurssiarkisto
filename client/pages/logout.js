@@ -26,7 +26,7 @@ class LogOut extends Component {
 
   componentDidMount() {
     auth.logout();
-    this.props.url.pushTo('/');
+    this.props.url.push('/');
   }
 
   render() {

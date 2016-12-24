@@ -120,11 +120,11 @@ class Mypage extends Component {
     const user = props.auth.getProfile();
     this.state = {
       user,
-      nickname: user.nickname,
-      role: user.role,
-      email: user.email,
-      track: user.track,
-      startingYear: user.startingYear,
+      nickname: user.nickname || '',
+      role: user.role || '',
+      email: user.email || '',
+      track: user.track || '',
+      startingYear: user.startingYear || '',
       oldPassword: '',
       newPassword: '',
       newPasswordAgain: '',
@@ -289,7 +289,7 @@ class Mypage extends Component {
                               >
                                 {option}
                               </a>
-                            </li>
+                            </li>,
                           )
                         }
                       </ul>

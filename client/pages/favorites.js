@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Link from 'next/link';
+import Link from 'next/prefetch';
 import styled from 'styled-components';
 // import _ from 'lodash';
 
@@ -73,7 +73,7 @@ class Favorites extends Component {
           <ul>
             {this.state.favorites &&
             this.state.favorites.map(favorite =>
-              <LiStyled>
+              <LiStyled key={favorite}>
                 <FavoriteIconContainer>
                   <FavoriteIcon
                     code={favorite}
@@ -83,7 +83,7 @@ class Favorites extends Component {
                 <Link href={`/course?code=${favorite}`} key={favorite}>
                   <LinkText>{favorite}</LinkText>
                 </Link> <br />
-              </LiStyled>
+              </LiStyled>,
             )}
           </ul>
 

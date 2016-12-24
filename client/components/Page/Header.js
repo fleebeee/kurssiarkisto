@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 // import fetch from 'isomorphic-fetch';
 // import ls from 'local-storage';
 import styled from 'styled-components';
-import Link from 'next/link';
+import Link from 'next/prefetch';
 
 import globals from '../../utils/globals.js';
 import palette from '../../utils/palette.js';

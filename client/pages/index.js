@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import fetch from 'isomorphic-fetch';
 import _ from 'lodash';
-import Link from 'next/link';
+import Link from 'next/prefetch';
 import styled from 'styled-components';
 import { Row, Col } from 'react-bootstrap';
 

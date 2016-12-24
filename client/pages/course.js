@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { ButtonGroup, Button, Modal, Table } from 'react-bootstrap';
 import fetch from 'isomorphic-fetch';
-import Link from 'next/link';
+import Link from 'next/prefetch';
 import styled from 'styled-components';
 import _ from 'lodash';
 import ls from 'local-storage';

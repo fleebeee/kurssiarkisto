@@ -92,7 +92,7 @@ class LoginComponent extends Component {
     const res = await auth.login(this.state.email, this.state.password);
 
     if (res.success) {
-      this.props.url.pushTo(`/?toast=login&name=${res.profile.nickname}`);
+      this.props.url.push(`/?toast=login&name=${res.profile.nickname}`);
     } else {
       this.props.addToast({
         title: 'Login failed',

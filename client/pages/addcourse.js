@@ -250,7 +250,7 @@ class addCourse extends Component {
    );
 
     if (res.success) {
-      this.props.url.pushTo(
+      this.props.url.push(
       /* eslint-disable prefer-template */
         '/?toast=addcourse' +
         '&code=' + this.state.courseCode +

@@ -151,7 +151,7 @@ class Signup extends Component {
       return;
     } else if (res.success) {
       // Redirect to front page
-      this.props.url.pushTo(`/login?toast=signup&name=${this.state.nickname}`);
+      this.props.url.push(`/login?toast=signup&name=${this.state.nickname}`);
     } else {
       this.props.addToast({
         title: 'Register failed',

@@ -1,6 +1,6 @@
 // A HOC for protected pages
 import React, { Component, PropTypes } from 'react';
-import Link from 'next/link';
+import Link from 'next/prefetch';
 import styled from 'styled-components';
 
 import AuthService from './AuthService.js';
